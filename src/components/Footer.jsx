@@ -15,7 +15,7 @@ const Footer = () => {
             <img src="/white.png" alt="Bark Tech Logo" style={{ maxHeight: '60px' }} className="mb-4" />
             <div className="contact-info">
               <p><i className="fa fa-map-marker-alt me-3"></i>{isAr ? 'الرياض: حي الملقا' : 'Riyadh: Al Malqa'}</p>
-              <p><i className="fa fa-phone-alt me-3"></i>+966 55 024 3776</p>
+              <p><i className="fa fa-phone-alt me-3"></i><span dir="ltr">+966 55 024 3776</span></p>
               <p><i className="fa fa-envelope me-3"></i>grow@barqtech.ai</p>
             </div>
             <div className="d-flex justify-content-center justify-content-md-start pt-2">
