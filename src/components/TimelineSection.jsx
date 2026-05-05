@@ -43,7 +43,7 @@ const TimelineSection = () => {
   return (
     <div className="container-xxl py-5 bg-light overflow-hidden">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'منهجية العمل' : 'Work Methodology'}
           </h6>
@@ -56,7 +56,7 @@ const TimelineSection = () => {
           <div className="position-absolute bg-primary d-none d-lg-block" style={{ height: '2px', top: '50%', left: '10%', right: '10%', zIndex: 0 }}></div>
           
           {timelineData.map((item, index) => (
-            <div className="col-lg-3 col-md-6 mb-4 mb-lg-0 wow fadeInUp" data-wow-delay={`0.${index + 1}s`} key={index}>
+            <div className={`col-lg-3 col-md-6 mb-4 mb-lg-0 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 200} key={index}>
               <div className="timeline-item text-center px-4 position-relative" style={{ zIndex: 1 }}>
                 <div className="timeline-icon bg-white border border-primary rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center shadow-sm" style={{ width: '80px', height: '80px' }}>
                   <i className={`${item.icon} text-primary fa-2x`}></i>

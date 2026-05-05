@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const whyUsData = [
   {
@@ -47,20 +48,34 @@ const WhyUsSection = () => {
             {isAr ? 'لماذا برق تك؟' : 'Why Barq Tech?'}
           </h2>
         </div>
-        <div className="row g-4">
-          {whyUsData.map((item, index) => (
-            <div className={`col-lg-4 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 150} key={index}>
-              <div className="service-item d-flex flex-column justify-content-center text-center rounded bg-white p-4 h-100 shadow-sm border border-light">
-                <div className="service-icon flex-shrink-0 mb-4 mx-auto">
-                  <i className={`${item.icon} fa-2x`}></i>
+        <div className="row g-4 align-items-center">
+          {/* Lottie Animation */}
+          <div className="col-lg-6 scroll-reveal from-left" data-delay="100">
+            <DotLottieReact
+              src="https://lottie.host/b1a49684-af93-4b56-b8e4-3de270e907ac/vQt3ag2Sap.lottie"
+              loop
+              autoplay
+              style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}
+            />
+          </div>
+          {/* Features Cards */}
+          <div className="col-lg-6">
+            <div className="row g-4">
+              {whyUsData.map((item, index) => (
+                <div className={`col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-right' : 'from-left'}`} data-delay={index * 150} key={index}>
+                  <div className="d-flex flex-column justify-content-center text-center rounded bg-white p-4 h-100 shadow-sm border border-light" style={{ transition: '0.3s' }}>
+                    <div className="mb-3 mx-auto">
+                      <i className={`${item.icon} fa-2x text-primary`}></i>
+                    </div>
+                    <h5 className="mb-3">{isAr ? item.title : item.titleEn}</h5>
+                    <p className="m-0 text-muted" style={{ direction: isAr ? 'rtl' : 'ltr' }}>
+                      {isAr ? item.desc : item.descEn}
+                    </p>
+                  </div>
                 </div>
-                <h5 className="mb-3">{isAr ? item.title : item.titleEn}</h5>
-                <p className="m-0" style={{ direction: isAr ? 'rtl' : 'ltr' }}>
-                  {isAr ? item.desc : item.descEn}
-                </p>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ const VisionMissionSection = () => {
       <div className="container px-lg-5">
         <div className="row g-4">
           {data.map((item, index) => (
-            <div className="col-lg-4 wow fadeInUp" data-wow-delay={`0.${index * 2 + 1}s`} key={index}>
+            <div className={`col-lg-4 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 150} key={index}>
               <div className="bg-light rounded text-center p-5 h-100 shadow-sm hover-top transition">
                 <div className="btn-square bg-primary rounded-circle mx-auto mb-4" style={{ width: '64px', height: '64px' }}>
                   <i className={`${item.icon} text-white fa-2x`}></i>

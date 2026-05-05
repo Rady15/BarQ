@@ -45,7 +45,7 @@ const PricingSection = () => {
   return (
     <div className="container-xxl py-5">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'الأسعار' : 'Pricing'}
           </h6>
@@ -55,7 +55,7 @@ const PricingSection = () => {
         </div>
         <div className="row g-4 justify-content-center">
           {pricingData.map((plan, index) => (
-            <div className="col-lg-4 col-md-6 wow zoomIn" data-wow-delay={plan.delay} key={index}>
+            <div className={`col-lg-4 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 150} key={index}>
               <div className={`service-item d-flex flex-column text-center rounded bg-light p-4 h-100 ${plan.featured ? 'border border-primary shadow' : ''}`}>
                 {plan.featured && (
                   <div className="bg-primary text-white position-absolute top-0 start-50 translate-middle rounded-pill px-3 py-1 mt-3" style={{ zIndex: 1 }}>
@@ -84,7 +84,7 @@ const PricingSection = () => {
             </div>
           ))}
         </div>
-        <div className="row mt-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="row mt-5 scroll-reveal from-bottom" data-delay="300">
           <div className="col-12 text-center">
             <div className="alert alert-primary d-inline-block rounded-pill px-4 py-3">
               <strong><i className="fa fa-gift me-2 ms-2"></i></strong>

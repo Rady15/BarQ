@@ -91,7 +91,7 @@ export function useBackToTop() {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const ease = easeInOutExpo(progress);
-      
+
       window.scrollTo(0, start * (1 - ease));
 
       if (progress < 1) {

@@ -160,8 +160,7 @@ const PortfolioSection = ({ limit }) => {
     <div className="container-xxl py-5" id="portfolio">
       <div className="container px-lg-5">
         <div
-          className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp"
-          data-wow-delay="0.1s"
+          className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom"
         >
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'مشاريعنا' : 'Our Projects'}
@@ -173,9 +172,9 @@ const PortfolioSection = ({ limit }) => {
         <div className="row g-4">
           {displayData.map((item, index) => (
             <div
-              className="col-lg-4 col-md-6 portfolio-item wow zoomIn"
+              className={`col-lg-4 col-md-6 portfolio-item scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`}
               key={index}
-              data-wow-delay={item.delay}
+              data-delay={index * 150}
             >
               <div className="position-relative rounded overflow-hidden">
                 <img className="img-fluid w-100" src={item.img} alt={isAr ? item.name : item.nameEn} />
@@ -203,7 +202,7 @@ const PortfolioSection = ({ limit }) => {
           ))}
         </div>
         {limit && (
-          <div className="text-center mt-5 wow fadeInUp" data-wow-delay="0.1s">
+          <div className="text-center mt-5 scroll-reveal from-bottom" data-delay="300">
             <Link to="/project" className="btn btn-primary rounded-pill py-3 px-5">
               {isAr ? 'عرض المزيد من المشاريع' : 'View More Projects'}
             </Link>

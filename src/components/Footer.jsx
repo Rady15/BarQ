@@ -6,8 +6,7 @@ const Footer = () => {
   const isAr = lang === 'ar';
   return (
     <div
-      className="container-fluid bg-primary text-light footer mt-5 pt-5 wow fadeIn"
-      data-wow-delay="0.1s"
+      className="container-fluid bg-primary text-light footer mt-5 pt-5 scroll-reveal from-bottom"
     >
       <div className="container py-5 px-lg-5">
         <div className="row g-5">

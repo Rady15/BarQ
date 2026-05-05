@@ -27,7 +27,7 @@ const ContactSection = () => {
     <div className="container-xxl py-5" id="contact">
       <div className="container px-lg-5">
         <div className="row g-5">
-          <div className="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
+          <div className="col-lg-5 scroll-reveal from-left">
             <div className="section-title position-relative mb-4 pb-2">
               <h6 className="position-relative text-primary ps-4">
                 {isAr ? 'تواصل معنا الآن' : 'Contact Us Now'}
@@ -90,7 +90,7 @@ const ContactSection = () => {
             </div>
           </div>
           <div className="col-lg-7">
-            <div className="wow fadeInUp" data-wow-delay="0.3s">
+            <div className="scroll-reveal from-right" data-delay="200">
               <form onSubmit={handleSubmit}>
                 <div className="row g-3">
                   <div className="col-md-6">

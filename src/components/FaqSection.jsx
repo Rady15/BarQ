@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const faqData = [
   {
@@ -35,7 +36,7 @@ const FaqSection = () => {
   return (
     <div className="container-xxl py-5 bg-light">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'الدعم الفني' : 'Support'}
           </h6>
@@ -43,8 +44,18 @@ const FaqSection = () => {
             {isAr ? 'أسئلة شائعة' : 'Frequently Asked Questions'}
           </h2>
         </div>
-        <div className="row justify-content-center">
-          <div className="col-lg-8 wow fadeInUp" data-wow-delay="0.3s">
+        <div className="row g-4 align-items-center">
+          {/* Lottie Animation */}
+          <div className="col-lg-5 scroll-reveal from-left" data-delay="100">
+            <DotLottieReact
+              src="https://lottie.host/9842d8cc-cc0c-4e56-bca3-3f44fea9efd8/fxmKctxAVj.lottie"
+              loop
+              autoplay
+              style={{ width: '100%', maxWidth: '450px', margin: '0 auto' }}
+            />
+          </div>
+          {/* FAQ Accordion */}
+          <div className="col-lg-7 scroll-reveal from-right" data-delay="200">
             <div className="accordion" id="faqAccordion">
               {faqData.map((faq, index) => (
                 <div className="accordion-item mb-3 rounded border-0 shadow-sm" key={index}>

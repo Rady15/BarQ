@@ -85,7 +85,7 @@ const StatsSection = () => {
       <div className="container px-lg-5">
         <div className="row g-4 text-center">
           {stats.map((stat) => (
-            <div key={stat.id} className="col-md-6 col-lg-3 wow zoomIn" data-wow-delay="0.1s">
+            <div key={stat.id} className={`col-md-6 col-lg-3 scroll-reveal ${stat.id % 2 === 0 ? 'from-right' : 'from-left'}`} data-delay={(stat.id - 1) * 150}>
               <div className="stat-circle d-flex flex-column align-items-center justify-content-center mx-auto">
                 <h2 className="display-4 text-primary mb-0">
                   <Counter end={stat.end} prefix={stat.prefix || ''} suffix={stat.suffix || ''} />
