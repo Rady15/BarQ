@@ -16,6 +16,7 @@ import ContactSection from '../components/ContactSection';
 import StatsSection from '../components/StatsSection';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
+import WhatsAppFloat from '../components/WhatsAppFloat';
 import { useSpinner, useWow } from '../hooks/useAnimations';
 import { useLanguage } from '../context/LanguageContext';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -118,6 +119,9 @@ const Home = () => {
 
       {/* Back to Top */}
       <BackToTop />
+
+      {/* WhatsApp Float */}
+      <WhatsAppFloat />
     </div>
   );
 };

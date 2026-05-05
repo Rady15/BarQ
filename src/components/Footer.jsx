@@ -20,7 +20,7 @@ const Footer = () => {
               <i className="fa fa-map-marker-alt me-3"></i>{isAr ? 'جدة: طريق الأمير سلطان، برج الأعمال' : 'Jeddah: Prince Sultan Rd, Business Tower'}
             </p>
             <p>
-              <i className="fa fa-phone-alt me-3"></i>+966 55 123 4567
+              <i className="fa fa-phone-alt me-3"></i>+966 55 024 3776
             </p>
             <p>
               <i className="fa fa-envelope me-3"></i>grow@barqtech.ai

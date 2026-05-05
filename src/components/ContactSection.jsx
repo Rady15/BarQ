@@ -46,7 +46,7 @@ const ContactSection = () => {
               <div className={isAr ? 'ms-3' : 'me-3'}></div>
               <div className="px-3">
                 <h5 className="mb-0">{isAr ? 'اتصال مباشر' : 'Direct Call'}</h5>
-                <p className="mb-0" style={{ direction: 'ltr' }}>+966 55 123 4567</p>
+                <p className="mb-0" style={{ direction: 'ltr' }}>+966 55 024 3776</p>
               </div>
             </div>
             <div className="d-flex align-items-center mb-3">
@@ -56,7 +56,7 @@ const ContactSection = () => {
               <div className={isAr ? 'ms-3' : 'me-3'}></div>
               <div className="px-3">
                 <h5 className="mb-0">{isAr ? 'واتساب' : 'WhatsApp'}</h5>
-                <a href="https://wa.me/966551234567" target="_blank" rel="noopener noreferrer" className="mb-0 text-dark">
+                <a href="https://wa.me/966550243776" target="_blank" rel="noopener noreferrer" className="mb-0 text-dark">
                   {isAr ? 'اضغط للمحادثة الفورية' : 'Click for instant chat'}
                 </a>
               </div>
