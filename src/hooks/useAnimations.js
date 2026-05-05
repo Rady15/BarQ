@@ -8,55 +8,39 @@ import { useLocation } from 'react-router-dom';
  * 
  * This is called once per page component after mount.
  */
-export function useWow() {
+export function useScrollReveal() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const handleIntersect = (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const delay = el.getAttribute('data-wow-delay') || '0s';
-          const duration = el.getAttribute('data-wow-duration') || '1s';
-          const iteration = el.getAttribute('data-wow-iteration') || '1';
-          
-          el.style.visibility = 'visible';
-          el.style.animationDelay = delay;
-          el.style.animationDuration = duration;
-          el.style.animationIterationCount = iteration;
-          el.classList.add('animated');
-          
-          // Once animated, we can stop observing if we don't want exit transitions
-          // But user asked for enter/outer, so we keep observing
-        } else {
-          const el = entry.target;
-          el.classList.remove('animated');
-          el.style.visibility = 'hidden';
-        }
-      });
-    };
+    const elements = document.querySelectorAll('.scroll-reveal');
 
-    const observer = new IntersectionObserver(handleIntersect, {
-      threshold: 0.1,
-      rootMargin: '0px'
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Add delay if specified
+            const delay = entry.target.getAttribute('data-delay') || '0';
+            setTimeout(() => {
+              entry.target.classList.add('in-view');
+            }, parseInt(delay));
+          } else {
+            // Remove to allow re-animation on scroll back
+            entry.target.classList.remove('in-view');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-    const initWow = () => {
-      const wowElements = document.querySelectorAll('.wow');
-      wowElements.forEach((el) => {
-        el.style.visibility = 'hidden'; // Ensure hidden
-        observer.observe(el);
-      });
-    };
+    elements.forEach((el) => observer.observe(el));
 
-    // Run after a short delay to ensure DOM is ready
-    const timer = setTimeout(initWow, 500);
-
-    return () => {
-      clearTimeout(timer);
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [pathname]);
+}
+
+// Keep old useWow for backward compatibility
+export function useWow() {
+  useScrollReveal();
 }
 
 /**

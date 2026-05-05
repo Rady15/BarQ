@@ -10,12 +10,37 @@ html {
     scroll-behavior: smooth;
 }
 
-.wow {
-    visibility: hidden;
+/* ===== Scroll Transition System ===== */
+.scroll-reveal {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform, opacity;
 }
 
-.animated {
-    visibility: visible !important;
+.scroll-reveal.from-left {
+    transform: translateX(-100px);
+}
+
+.scroll-reveal.from-right {
+    transform: translateX(100px);
+}
+
+.scroll-reveal.from-bottom {
+    transform: translateY(60px);
+}
+
+.scroll-reveal.from-top {
+    transform: translateY(-60px);
+}
+
+.scroll-reveal.zoom-in {
+    transform: scale(0.8);
+}
+
+/* When element is in view */
+.scroll-reveal.in-view {
+    opacity: 1 !important;
+    transform: translateX(0) translateY(0) scale(1) !important;
 }
 
 body, h1, h2, h3, h4, h5, h6, p, a, span, div {

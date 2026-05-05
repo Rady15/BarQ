@@ -36,9 +36,9 @@ const TestimonialSection = () => {
   const isAr = lang === 'ar';
 
   return (
-    <div className="container-xxl py-5 bg-light wow fadeIn" data-wow-delay="0.1s">
+    <div className="container-xxl py-5 bg-light">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'آراء العملاء' : 'Testimonials'}
           </h6>
@@ -48,7 +48,7 @@ const TestimonialSection = () => {
         </div>
         <div className="row g-4 justify-content-center">
           {testimonials.map((t, index) => (
-            <div className="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay={`0.${index * 2 + 1}s`} key={index}>
+            <div className={`col-lg-4 col-md-6 scroll-reveal ${index === 0 ? 'from-left' : index === 2 ? 'from-right' : 'from-bottom'}`} data-delay={index * 200} key={index}>
               <div className="testimonial-item bg-white rounded p-4 h-100 shadow-sm border border-light">
                 <i className="fa fa-quote-left fa-2x text-primary mb-3"></i>
                 <p style={{ direction: isAr ? 'rtl' : 'ltr' }}>{isAr ? t.quote : t.quoteEn}</p>

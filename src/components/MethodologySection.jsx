@@ -41,9 +41,9 @@ const MethodologySection = () => {
   const isAr = lang === 'ar';
 
   return (
-    <div className="container-xxl py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div className="container-xxl py-5">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'خطوات العمل' : 'Work Process'}
           </h6>
@@ -53,7 +53,7 @@ const MethodologySection = () => {
         </div>
         <div className="row g-4">
           {stepsData.map((step, index) => (
-            <div className="col-lg-3 col-md-6 wow zoomIn" data-wow-delay={`0.${index * 2 + 1}s`} key={index}>
+            <div className={`col-lg-3 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 200} key={index}>
               <div className="service-item d-flex flex-column justify-content-center text-center rounded bg-light p-4 h-100">
                 <div className="service-icon flex-shrink-0 mb-4 mx-auto">
                   <i className={`${step.icon} fa-2x`}></i>

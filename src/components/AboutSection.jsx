@@ -7,10 +7,10 @@ const AboutSection = () => {
   const isAr = lang === 'ar';
 
   return (
-    <div className="container-xxl py-5 wow fadeIn" id="about" data-wow-delay="0.1s">
+    <div className="container-xxl py-5" id="about">
       <div className="container px-lg-5">
         <div className="row g-5">
-          <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div className="col-lg-6 scroll-reveal from-left" data-delay="100">
             <div className="section-title position-relative mb-4 pb-2">
               <h6 className="position-relative text-primary ps-4">
                 {isAr ? 'من نحن' : 'About Us'}
@@ -30,7 +30,7 @@ const AboutSection = () => {
                 <>
                   We are a leading technology institution specializing in providing innovative design and software solutions, and smart automation systems that meet the needs of individuals, companies, and government agencies. We aim to create an exceptional user experience and integrated management systems based on artificial intelligence to help your business grow and achieve sustainable profits in the digital world.
                   <br /><br />
-                  At "Barq Tech", we are committed to keeping pace with technological development to support the Kingdom\'s Vision 2030 by innovating smart technical solutions and ERP systems compatible with the requirements of the Zakat, Tax and Customs Authority (ZATCA).
+                  At "Barq Tech", we are committed to keeping pace with technological development to support the Kingdom's Vision 2030 by innovating smart technical solutions and ERP systems compatible with the requirements of the Zakat, Tax and Customs Authority (ZATCA).
                 </>
               )}
             </p>
@@ -60,26 +60,17 @@ const AboutSection = () => {
               <Link className={`btn btn-primary rounded-pill px-4 ${isAr ? 'ms-3' : 'me-3'}`} to="/about">
                 {isAr ? 'اقرأ المزيد' : 'Read More'}
               </Link>
-              <a className="btn btn-outline-primary btn-square me-3" href="#">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a className="btn btn-outline-primary btn-square me-3" href="#">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a className="btn btn-outline-primary btn-square me-3" href="#">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a className="btn btn-outline-primary btn-square" href="#">
-                <i className="fab fa-linkedin-in"></i>
-              </a>
+              <a className="btn btn-outline-primary btn-square me-3" href="#"><i className="fab fa-facebook-f"></i></a>
+              <a className="btn btn-outline-primary btn-square me-3" href="#"><i className="fab fa-twitter"></i></a>
+              <a className="btn btn-outline-primary btn-square me-3" href="#"><i className="fab fa-instagram"></i></a>
+              <a className="btn btn-outline-primary btn-square" href="#"><i className="fab fa-linkedin-in"></i></a>
             </div>
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6 scroll-reveal from-right" data-delay="300">
             <img
-              className="img-fluid wow zoomIn"
+              className="img-fluid"
               src="/img/about.png"
               alt="About Bark Tech"
-              data-wow-delay="0.5s"
             />
           </div>
         </div>

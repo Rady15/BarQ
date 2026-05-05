@@ -39,7 +39,7 @@ const TeamSection = () => {
   return (
     <div className="container-xxl py-5">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'فريق العمل' : 'Our Team'}
           </h6>
@@ -49,7 +49,7 @@ const TeamSection = () => {
         </div>
         <div className="row g-4">
           {teamData.map((member, index) => (
-            <div className="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay={`0.${index * 2 + 1}s`} key={index}>
+            <div className={`col-lg-3 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 150} key={index}>
               <div className="team-item bg-light rounded text-center p-4 h-100 shadow-sm">
                 <div className="btn-square bg-white rounded-circle mx-auto mb-4 border" style={{ width: '100px', height: '100px' }}>
                   <i className={`${member.icon} text-primary fa-3x`}></i>

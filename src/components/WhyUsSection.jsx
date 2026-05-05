@@ -37,9 +37,9 @@ const WhyUsSection = () => {
   const isAr = lang === 'ar';
 
   return (
-    <div className="container-xxl py-5 bg-light wow fadeIn" data-wow-delay="0.1s">
+    <div className="container-xxl py-5 bg-light">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'المميزات' : 'Features'}
           </h6>
@@ -49,7 +49,7 @@ const WhyUsSection = () => {
         </div>
         <div className="row g-4">
           {whyUsData.map((item, index) => (
-            <div className="col-lg-4 col-md-6 wow zoomIn" data-wow-delay={`0.${index % 3 * 2 + 1}s`} key={index}>
+            <div className={`col-lg-4 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 150} key={index}>
               <div className="service-item d-flex flex-column justify-content-center text-center rounded bg-white p-4 h-100 shadow-sm border border-light">
                 <div className="service-icon flex-shrink-0 mb-4 mx-auto">
                   <i className={`${item.icon} fa-2x`}></i>

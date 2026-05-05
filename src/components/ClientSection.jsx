@@ -15,9 +15,9 @@ const ClientSection = () => {
   const isAr = lang === 'ar';
 
   return (
-    <div className="container-xxl py-5 wow fadeIn" data-wow-delay="0.1s">
+    <div className="container-xxl py-5">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
             {isAr ? 'شركاء النجاح' : 'Success Partners'}
           </h6>
@@ -27,9 +27,8 @@ const ClientSection = () => {
         </div>
         <div className="row g-4 align-items-center justify-content-center">
           {clientsData.map((client, index) => (
-            <div className="col-6 col-md-4 col-lg-2 wow zoomIn" data-wow-delay={`0.${index + 1}s`} key={index}>
+            <div className={`col-6 col-md-4 col-lg-2 scroll-reveal zoom-in`} data-delay={index * 100} key={index}>
               <div className="client-logo-item p-4 text-center grayscale hover-color transition">
-                {/* For demonstration, using a stylized text if logo is missing */}
                 <div className="bg-light p-3 rounded shadow-sm border border-2 border-transparent hover-border-primary">
                    <h5 className="mb-0 text-muted">{client.name}</h5>
                 </div>

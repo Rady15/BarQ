@@ -157,7 +157,7 @@ const PortfolioSection = ({ limit }) => {
   const displayData = limit ? portfolioData.slice(0, limit) : portfolioData;
 
   return (
-    <div className="container-xxl py-5 wow fadeIn" id="portfolio" data-wow-delay="0.1s">
+    <div className="container-xxl py-5" id="portfolio">
       <div className="container px-lg-5">
         <div
           className="section-title position-relative text-center mb-5 pb-2 wow fadeInUp"
