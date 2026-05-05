@@ -4,35 +4,35 @@ import { useLanguage } from '../context/LanguageContext';
 const stepsData = [
   {
     stepNum: '01',
-    title: 'تحليل الاحتياجات',
-    titleEn: 'Needs Analysis',
-    desc: 'اجتماع استشاري لفهم واقع عملك وأهدافك بدقة.',
-    descEn: 'A consultative meeting to accurately understand your business reality and goals.',
-    icon: 'fa fa-search'
+    title: 'الأتمتة "المدركة"',
+    titleEn: 'Cognitive Automation',
+    desc: 'الأتمتة التقليدية تنفذ أوامر ثابتة فقط، أما أتمتة "برق تك" فهي تفهم المحتوى. يمكن لأنظمتنا قراءة العقود، استخراج البيانات من الصور، وفهم سياق الإيميلات لاتخاذ إجراء بناءً عليها.',
+    descEn: 'Traditional automation only executes fixed commands, but "Barq Tech" automation understands content. Our systems can read contracts, extract data from images, and understand the context of emails to take action based on them.',
+    icon: 'fa fa-brain'
   },
   {
     stepNum: '02',
-    title: 'تصميم الحلول',
-    titleEn: 'Solution Design',
-    desc: 'تصميم الواجهات وبناء هيكلية النظام أو التطبيق ليناسب طبيعة نشاطك.',
-    descEn: 'Designing interfaces and building the system or application structure to suit your business nature.',
-    icon: 'fa fa-laptop-code'
+    title: 'الربط الشامل',
+    titleEn: 'Comprehensive Linking',
+    desc: 'نحن نصنع الفارق بربط الأنظمة المنفصلة ببعضها. نجعل موقعك، وتطبيقك، ونظام المحاسبة ERP، والمخازن يتحدثون لغة واحدة، مما يخلق تدفقاً سلساً للمعلومات دون انقطاع.',
+    descEn: 'We make a difference by linking separate systems together. We make your website, application, ERP accounting system, and warehouses speak one language, creating a smooth flow of information without interruption.',
+    icon: 'fa fa-link'
   },
   {
     stepNum: '03',
-    title: 'التنفيذ والتطوير',
-    titleEn: 'Implementation & Development',
-    desc: 'برمجة وتخصيص الحلول التقنية في وقت قياسي وبجودة فائقة.',
-    descEn: 'Programming and customizing technical solutions in record time with superior quality.',
-    icon: 'fa fa-rocket'
+    title: 'حلول "مفصلة" للسوق السعودي',
+    titleEn: 'Tailored Solutions for the Saudi Market',
+    desc: 'نراعي في أتمتة العمليات القوانين والأنظمة المحلية (مثل متطلبات هيئة الزكاة والضريبة والجمارك - الفوترة الإلكترونية) واللغة العربية، مما يجعل حلولنا جاهزة للتطبيق فوراً في بيئتك المحلية.',
+    descEn: 'We take into account local laws (such as Zakat, Tax and Customs Authority requirements - electronic invoicing) and the Arabic language in process automation, making our solutions ready for immediate application in your local environment.',
+    icon: 'fa fa-map-marker-alt'
   },
   {
     stepNum: '04',
-    title: 'التدريب والدعم الفني',
-    titleEn: 'Training & Support',
-    desc: 'تدريب فريق عملك على النظام الجديد، وتقديم صيانة مستمرة بعد الإطلاق.',
-    descEn: 'Training your team on the new system and providing continuous maintenance after launch.',
-    icon: 'fa fa-headset'
+    title: 'التحسين الذاتي',
+    titleEn: 'Self-Improvement',
+    desc: 'أنظمتنا ليست جامدة؛ فهي تراقب المسارات وتقترح عليك طرقاً أفضل لتسريع العمل. إذا وجد النظام "عنق زجاجة" في دورة العمل، ينبهك فوراً ويقدم حلولاً ذكية لتجاوزها.',
+    descEn: 'Our systems are not rigid; they monitor pathways and suggest better ways to speed up work. If the system finds a "bottleneck" in the work cycle, it immediately alerts you and provides smart solutions to overcome it.',
+    icon: 'fa fa-chart-line'
   }
 ];
 

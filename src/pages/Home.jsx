@@ -32,7 +32,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="container-fluid bg-white p-0">
+    <div className="container-fluid bg-white p-0" dir={isAr ? 'rtl' : 'ltr'}>
       <Spinner loading={loading} />
 
       {/* Navbar & Hero */}
@@ -44,13 +44,13 @@ const Home = () => {
             <div className="row g-5 py-5 align-items-center">
               <div className="col-lg-6 text-center text-lg-start order-2 order-lg-1">
                 <h1 className="text-white mb-4 animated zoomIn" style={{ fontSize: 'calc(1.5rem + 1.5vw)' }}>
-                  {isAr ? 'برق تك | نقود مستقبلك نحو التحول الرقمي الذكي' : 'Barq Tech | Leading Your Future Towards Smart Digital Transformation'}
+                  {isAr ? 'برق تك.. barq tech' : 'Barq Tech.. barq tech'}
                 </h1>
                 <p className="text-white pb-3 animated zoomIn">
                   {isAr ? (
-                    'نحن في "برق تك" نحول أفكار أعمالك إلى واقع ملموس من خلال حلول تقنية المعلومات المتكاملة، وأنظمة الأتمتة المتقدمة المعتمدة على الذكاء الاصطناعي، لتسهيل إدارة أعمالك وزيادة إنتاجيتك بكفاءة عالية.'
+                    'نحن في برق تك، نؤمن أن الذكاء الاصطناعي ليس مجرد أداة، بل هو المحرك الجديد للنمو. انطلقنا لنطوع أحدث تقنيات الـ AI لخدمة الشركات الطموحة، محولين الأفكار المعقدة إلى تطبيقات واقعية ووكلاء ذكيين يعملون بدقة البرق.'
                   ) : (
-                    'At "Barq Tech", we turn your business ideas into reality through integrated IT solutions and advanced AI-driven automation systems, to facilitate your business management and increase your productivity with high efficiency.'
+                    'At Barq Tech, we believe that AI is not just a tool, but the new engine for growth. We set out to harness the latest AI technologies to serve ambitious companies, transforming complex ideas into realistic applications and smart agents that work with lightning precision.'
                   )}
                 </p>
                 <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start">
@@ -69,12 +69,11 @@ const Home = () => {
                 </div>
               </div>
               <div className="col-lg-6 text-center order-1 order-lg-2">
-                <div className="mx-auto" style={{ maxWidth: '400px' }}>
-                  <DotLottieReact
-                    src="https://lottie.host/8b0215a4-f444-4cf3-bcd7-af2ba68ab8b4/MCFezIAnhi.lottie"
-                    loop
-                    autoplay
-                    className="img-fluid animated zoomIn"
+                <div className="mx-auto" style={{ maxWidth: '500px' }}>
+                  <img
+                    src="/img/hero.png"
+                    alt="Hero Image"
+                    className="img-fluid animated zoomIn hero-image-float"
                   />
                 </div>
               </div>
@@ -87,17 +86,8 @@ const Home = () => {
       {/* About Section */}
       <AboutSection />
 
-      {/* Challenge Section */}
-      <ChallengeSection />
-
-      {/* Service Section */}
+      {/* Detailed Services Section (Description -> Importance -> How We Help) */}
       <ServiceSection />
-
-      {/* Methodology Section */}
-      <MethodologySection />
-
-      {/* Why Us Section */}
-      <WhyUsSection />
 
       {/* Client Section */}
       <ClientSection />

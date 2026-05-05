@@ -4,32 +4,32 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const whyUsData = [
   {
-    title: 'تكامل مرن وذكي',
-    titleEn: 'Flexible & Smart Integration',
-    desc: 'أنظمة قابلة للربط بسهولة مع أدوات التسويق، أنظمة الدفع، وتطبيقات الطرف الثالث.',
-    descEn: 'Systems that can be easily linked with marketing tools, payment systems, and third-party applications.',
-    icon: 'fa fa-puzzle-piece'
+    title: 'تحرير الطاقة البشرية',
+    titleEn: '1. Liberating Human Energy',
+    desc: 'نحن نصنع الفارق عبر إيقاف استنزاف موظفيك في المهام الرتيبة. بدلاً من قضاء ساعات في الرد على الإيميلات المتكررة أو إدخال البيانات، يقوم وكيل "برق" بهذه المهام في ثوانٍ، مما يتيح لفريقك التركيز على الإبداع، التخطيط، وبناء العلاقات الإنسانية مع العملاء.',
+    descEn: 'We make a difference by stopping the drain on your employees in monotonous tasks. Instead of spending hours responding to repetitive emails or entering data, a "Barq" agent performs these tasks in seconds, allowing your team to focus on creativity, planning, and building human relationships with customers.',
+    icon: 'fa fa-users-cog'
   },
   {
-    title: 'دعم فني متواصل',
-    titleEn: 'Continuous Tech Support',
-    desc: 'طاقم من أفضل المهندسين التقنيين مستعدون لخدمتك دائماً ومتابعة أداء النظام بصفة دورية.',
-    descEn: 'A staff of the best technical engineers ready to serve you always and follow up on system performance periodically.',
-    icon: 'fa fa-headset'
+    title: 'الاستجابة بسرعة الضوء',
+    titleEn: '2. Response at the Speed of Light',
+    desc: 'تخيل أن يزور موقعك 10 عملاء أو 10,000 عميل في نفس اللحظة. في الحالة التقليدية، ستنهار الخدمة؛ أما مع وكلائنا الأذكياء، فنحن نصنع الفارق عبر القدرة على التوسع اللحظي. كل عميل سيحصل على اهتمام كامل وفوري وكأنه العميل الوحيد، دون الحاجة لزيادة عدد الموظفين.',
+    descEn: 'Imagine 10 customers or 10,000 customers visiting your site at the same moment. In the traditional case, the service would collapse; but with our smart agents, we make a difference through the ability of instant expansion. Every customer will receive full and immediate attention as if they were the only customer, without the need to increase the number of employees.',
+    icon: 'fa fa-bolt'
   },
   {
-    title: 'واجهات استخدام بسيطة',
-    titleEn: 'Simple User Interfaces',
-    desc: 'أنظمة ولوحات تحكم عربية أنيقة وسهلة الاستخدام لأي موظف.',
-    descEn: 'Elegant and easy-to-use Arabic systems and control panels for any employee.',
-    icon: 'fa fa-desktop'
+    title: 'تحويل البيانات إلى قرارات',
+    titleEn: '3. Turning Data into Decisions',
+    desc: 'معظم الشركات تملك بيانات لكنها لا تعرف كيف تستخدمها. نحن نصنع الفارق بجعل الوكيل الذكي "عقلاً تحليلياً"؛ فهو لا يجمع البيانات فحسب، بل يربط بينها ليخبرك: "هذا العميل على وشك مغادرة الخدمة، اقترح عليه هذا العرض الآن". نحن نحول البيانات الصامتة إلى فرص ربحية.',
+    descEn: 'Most companies have data but don\'t know how to use it. We make a difference by making the smart agent an "analytical mind"; it doesn\'t just collect data, but connects it to tell you: "This customer is about to leave the service, suggest this offer to them now". We transform silent data into profitable opportunities.',
+    icon: 'fa fa-chart-pie'
   },
   {
-    title: 'الدقة والاحترافية',
-    titleEn: 'Accuracy & Professionalism',
-    desc: 'لا ينتهي عملنا حتى نتأكد من رضاك التام، مع ضمان جودة البرمجيات وسرعة التنفيذ.',
-    descEn: 'Our work does not end until we are completely satisfied, ensuring software quality and speed of execution.',
-    icon: 'fa fa-check-double'
+    title: 'تجربة عملاء "شخصية"',
+    titleEn: '4. "Personal" Customer Experience',
+    desc: 'نحن نكسر حاجز الردود الآلية المملة. وكلاء برق تك يصنعون الفارق من خلال "السياق"؛ الوكيل يعرف من هو العميل، وماذا اشترى سابقاً، وما هو تفضيله الشخصي، ويتحدث معه بلهجة ودودة وذكية، مما يرفع من ولاء العميل لعلامتك التجارية.',
+    descEn: 'We break the barrier of boring automated responses. Barq Tech agents make a difference through "context"; the agent knows who the customer is, what they bought previously, and what their personal preference is, and speaks to them in a friendly and intelligent tone, which increases customer loyalty to your brand.',
+    icon: 'fa fa-heart'
   }
 ];
 

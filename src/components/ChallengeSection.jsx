@@ -3,28 +3,28 @@ import { useLanguage } from '../context/LanguageContext';
 
 const challengesData = [
   {
-    challenge: 'التحول الرقمي المشتت',
-    challengeEn: 'Fragmented Digital Transformation',
-    solution: 'نقل أعمالك من الورق والأنظمة المشتتة إلى بيئة رقمية متكاملة.',
-    solutionEn: 'Moving your business from paper and fragmented systems to an integrated digital environment.',
+    challenge: 'الأتمتة ليست رفاهية بل ضرورة للبقاء في السوق السعودي',
+    challengeEn: 'Automation is not a luxury but a necessity to survive in the Saudi market',
+    solution: 'خفص التكاليف التشغيلية: تقليل الاعتماد على التدخل البشري في المهام الروتينية يقلل من تكاليف الأجور والهدر التشغيلي بنسب قد تصل إلى 60%',
+    solutionEn: 'Reducing operational costs: Reducing dependence on human intervention in routine tasks reduces wage costs and operational waste by rates that may reach 60%',
   },
   {
-    challenge: 'مخاطر أمن المعلومات',
-    challengeEn: 'Information Security Risks',
-    solution: 'حماية بيانات شركتك وعملائك وفق أعلى معايير الأمان المحلية والدولية.',
-    solutionEn: 'Protecting your company and customer data according to the highest local and international security standards.',
+    challenge: 'الوقوع في الخطأ البشري المتكرر',
+    challengeEn: 'Falling into repetitive human error',
+    solution: 'القضاء على الخطأ البشري: الآلة لا تتعب ولا تفقد التركيز؛ مما يضمن دقة متناهية في البيانات والعمليات الحساسة (مثل الحسابات والتدقيق).',
+    solutionEn: 'Eliminating human error: The machine does not get tired or lose focus; which ensures extreme accuracy in data and sensitive operations (such as accounting and auditing).',
   },
   {
-    challenge: 'العمليات اليدوية المكررة',
-    challengeEn: 'Manual Repetitive Processes',
-    solution: 'الأتمتة الذكية: تقليل التدخل البشري في العمليات المتكررة لتسريع الإنجاز.',
-    solutionEn: 'Smart Automation: Reducing human intervention in repetitive processes to speed up completion.',
+    challenge: 'بطء زمن الاستجابة للسوق والمتغيرات',
+    challengeEn: 'Slow response time to the market and variables',
+    solution: 'السرعة الفائقة: ما يستغرق من الموظف ساعات لإنجازه، ينهيه نظام الأتمتة في أجزاء من الثانية، مما يحسن من "زمن الاستجابة" للسوق.',
+    solutionEn: 'Super speed: What takes an employee hours to complete, the automation system finishes in fractions of a second, which improves the "response time" to the market.',
   },
   {
-    challenge: 'فوضى الأقسام والبيانات',
-    challengeEn: 'Department and Data Chaos',
-    solution: 'تحسين الكفاءة: ربط مختلف أقسام الشركة (المشتريات، المبيعات، المحاسبة) بشفافية تامة.',
-    solutionEn: 'Improving Efficiency: Linking various company departments (procurement, sales, accounting) with complete transparency.',
+    challenge: 'انشغال الكفاءات بالمهام الروتينية المتكررة',
+    challengeEn: 'Competencies occupied with repetitive routine tasks',
+    solution: 'التفرغ للاستراتيجية: عندما تتولى الأنظمة المهام المتكررة، يتحرر موظفوك للقيام بمهام تتطلب التفكير الإبداعي وبناء الصفقات وتطوير العمل.',
+    solutionEn: 'Devoting time to strategy: When systems handle repetitive tasks, your employees are freed to perform tasks that require creative thinking, building deals and developing work.',
   }
 ];
 

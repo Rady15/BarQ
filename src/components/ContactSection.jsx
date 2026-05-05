@@ -26,16 +26,16 @@ const ContactSection = () => {
   return (
     <div className="container-xxl py-5" id="contact">
       <div className="container px-lg-5">
+        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
+          <h6 className="position-relative d-inline text-primary ps-4">
+            {isAr ? 'تواصل معنا الآن' : 'Contact Us Now'}
+          </h6>
+          <h2 className="mt-2">
+            {isAr ? 'جاهز تسبق منافسيك بخطوة؟' : 'Ready to stay a step ahead of competitors?'}
+          </h2>
+        </div>
         <div className="row g-5">
           <div className="col-lg-5 scroll-reveal from-left">
-            <div className="section-title position-relative mb-4 pb-2">
-              <h6 className="position-relative text-primary ps-4">
-                {isAr ? 'تواصل معنا الآن' : 'Contact Us Now'}
-              </h6>
-              <h2 className="mt-2">
-                {isAr ? 'جاهز تسبق منافسيك بخطوة؟' : 'Ready to stay a step ahead of competitors?'}
-              </h2>
-            </div>
             <p className="mb-4">
               {isAr ? 'هل أنت مستعد لبدء رحلة التحول الرقمي مع "برق تك"؟ تواصل معنا اليوم لتحصل على حلول موجهة بالكامل نحو تحقيق أهدافك!' : 'Ready to start your digital transformation journey with "Barq Tech"? Contact us today to get solutions fully directed towards achieving your goals!'}
             </p>
@@ -82,11 +82,6 @@ const ContactSection = () => {
                 <h5 className="mb-0 mt-2">{isAr ? 'فرع جدة' : 'Jeddah Branch'}</h5>
                 <p className="mb-0 small">{isAr ? 'طريق الأمير سلطان، برج الأعمال' : 'Prince Sultan Rd, Business Tower'}</p>
               </div>
-            </div>
-            <div className="bg-primary-transparent p-3 rounded mt-4">
-              <h6 className="mb-1 text-primary">{isAr ? 'ساعات العمل' : 'Working Hours'}</h6>
-              <p className="mb-1 small">{isAr ? 'الأحد - الخميس | 9:00 ص - 6:00 م' : 'Sunday - Thursday | 9:00 AM - 6:00 PM'}</p>
-              <p className="mb-0 small text-danger fw-bold">{isAr ? 'دعم طوارئ العملاء: ' : 'Customer Emergency Support: '}</p>
             </div>
           </div>
           <div className="col-lg-7">

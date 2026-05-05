@@ -16,7 +16,7 @@ const WhatsAppFloat = () => {
         position: 'fixed',
         width: 'clamp(50px, 10vw, 60px)',
         height: 'clamp(50px, 10vw, 60px)',
-        bottom: '20px',
+        bottom: '110px',
         right: '20px',
         backgroundColor: '#25d366',
         color: '#fff',

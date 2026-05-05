@@ -52,7 +52,8 @@ html {
 
     .scroll-reveal.from-left,
     .scroll-reveal.from-right {
-        transform: translateY(30px); /* Vertical reveal is safer for mobile */
+        transform: translateY(30px);
+        /* Vertical reveal is safer for mobile */
     }
 
     .section-title h2 {
@@ -64,7 +65,17 @@ html {
     }
 }
 
-body, h1, h2, h3, h4, h5, h6, p, a, span, div {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span,
+div {
     font-family: 'Tajawal', 'Heebo', sans-serif !important;
 }
 
@@ -199,6 +210,18 @@ h6,
     .navbar-light .navbar-brand img {
         max-height: 45px;
     }
+
+    .sticky-top.navbar-light {
+        position: fixed !important;
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1020;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
 }
 
 @media (min-width: 992px) {
@@ -210,7 +233,7 @@ h6,
         border-bottom: 1px solid rgba(256, 256, 256, .1);
         z-index: 999;
     }
-    
+
     .sticky-top.navbar-light {
         position: fixed;
         background: #FFFFFF;
@@ -242,6 +265,170 @@ h6,
     }
 }
 
+/* ===== Mobile Sidebar & Dropdown ===== */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    /* Default to hidden */
+    width: 300px;
+    height: 100vh;
+    background: #fff;
+    z-index: 1100;
+    transition: all 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-sidebar.ltr {
+    left: -100%;
+    right: auto;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-sidebar.open {
+    right: 0;
+}
+
+.mobile-sidebar.open.ltr {
+    left: 0;
+    right: auto;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.mobile-dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.mobile-dropdown-content.show {
+    max-height: 500px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    background-color: var(--light);
+    color: var(--primary);
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        display: none !important;
+        /* Hide bootstrap collapse in favor of our sidebar */
+    }
+}
+
+/* Custom Hamburger Icon */
+.hamburger-icon {
+    width: 25px;
+    height: 18px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1200;
+}
+
+@media (min-width: 992px) {
+    .navbar-toggler {
+        display: none !important;
+    }
+}
+
+.hamburger-icon span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--primary) !important;
+    /* Force blue by default */
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* On Desktop Hero (Non-Sticky), make it white */
+@media (min-width: 992px) {
+    .navbar:not(.sticky-top) .hamburger-icon span {
+        background-color: #fff !important;
+    }
+}
+
+/* Remove button styles */
+.navbar-toggler {
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Hero Image Floating Animation */
+.hero-image-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Animation to X */
+.navbar-toggler.active .hamburger-icon span:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+}
+
+.navbar-toggler.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-toggler.active .hamburger-icon span:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+}
+
 
 /*** Hero Header ***/
 .hero-header {
@@ -268,13 +455,31 @@ h6,
 
 
 /*** Section Title ***/
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    font-weight: 800 !important;
+    color: var(--dark);
+}
+
+.section-title h6 {
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
 .section-title::before {
     position: absolute;
     content: "";
     width: 45px;
     height: 4px;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    margin-left: -25px;
     background: var(--dark);
 }
 
@@ -284,18 +489,9 @@ h6,
     width: 4px;
     height: 4px;
     bottom: 0;
-    left: 50px;
-    background: var(--dark);
-}
-
-.section-title.text-center::before {
-    left: 50%;
-    margin-left: -25px;
-}
-
-.section-title.text-center::after {
     left: 50%;
     margin-left: 25px;
+    background: var(--dark);
 }
 
 .section-title h6::before,
@@ -548,7 +744,7 @@ h6,
 
 .hover-top:hover {
     transform: translateY(-10px);
-    box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
 }
 
 .transition {
@@ -594,6 +790,7 @@ h6,
         width: 180px;
         height: 180px;
     }
+
     .stat-circle h2 {
         font-size: 2.5rem;
     }
