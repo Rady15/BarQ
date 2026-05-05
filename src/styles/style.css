@@ -43,6 +43,27 @@ html {
     transform: translateX(0) translateY(0) scale(1) !important;
 }
 
+/* Mobile Responsiveness Overrides */
+@media (max-width: 768px) {
+    .container-xxl {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    .scroll-reveal.from-left,
+    .scroll-reveal.from-right {
+        transform: translateY(30px); /* Vertical reveal is safer for mobile */
+    }
+
+    .section-title h2 {
+        font-size: 1.75rem !important;
+    }
+
+    .section-title h6 {
+        font-size: 0.9rem !important;
+    }
+}
+
 body, h1, h2, h3, h4, h5, h6, p, a, span, div {
     font-family: 'Tajawal', 'Heebo', sans-serif !important;
 }

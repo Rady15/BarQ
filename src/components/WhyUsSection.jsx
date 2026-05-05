@@ -51,12 +51,14 @@ const WhyUsSection = () => {
         <div className="row g-4 align-items-center">
           {/* Lottie Animation */}
           <div className="col-lg-6 scroll-reveal from-left" data-delay="100">
-            <DotLottieReact
-              src="https://lottie.host/b1a49684-af93-4b56-b8e4-3de270e907ac/vQt3ag2Sap.lottie"
-              loop
-              autoplay
-              style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}
-            />
+            <div className="mx-auto" style={{ maxWidth: '350px' }}>
+              <DotLottieReact
+                src="https://lottie.host/b1a49684-af93-4b56-b8e4-3de270e907ac/vQt3ag2Sap.lottie"
+                loop
+                autoplay
+                style={{ width: '100%' }}
+              />
+            </div>
           </div>
           {/* Features Cards */}
           <div className="col-lg-6">

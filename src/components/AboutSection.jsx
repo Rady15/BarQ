@@ -66,11 +66,12 @@ const AboutSection = () => {
               <a className="btn btn-outline-primary btn-square" href="#"><i className="fab fa-linkedin-in"></i></a>
             </div>
           </div>
-          <div className="col-lg-6 scroll-reveal from-right" data-delay="300">
+          <div className="col-lg-6 scroll-reveal from-right text-center" data-delay="300">
             <img
-              className="img-fluid"
+              className="img-fluid rounded shadow-sm"
               src="/img/about.png"
               alt="About Bark Tech"
+              style={{ maxWidth: '450px', width: '100%' }}
             />
           </div>
         </div>

@@ -81,22 +81,20 @@ const StatsSection = () => {
   ];
 
   return (
-    <div className="container py-5">
-      <div className="container px-lg-5">
-        <div className="row g-4 text-center">
-          {stats.map((stat) => (
-            <div key={stat.id} className={`col-md-6 col-lg-3 scroll-reveal ${stat.id % 2 === 0 ? 'from-right' : 'from-left'}`} data-delay={(stat.id - 1) * 150}>
-              <div className="stat-circle d-flex flex-column align-items-center justify-content-center mx-auto">
-                <h2 className="display-4 text-primary mb-0">
-                  <Counter end={stat.end} prefix={stat.prefix || ''} suffix={stat.suffix || ''} />
-                </h2>
-                <p className="text-dark fw-bold mb-0 mt-2">
-                  {isAr ? stat.labelAr : stat.labelEn}
-                </p>
-              </div>
+    <div className="container py-5 px-lg-5">
+      <div className="row g-4 text-center justify-content-center">
+        {stats.map((stat) => (
+          <div key={stat.id} className="col-6 col-md-6 col-lg-3 scroll-reveal from-bottom" data-delay={(stat.id - 1) * 100}>
+            <div className="stat-circle d-flex flex-column align-items-center justify-content-center mx-auto">
+              <h2 className="mb-0">
+                <Counter end={stat.end} prefix={stat.prefix || ''} suffix={stat.suffix || ''} />
+              </h2>
+              <p className="fw-bold mb-0 mt-2 text-uppercase" style={{ fontSize: '0.85rem' }}>
+                {isAr ? stat.labelAr : stat.labelEn}
+              </p>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -41,9 +41,9 @@ const Home = () => {
 
         <div className="container-fluid py-5 bg-primary hero-header">
           <div className="container my-5 py-5 px-lg-5">
-            <div className="row g-5 py-5">
-              <div className="col-lg-6 text-center text-lg-start">
-                <h1 className="text-white mb-4 animated zoomIn">
+            <div className="row g-5 py-5 align-items-center">
+              <div className="col-lg-6 text-center text-lg-start order-2 order-lg-1">
+                <h1 className="text-white mb-4 animated zoomIn" style={{ fontSize: 'calc(1.5rem + 1.5vw)' }}>
                   {isAr ? 'برق تك | نقود مستقبلك نحو التحول الرقمي الذكي' : 'Barq Tech | Leading Your Future Towards Smart Digital Transformation'}
                 </h1>
                 <p className="text-white pb-3 animated zoomIn">
@@ -53,27 +53,30 @@ const Home = () => {
                     'At "Barq Tech", we turn your business ideas into reality through integrated IT solutions and advanced AI-driven automation systems, to facilitate your business management and increase your productivity with high efficiency.'
                   )}
                 </p>
-                <Link
-                  to="/contact"
-                  className={`btn btn-light py-sm-3 px-sm-5 rounded-pill animated slideInLeft ${isAr ? 'ms-3' : 'me-3'}`}
-                >
-                  {isAr ? 'احجز استشارة مجانية' : 'Free Consultation'}
-                </Link>
-                <Link
-                  to="/contact"
-                  className="btn btn-outline-light py-sm-3 px-sm-5 rounded-pill animated slideInRight"
-                >
-                  {isAr ? 'اطلب عرض سعر' : 'Request a Quote'}
-                </Link>
+                <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start">
+                  <Link
+                    to="/contact"
+                    className={`btn btn-light py-sm-3 px-sm-5 rounded-pill animated slideInLeft mb-3 mb-sm-0 ${isAr ? 'ms-sm-3' : 'me-sm-3'}`}
+                  >
+                    {isAr ? 'احجز استشارة مجانية' : 'Free Consultation'}
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="btn btn-outline-light py-sm-3 px-sm-5 rounded-pill animated slideInRight"
+                  >
+                    {isAr ? 'اطلب عرض سعر' : 'Request a Quote'}
+                  </Link>
+                </div>
               </div>
-              <div className="col-lg-6 text-center text-lg-start">
-                <DotLottieReact
-                  src="https://lottie.host/8b0215a4-f444-4cf3-bcd7-af2ba68ab8b4/MCFezIAnhi.lottie"
-                  loop
-                  autoplay
-                  className="img-fluid animated zoomIn"
-                  style={{ transform: 'scale(1.3)' }}
-                />
+              <div className="col-lg-6 text-center order-1 order-lg-2">
+                <div className="mx-auto" style={{ maxWidth: '400px' }}>
+                  <DotLottieReact
+                    src="https://lottie.host/8b0215a4-f444-4cf3-bcd7-af2ba68ab8b4/MCFezIAnhi.lottie"
+                    loop
+                    autoplay
+                    className="img-fluid animated zoomIn"
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -174,7 +174,7 @@ const PortfolioSection = ({ limit }) => {
             <div
               className={`col-lg-4 col-md-6 portfolio-item scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`}
               key={index}
-              data-delay={index * 150}
+              data-delay={index * 100}
             >
               <div className="position-relative rounded overflow-hidden">
                 <img className="img-fluid w-100" src={item.img} alt={isAr ? item.name : item.nameEn} />

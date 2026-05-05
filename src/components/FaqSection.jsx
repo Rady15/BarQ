@@ -47,12 +47,14 @@ const FaqSection = () => {
         <div className="row g-4 align-items-center">
           {/* Lottie Animation */}
           <div className="col-lg-5 scroll-reveal from-left" data-delay="100">
-            <DotLottieReact
-              src="https://lottie.host/9842d8cc-cc0c-4e56-bca3-3f44fea9efd8/fxmKctxAVj.lottie"
-              loop
-              autoplay
-              style={{ width: '100%', maxWidth: '450px', margin: '0 auto' }}
-            />
+            <div className="mx-auto" style={{ maxWidth: '300px' }}>
+              <DotLottieReact
+                src="https://lottie.host/9842d8cc-cc0c-4e56-bca3-3f44fea9efd8/fxmKctxAVj.lottie"
+                loop
+                autoplay
+                style={{ width: '100%' }}
+              />
+            </div>
           </div>
           {/* FAQ Accordion */}
           <div className="col-lg-7 scroll-reveal from-right" data-delay="200">

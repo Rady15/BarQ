@@ -73,13 +73,15 @@ const ClientSection = () => {
         
         <div className="row g-4 align-items-center">
           {/* Lottie Animation */}
-          <div className="col-lg-12 mb-5 scroll-reveal zoom-in">
-            <DotLottieReact
-              src="https://lottie.host/69c446f6-fb2b-4d1a-a205-ea530ab53a93/htZAphvAz9.lottie"
-              loop
-              autoplay
-              style={{ width: '100%', maxWidth: '250px', margin: '0 auto' }}
-            />
+          <div className="col-lg-12 mb-4 scroll-reveal zoom-in">
+            <div className="mx-auto" style={{ maxWidth: '200px' }}>
+              <DotLottieReact
+                src="https://lottie.host/69c446f6-fb2b-4d1a-a205-ea530ab53a93/htZAphvAz9.lottie"
+                loop
+                autoplay
+                style={{ width: '100%' }}
+              />
+            </div>
           </div>
 
           {/* Logos Grid */}

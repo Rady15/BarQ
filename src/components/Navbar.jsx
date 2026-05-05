@@ -22,8 +22,8 @@ const Navbar = () => {
       <Link to="/" className="navbar-brand p-0">
         {/* Desktop Logo: switches based on sticky */}
         <img src={isSticky ? "/two%20colors.png" : "/white.png"} alt="Bark Tech Logo" className="d-none d-lg-block" />
-        {/* Mobile Logo: always colored because navbar is white */}
-        <img src="/two%20colors.png" alt="Bark Tech Logo" className="d-lg-none" />
+        {/* Mobile Logo: always colored because navbar background is white or has shadow */}
+        <img src="/two%20colors.png" alt="Bark Tech Logo" className="d-lg-none" style={{ maxHeight: '40px' }} />
       </Link>
       <button
         className="navbar-toggler"

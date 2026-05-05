@@ -14,15 +14,15 @@ const WhatsAppFloat = () => {
       aria-label="Contact us on WhatsApp"
       style={{
         position: 'fixed',
-        width: '60px',
-        height: '60px',
-        bottom: '40px',
-        right: '40px',
+        width: 'clamp(50px, 10vw, 60px)',
+        height: 'clamp(50px, 10vw, 60px)',
+        bottom: '20px',
+        right: '20px',
         backgroundColor: '#25d366',
         color: '#fff',
         borderRadius: '50px',
         textAlign: 'center',
-        fontSize: '30px',
+        fontSize: 'clamp(24px, 5vw, 30px)',
         zIndex: '1000',
         transition: 'all 0.3s ease'
       }}
