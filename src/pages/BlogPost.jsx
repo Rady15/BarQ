@@ -120,7 +120,7 @@ const BlogPost = () => {
       <Navbar />
 
       <div className="post-hero-modern" style={{ 
-        backgroundImage: 'linear-gradient(135deg, rgba(33, 36, 177, 0.92) 0%, rgba(71, 119, 245, 0.88) 100%), url(/img/services/blog.png)',
+        backgroundImage: 'url(/img/services/blog.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
@@ -153,15 +153,8 @@ const BlogPost = () => {
             </div>
           </div>
         </div>
-        
-        <div className="post-hero-curve">
-          <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 100C240 60 480 60 720 40C960 20 1200 20 1440 60L1440 100H0Z" fill="#F7FAFF"/>
-          </svg>
-        </div>
-      </div>
 
-      <div className="post-content-modern py-5" style={{ background: '#F7FAFF' }}>
+        <div className="post-content-modern py-5" style={{ background: '#F7FAFF' }}>
         <div className="container-xxl py-5">
           <div className="container px-lg-5">
             <div className="row justify-content-center">

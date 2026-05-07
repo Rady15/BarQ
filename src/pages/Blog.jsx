@@ -110,7 +110,7 @@ const Blog = () => {
       <Navbar />
 
       <div className="blog-hero-modern position-relative overflow-hidden" style={{ 
-        backgroundImage: 'linear-gradient(135deg, rgba(33, 36, 177, 0.95) 0%, rgba(71, 119, 245, 0.9) 100%), url(/img/services/blog.png)',
+        backgroundImage: 'url(/img/services/blog.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '55vh'
@@ -170,14 +170,7 @@ const Blog = () => {
           </div>
         </div>
 
-        <div className="hero-curve">
-          <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 50C240 100 480 100 720 60C960 20 1200 20 1440 70L1440 100H0Z" fill="#F7FAFF"/>
-          </svg>
-        </div>
-      </div>
-
-      <div className="blog-main-modern py-5" style={{ background: '#F7FAFF' }}>
+        <div className="blog-main-modern py-5" style={{ background: '#F7FAFF' }}>
         <div className="container-xxl py-4">
           <div className="container px-lg-5">
             <div className="row g-5">
