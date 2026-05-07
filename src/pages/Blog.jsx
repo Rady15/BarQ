@@ -111,10 +111,11 @@ const Blog = () => {
 
       <div className="blog-hero-modern position-relative overflow-hidden" style={{ 
         backgroundImage: 'url(/img/services/blog.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center top',
+        backgroundSize: '100% 100%',
+        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        minHeight: '100vh'
+        height: '100vh',
+        width: '100%'
       }}>
         <div className="container-xxl py-5 position-relative">
           <div className="container px-lg-5 py-5">
