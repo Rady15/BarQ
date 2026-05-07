@@ -115,20 +115,6 @@ const Blog = () => {
         backgroundPosition: 'center',
         minHeight: '55vh'
       }}>
-        <div className="hero-decorations position-absolute w-100 h-100">
-          <div className="deco-circle deco-1"></div>
-          <div className="deco-circle deco-2"></div>
-          <div className="deco-dots">
-            {[...Array(8)].map((_, i) => (
-              <span key={i} className="deco-dot" style={{ 
-                left: `${15 + i * 12}%`, 
-                top: `${20 + (i % 3) * 25}%`,
-                animationDelay: `${i * 0.2}s`
-              }}></span>
-            ))}
-          </div>
-        </div>
-
         <div className="container-xxl py-5 position-relative">
           <div className="container px-lg-5 py-5">
             <div className="row min-vh-50 align-items-center">
@@ -141,9 +127,9 @@ const Blog = () => {
                 </div>
                 <h1 className="display-2 fw-bold text-white mb-3" style={{ lineHeight: '1.15' }}>
                   {isAr ? 'مدونة' : 'Our'}
-                  <span className="d-block" style={{ color: '#fff', opacity: 0.9 }}>{
-                    isAr ? 'برق تك' : 'Blog'
-                  }</span>
+                  <span className="d-block" style={{ color: '#fff', opacity: 0.9 }}>
+                    {isAr ? 'برق تك' : 'Blog'}
+                  </span>
                 </h1>
                 <p className="lead mb-0 text-white" style={{ fontSize: '1.15rem', maxWidth: '520px', lineHeight: '1.8', opacity: 0.9 }}>
                   {isAr 
@@ -171,142 +157,143 @@ const Blog = () => {
         </div>
 
         <div className="blog-main-modern py-5" style={{ background: '#F7FAFF' }}>
-        <div className="container-xxl py-4">
-          <div className="container px-lg-5">
-            <div className="row g-5">
-              <div className="col-lg-8">
-                <div className="filter-bar-modern d-flex flex-wrap gap-3 mb-5 align-items-center">
-                  <select 
-                    className="form-select rounded-pill border-0 shadow-sm"
-                    style={{ width: 'auto', minWidth: '150px' }}
-                    value={activeCategory}
-                    onChange={(e) => setActiveCategory(e.target.value)}
-                  >
-                    <option value="all">{isAr ? 'الكل' : 'All'}</option>
-                    {categories.map((cat, i) => (
-                      <option key={i} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                  <div className="search-input-modern flex-grow-1 position-relative" style={{ maxWidth: '300px' }}>
-                    <i className="fa fa-search position-absolute text-muted" style={{ left: '15px', top: '50%', transform: 'translateY(-50%)' }}></i>
-                    <input
-                      type="text"
-                      className="form-control rounded-pill border-0 shadow-sm"
-                      placeholder={isAr ? 'بحث...' : 'Search...'}
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      style={{ paddingLeft: '40px' }}
-                    />
-                  </div>
-                </div>
-
-                <div className="row g-4">
-                  {filteredPosts.map((post, index) => (
-                    <div className="col-md-6" key={post.id}>
-                      <Link to={`/blog/${post.id}`} className="text-decoration-none">
-                        <div className="blog-card-modern bg-white rounded-4 overflow-hidden h-100 shadow-sm">
-                          <div className="card-image-modern position-relative" style={{ height: '180px', background: 'linear-gradient(135deg, #2124B1 0%, #4777F5 100%)' }}>
-                            <div className="card-icon-center d-flex align-items-center justify-content-center h-100">
-                              <i className={`fa ${post.image} fa-3x text-white`}></i>
-                            </div>
-                            <div className="card-badge-modern position-absolute top-0 end-0 m-3">
-                              <span className="badge bg-white text-primary px-3 py-1 rounded-pill fw-bold" style={{ fontSize: '0.75rem' }}>
-                                {isAr ? post.categoryAr : post.category}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="card-body-modern p-4">
-                            <div className="card-meta-modern d-flex align-items-center gap-3 mb-3 text-muted" style={{ fontSize: '0.85rem' }}>
-                              <span><i className="fa fa-calendar me-1"></i> {post.date}</span>
-                              <span><i className="fa fa-clock-o me-1"></i> {post.readTime} {isAr ? 'دقيقة' : 'min'}</span>
-                            </div>
-                            <h3 className="card-title-modern text-dark mb-3" style={{ fontSize: '1.15rem', lineHeight: '1.5', fontWeight: '600' }}>
-                              {isAr ? post.titleAr : post.titleEn}
-                            </h3>
-                            <p className="card-excerpt-modern text-muted mb-3" style={{ fontSize: '0.9rem', lineHeight: '1.7' }}>
-                              {isAr ? post.excerptAr : post.excerptEn}
-                            </p>
-                            <div className="card-link-modern text-primary fw-bold" style={{ fontSize: '0.9rem' }}>
-                              {isAr ? 'اقرأ المزيد' : 'Read More'}
-                              <i className={`fa fa-arrow-${isAr ? 'left' : 'right'} ms-2`}></i>
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-
-                {filteredPosts.length === 0 && (
-                  <div className="text-center py-5 bg-white rounded-4">
-                    <i className="fa fa-search fa-4x text-muted opacity-25"></i>
-                    <p className="text-muted mt-3">{isAr ? 'لا توجد نتائج' : 'No results found'}</p>
-                  </div>
-                )}
-              </div>
-
-              <div className="col-lg-4">
-                <div className="sidebar-modern">
-                  <div className="sidebar-card-modern bg-white rounded-4 p-4 mb-4 shadow-sm">
-                    <h5 className="sidebar-title-modern text-dark fw-bold mb-4">
-                      <i className="fa fa-folder-open text-primary me-2"></i>
-                      {isAr ? 'التصنيفات' : 'Categories'}
-                    </h5>
-                    <div className="category-list-modern">
-                      {categories.map((cat, i) => {
-                        const count = blogPosts.filter(p => (isAr ? p.categoryAr : p.category) === cat).length;
-                        return (
-                          <Link 
-                            to="#" 
-                            key={i} 
-                            className={`category-link-modern d-flex align-items-center justify-content-between p-3 rounded-3 text-decoration-none ${activeCategory === cat ? 'active' : ''}`}
-                            onClick={() => setActiveCategory(cat)}
-                          >
-                            <span className="text-dark">{cat}</span>
-                            <span className="badge bg-primary rounded-pill">{count}</span>
-                          </Link>
-                        );
-                      })}
+          <div className="container-xxl py-4">
+            <div className="container px-lg-5">
+              <div className="row g-5">
+                <div className="col-lg-8">
+                  <div className="filter-bar-modern d-flex flex-wrap gap-3 mb-5 align-items-center">
+                    <select 
+                      className="form-select rounded-pill border-0 shadow-sm"
+                      style={{ width: 'auto', minWidth: '150px' }}
+                      value={activeCategory}
+                      onChange={(e) => setActiveCategory(e.target.value)}
+                    >
+                      <option value="all">{isAr ? 'الكل' : 'All'}</option>
+                      {categories.map((cat, i) => (
+                        <option key={i} value={cat}>{cat}</option>
+                      ))}
+                    </select>
+                    <div className="search-input-modern flex-grow-1 position-relative" style={{ maxWidth: '300px' }}>
+                      <i className="fa fa-search position-absolute text-muted" style={{ left: '15px', top: '50%', transform: 'translateY(-50%)' }}></i>
+                      <input
+                        type="text"
+                        className="form-control rounded-pill border-0 shadow-sm"
+                        placeholder={isAr ? 'بحث...' : 'Search...'}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ paddingLeft: '40px' }}
+                      />
                     </div>
                   </div>
 
-                  <div className="sidebar-card-modern bg-white rounded-4 p-4 mb-4 shadow-sm">
-                    <h5 className="sidebar-title-modern text-dark fw-bold mb-4">
-                      <i className="fa fa-paper-plane text-primary me-2"></i>
-                      {isAr ? 'آخر المقالات' : 'Recent Posts'}
-                    </h5>
-                    <div className="recent-posts-modern">
-                      {blogPosts.slice(0, 4).map((post, i) => (
-                        <Link to={`/blog/${post.id}`} key={post.id} className="recent-post-item d-flex align-items-center gap-3 text-decoration-none mb-3">
-                          <div className="recent-post-icon bg-primary rounded-3 d-flex align-items-center justify-content-center text-white" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
-                            <i className={`fa ${post.image}`}></i>
-                          </div>
-                          <div className="recent-post-info flex-grow-1">
-                            <h6 className="text-dark mb-1" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
-                              {isAr ? post.titleAr : post.titleEn}
-                            </h6>
-                            <small className="text-muted">{post.date}</small>
+                  <div className="row g-4">
+                    {filteredPosts.map((post, index) => (
+                      <div className="col-md-6" key={post.id}>
+                        <Link to={`/blog/${post.id}`} className="text-decoration-none">
+                          <div className="blog-card-modern bg-white rounded-4 overflow-hidden h-100 shadow-sm">
+                            <div className="card-image-modern position-relative" style={{ height: '180px', background: 'linear-gradient(135deg, #2124B1 0%, #4777F5 100%)' }}>
+                              <div className="card-icon-center d-flex align-items-center justify-content-center h-100">
+                                <i className={`fa ${post.image} fa-3x text-white`}></i>
+                              </div>
+                              <div className="card-badge-modern position-absolute top-0 end-0 m-3">
+                                <span className="badge bg-white text-primary px-3 py-1 rounded-pill fw-bold" style={{ fontSize: '0.75rem' }}>
+                                  {isAr ? post.categoryAr : post.category}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="card-body-modern p-4">
+                              <div className="card-meta-modern d-flex align-items-center gap-3 mb-3 text-muted" style={{ fontSize: '0.85rem' }}>
+                                <span><i className="fa fa-calendar me-1"></i> {post.date}</span>
+                                <span><i className="fa fa-clock-o me-1"></i> {post.readTime} {isAr ? 'دقيقة' : 'min'}</span>
+                              </div>
+                              <h3 className="card-title-modern text-dark mb-3" style={{ fontSize: '1.15rem', lineHeight: '1.5', fontWeight: '600' }}>
+                                {isAr ? post.titleAr : post.titleEn}
+                              </h3>
+                              <p className="card-excerpt-modern text-muted mb-3" style={{ fontSize: '0.9rem', lineHeight: '1.7' }}>
+                                {isAr ? post.excerptAr : post.excerptEn}
+                              </p>
+                              <div className="card-link-modern text-primary fw-bold" style={{ fontSize: '0.9rem' }}>
+                                {isAr ? 'اقرأ المزيد' : 'Read More'}
+                                <i className={`fa fa-arrow-${isAr ? 'left' : 'right'} ms-2`}></i>
+                              </div>
+                            </div>
                           </div>
                         </Link>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
 
-                  <div className="sidebar-card-modern bg-gradient-modern rounded-4 p-4 shadow-sm">
-                    <div className="text-center">
-                      <i className="fa fa-envelope-open fa-3x text-white mb-3"></i>
-                      <h5 className="text-white mb-2">{isAr ? 'النشرة البريدية' : 'Newsletter'}</h5>
-                      <p className="text-white mb-3" style={{ fontSize: '0.85rem', opacity: 0.9 }}>
-                        {isAr ? 'شاركنا للحصول على جديد المقالات' : 'Subscribe to get latest articles'}
-                      </p>
-                      <input 
-                        type="email" 
-                        className="form-control border-0 rounded-pill mb-3" 
-                        placeholder={isAr ? 'بريدك الإلكتروني' : 'Your email'}
-                      />
-                      <button className="btn btn-white w-100 rounded-pill fw-bold text-primary">
-                        {isAr ? 'اشتراك' : 'Subscribe'}
-                      </button>
+                  {filteredPosts.length === 0 && (
+                    <div className="text-center py-5 bg-white rounded-4">
+                      <i className="fa fa-search fa-4x text-muted opacity-25"></i>
+                      <p className="text-muted mt-3">{isAr ? 'لا توجد نتائج' : 'No results found'}</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="col-lg-4">
+                  <div className="sidebar-modern">
+                    <div className="sidebar-card-modern bg-white rounded-4 p-4 mb-4 shadow-sm">
+                      <h5 className="sidebar-title-modern text-dark fw-bold mb-4">
+                        <i className="fa fa-folder-open text-primary me-2"></i>
+                        {isAr ? 'التصنيفات' : 'Categories'}
+                      </h5>
+                      <div className="category-list-modern">
+                        {categories.map((cat, i) => {
+                          const count = blogPosts.filter(p => (isAr ? p.categoryAr : p.category) === cat).length;
+                          return (
+                            <Link 
+                              to="#" 
+                              key={i} 
+                              className={`category-link-modern d-flex align-items-center justify-content-between p-3 rounded-3 text-decoration-none ${activeCategory === cat ? 'active' : ''}`}
+                              onClick={() => setActiveCategory(cat)}
+                            >
+                              <span className="text-dark">{cat}</span>
+                              <span className="badge bg-primary rounded-pill">{count}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="sidebar-card-modern bg-white rounded-4 p-4 mb-4 shadow-sm">
+                      <h5 className="sidebar-title-modern text-dark fw-bold mb-4">
+                        <i className="fa fa-paper-plane text-primary me-2"></i>
+                        {isAr ? 'آخر المقالات' : 'Recent Posts'}
+                      </h5>
+                      <div className="recent-posts-modern">
+                        {blogPosts.slice(0, 4).map((post, i) => (
+                          <Link to={`/blog/${post.id}`} key={post.id} className="recent-post-item d-flex align-items-center gap-3 text-decoration-none mb-3">
+                            <div className="recent-post-icon bg-primary rounded-3 d-flex align-items-center justify-content-center text-white" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
+                              <i className={`fa ${post.image}`}></i>
+                            </div>
+                            <div className="recent-post-info flex-grow-1">
+                              <h6 className="text-dark mb-1" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                                {isAr ? post.titleAr : post.titleEn}
+                              </h6>
+                              <small className="text-muted">{post.date}</small>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="sidebar-card-modern bg-gradient-modern rounded-4 p-4 shadow-sm">
+                      <div className="text-center">
+                        <i className="fa fa-envelope-open fa-3x text-white mb-3"></i>
+                        <h5 className="text-white mb-2">{isAr ? 'النشرة البريدية' : 'Newsletter'}</h5>
+                        <p className="text-white mb-3" style={{ fontSize: '0.85rem', opacity: 0.9 }}>
+                          {isAr ? 'شاركنا للحصول على جديد المقالات' : 'Subscribe to get latest articles'}
+                        </p>
+                        <input 
+                          type="email" 
+                          className="form-control border-0 rounded-pill mb-3" 
+                          placeholder={isAr ? 'بريدك الإلكتروني' : 'Your email'}
+                        />
+                        <button className="btn btn-white w-100 rounded-pill fw-bold text-primary">
+                          {isAr ? 'اشتراك' : 'Subscribe'}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

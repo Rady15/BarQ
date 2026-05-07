@@ -124,7 +124,6 @@ const BlogPost = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
-        <div className="post-hero-overlay"></div>
         <div className="container-xxl py-5">
           <div className="container px-lg-5 py-5">
             <Link to="/blog" className="back-link-modern d-inline-flex align-items-center text-white text-decoration-none mb-4">
@@ -155,124 +154,125 @@ const BlogPost = () => {
         </div>
 
         <div className="post-content-modern py-5" style={{ background: '#F7FAFF' }}>
-        <div className="container-xxl py-5">
-          <div className="container px-lg-5">
-            <div className="row justify-content-center">
-              <div className="col-lg-8">
-                <div className="post-body-modern bg-white rounded-4 p-4 p-md-5 shadow-sm">
-                  <p className="lead text-dark mb-5" style={{ fontSize: '1.25rem', lineHeight: '1.9' }}>
-                    {isAr ? post.excerptAr : post.excerptEn}
-                  </p>
-                  
-                  {isAr ? (
-                    <>
-                      <h2 className="text-primary mb-4">مقدمة</h2>
-                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
-                        في عالم الأعمال الحديث، أصبح الذكاء الاصطناعي ليس مجرد تقنية مستقبلية، بل ضرورة حالية لكل مؤسسة تسعى للنمو والتميز. إن تبني هذه التقنيات يمكن أن يحدث فرقاً كبيراً في نتائج عملك ويمنحك ميزة تنافسية قوية في السوق المحلي والعالمي.
-                      </p>
-                      <h2 className="text-primary mt-5 mb-4">ما هو الوكيل الذكي؟</h2>
-                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
-                        الوكيل الذكي هو نظام برمجي متطور يعمل كموظف رقمي مستقل، قادر على فهم المهام وتنفيذها ذاتياً دون الحاجة لتدخل بشري مستمر. يمكنه التعلم من البيانات واتخاذ قرارات ذكية بناءً على أنماط محددة مسبقاً.
-                      </p>
-                      <h2 className="text-primary mt-5 mb-4">الفوائد الرئيسية</h2>
-                      <div className="benefits-modern mb-4">
-                        {[
-                          { title: 'توفير التكاليف', desc: 'تقليل الاعتماد على العمالة البشرية في المهام الروتينية والمتكررة', icon: 'fa-coins' },
-                          { title: 'السرعة', desc: 'تنفيذ المهام في ثوانٍ بدلاً من ساعات أو أيام', icon: 'fa-bolt' },
-                          { title: 'الدقة', desc: 'تجنب الأخطاء البشرية بنسبة تصل إلى 99%', icon: 'fa-check-circle' },
-                          { title: 'التوفر', desc: 'العمل على مدار الساعة طوال أيام الأسبوع', icon: 'fa-clock' }
-                        ].map((item, i) => (
-                          <div key={i} className="benefit-item-modern d-flex align-items-start p-4 rounded-4 mb-3 bg-light">
-                            <div className="benefit-icon-modern bg-primary rounded-circle me-4 d-flex align-items-center justify-content-center text-white" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
-                              <i className={`fa ${item.icon}`}></i>
+          <div className="container-xxl py-5">
+            <div className="container px-lg-5">
+              <div className="row justify-content-center">
+                <div className="col-lg-8">
+                  <div className="post-body-modern bg-white rounded-4 p-4 p-md-5 shadow-sm">
+                    <p className="lead text-dark mb-5" style={{ fontSize: '1.25rem', lineHeight: '1.9' }}>
+                      {isAr ? post.excerptAr : post.excerptEn}
+                    </p>
+                    
+                    {isAr ? (
+                      <>
+                        <h2 className="text-primary mb-4">مقدمة</h2>
+                        <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                          في عالم الأعمال الحديث، أصبح الذكاء الاصطناعي ليس مجرد تقنية مستقبلية، بل ضرورة حالية لكل مؤسسة تسعى للنمو والتميز. إن تبني هذه التقنيات يمكن أن يحدث فرقاً كبيراً في نتائج عملك ويمنحك ميزة تنافسية قوية في السوق المحلي والعالمي.
+                        </p>
+                        <h2 className="text-primary mt-5 mb-4">ما هو الوكيل الذكي؟</h2>
+                        <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                          الوكيل الذكي هو نظام برمجي متطور يعمل كموظف رقمي مستقل، قادر على فهم المهام وتنفيذها ذاتياً دون الحاجة لتدخل بشري مستمر. يمكنه التعلم من البيانات واتخاذ قرارات ذكية بناءً على أنماط محددة مسبقاً.
+                        </p>
+                        <h2 className="text-primary mt-5 mb-4">الفوائد الرئيسية</h2>
+                        <div className="benefits-modern mb-4">
+                          {[
+                            { title: 'توفير التكاليف', desc: 'تقليل الاعتماد على العمالة البشرية في المهام الروتينية والمتكررة', icon: 'fa-coins' },
+                            { title: 'السرعة', desc: 'تنفيذ المهام في ثوانٍ بدلاً من ساعات أو أيام', icon: 'fa-bolt' },
+                            { title: 'الدقة', desc: 'تجنب الأخطاء البشرية بنسبة تصل إلى 99%', icon: 'fa-check-circle' },
+                            { title: 'التوفر', desc: 'العمل على مدار الساعة طوال أيام الأسبوع', icon: 'fa-clock' }
+                          ].map((item, i) => (
+                            <div key={i} className="benefit-item-modern d-flex align-items-start p-4 rounded-4 mb-3 bg-light">
+                              <div className="benefit-icon-modern bg-primary rounded-circle me-4 d-flex align-items-center justify-content-center text-white" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
+                                <i className={`fa ${item.icon}`}></i>
+                              </div>
+                              <div>
+                                <h5 className="text-dark mb-2">{item.title}</h5>
+                                <p className="text-muted mb-0">{item.desc}</p>
+                              </div>
                             </div>
-                            <div>
-                              <h5 className="text-dark mb-2">{item.title}</h5>
-                              <p className="text-muted mb-0">{item.desc}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <h2 className="text-primary mt-5 mb-4">الخاتمة</h2>
-                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
-                        الذكاء الاصطناعي هو المستقبل، والشركات التي تتبناه مبكراً ستحصل على ميزة تنافسية كبيرة في السوق. ابدأ اليوم وحوّل عملك نحو النجاح والتميّز.
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <h2 className="text-primary mb-4">Introduction</h2>
-                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
-                        In today's business world, AI is not just a future technology, but a current necessity for any organization seeking growth and excellence.
-                      </p>
-                      <h2 className="text-primary mt-5 mb-4">What is an AI Agent?</h2>
-                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
-                        An AI agent is a sophisticated software system that works as an independent digital employee, capable of understanding and executing tasks autonomously.
-                      </p>
-                      <h2 className="text-primary mt-5 mb-4">Key Benefits</h2>
-                      <div className="benefits-modern mb-4">
-                        {[
-                          { title: 'Cost Savings', desc: 'Reduce reliance on human labor for routine tasks', icon: 'fa-coins' },
-                          { title: 'Speed', desc: 'Execute tasks in seconds not hours', icon: 'fa-bolt' },
-                          { title: 'Accuracy', desc: 'Avoid human errors up to 99%', icon: 'fa-check-circle' },
-                          { title: 'Availability', desc: 'Work 24/7 without breaks', icon: 'fa-clock' }
-                        ].map((item, i) => (
-                          <div key={i} className="benefit-item-modern d-flex align-items-start p-4 rounded-4 mb-3 bg-light">
-                            <div className="benefit-icon-modern bg-primary rounded-circle me-4 d-flex align-items-center justify-content-center text-white" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
-                              <i className={`fa ${item.icon}`}></i>
-                            </div>
-                            <div>
-                              <h5 className="text-dark mb-2">{item.title}</h5>
-                              <p className="text-muted mb-0">{item.desc}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <h2 className="text-primary mt-5 mb-4">Conclusion</h2>
-                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
-                        AI is the future. Companies that adopt it early will gain a significant competitive advantage.
-                      </p>
-                    </>
-                  )}
-
-                  <div className="post-share-modern mt-5 pt-4" style={{ borderTop: '2px solid #f0f0f0' }}>
-                    <div className="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                      <div className="d-flex align-items-center gap-3">
-                        <span className="text-muted">{isAr ? 'مشاركة:' : 'Share:'}</span>
-                        <div className="d-flex gap-2">
-                          {['facebook', 'twitter', 'linkedin', 'whatsapp'].map((social, i) => (
-                            <button key={i} className="btn btn-sm btn-outline-primary rounded-circle">
-                              <i className={`fa fa-${social}`}></i>
-                            </button>
                           ))}
                         </div>
-                      </div>
-                      <Link to="/blog" className="btn btn-primary rounded-pill px-4">
-                        <i className={`fa fa-list me-2`}></i>
-                        {isAr ? 'كل المقالات' : 'All Articles'}
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="related-posts-modern mt-5">
-                  <h4 className="text-dark fw-bold mb-4">
-                    <i className="fa fa-link text-primary me-2"></i>
-                    {isAr ? 'مقالات ذات صلة' : 'Related Articles'}
-                  </h4>
-                  <div className="row g-4">
-                    {relatedPosts.map((related, i) => (
-                      <div className="col-md-4" key={related.id}>
-                        <Link to={`/blog/${related.id}`} className="text-decoration-none">
-                          <div className="related-card-modern bg-white rounded-4 overflow-hidden h-100 shadow-sm">
-                            <div className="p-4 text-center" style={{ background: 'linear-gradient(135deg, #2124B1 0%, #4777F5 100%)' }}>
-                              <i className={`fa ${related.image} fa-2x text-white mb-3 d-block`}></i>
-                              <h6 className="text-white mb-2">{isAr ? related.titleAr : related.titleEn}</h6>
-                              <small className="text-white" style={{ opacity: 0.8 }}>{related.date}</small>
+                        <h2 className="text-primary mt-5 mb-4">الخاتمة</h2>
+                        <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                          الذكاء الاصطناعي هو المستقبل، والشركات التي تتبناه مبكراً ستحصل على ميزة تنافسية كبيرة في السوق. ابدأ اليوم وحوّل عملك نحو النجاح والتميّز.
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <h2 className="text-primary mb-4">Introduction</h2>
+                        <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                          In today's business world, AI is not just a future technology, but a current necessity for any organization seeking growth and excellence.
+                        </p>
+                        <h2 className="text-primary mt-5 mb-4">What is an AI Agent?</h2>
+                        <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                          An AI agent is a sophisticated software system that works as an independent digital employee, capable of understanding and executing tasks autonomously.
+                        </p>
+                        <h2 className="text-primary mt-5 mb-4">Key Benefits</h2>
+                        <div className="benefits-modern mb-4">
+                          {[
+                            { title: 'Cost Savings', desc: 'Reduce reliance on human labor for routine tasks', icon: 'fa-coins' },
+                            { title: 'Speed', desc: 'Execute tasks in seconds not hours', icon: 'fa-bolt' },
+                            { title: 'Accuracy', desc: 'Avoid human errors up to 99%', icon: 'fa-check-circle' },
+                            { title: 'Availability', desc: 'Work 24/7 without breaks', icon: 'fa-clock' }
+                          ].map((item, i) => (
+                            <div key={i} className="benefit-item-modern d-flex align-items-start p-4 rounded-4 mb-3 bg-light">
+                              <div className="benefit-icon-modern bg-primary rounded-circle me-4 d-flex align-items-center justify-content-center text-white" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
+                                <i className={`fa ${item.icon}`}></i>
+                              </div>
+                              <div>
+                                <h5 className="text-dark mb-2">{item.title}</h5>
+                                <p className="text-muted mb-0">{item.desc}</p>
+                              </div>
                             </div>
+                          ))}
+                        </div>
+                        <h2 className="text-primary mt-5 mb-4">Conclusion</h2>
+                        <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                          AI is the future. Companies that adopt it early will gain a significant competitive advantage.
+                        </p>
+                      </>
+                    )}
+
+                    <div className="post-share-modern mt-5 pt-4" style={{ borderTop: '2px solid #f0f0f0' }}>
+                      <div className="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                        <div className="d-flex align-items-center gap-3">
+                          <span className="text-muted">{isAr ? 'مشاركة:' : 'Share:'}</span>
+                          <div className="d-flex gap-2">
+                            {['facebook', 'twitter', 'linkedin', 'whatsapp'].map((social, i) => (
+                              <button key={i} className="btn btn-sm btn-outline-primary rounded-circle">
+                                <i className={`fa fa-${social}`}></i>
+                              </button>
+                            ))}
                           </div>
+                        </div>
+                        <Link to="/blog" className="btn btn-primary rounded-pill px-4">
+                          <i className={`fa fa-list me-2`}></i>
+                          {isAr ? 'كل المقالات' : 'All Articles'}
                         </Link>
                       </div>
-                    ))}
+                    </div>
+                  </div>
+
+                  <div className="related-posts-modern mt-5">
+                    <h4 className="text-dark fw-bold mb-4">
+                      <i className="fa fa-link text-primary me-2"></i>
+                      {isAr ? 'مقالات ذات صلة' : 'Related Articles'}
+                    </h4>
+                    <div className="row g-4">
+                      {relatedPosts.map((related, i) => (
+                        <div className="col-md-4" key={related.id}>
+                          <Link to={`/blog/${related.id}`} className="text-decoration-none">
+                            <div className="related-card-modern bg-white rounded-4 overflow-hidden h-100 shadow-sm">
+                              <div className="p-4 text-center" style={{ background: 'linear-gradient(135deg, #2124B1 0%, #4777F5 100%)' }}>
+                                <i className={`fa ${related.image} fa-2x text-white mb-3 d-block`}></i>
+                                <h6 className="text-white mb-2">{isAr ? related.titleAr : related.titleEn}</h6>
+                                <small className="text-white" style={{ opacity: 0.8 }}>{related.date}</small>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
