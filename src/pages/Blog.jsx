@@ -110,7 +110,9 @@ const Blog = () => {
       <Navbar />
 
       <div className="blog-hero-modern position-relative overflow-hidden" style={{ 
-        background: 'linear-gradient(135deg, #F7FAFF 0%, #E8F0FE 50%, #DBEAFE 100%)',
+        backgroundImage: 'linear-gradient(135deg, rgba(33, 36, 177, 0.95) 0%, rgba(71, 119, 245, 0.9) 100%), url(/img/services/blog.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         minHeight: '55vh'
       }}>
         <div className="hero-decorations position-absolute w-100 h-100">
@@ -133,17 +135,17 @@ const Blog = () => {
               <div className="col-lg-8">
                 <div className="hero-badge-modern d-inline-flex align-items-center gap-2 mb-4 px-4 py-2 bg-white rounded-pill shadow-sm">
                   <span className="badge-dot-modern"></span>
-                  <span className="text-primary fw-bold" style={{ fontSize: '0.85rem', letterSpacing: '1px' }}>
+                  <span className="fw-bold" style={{ fontSize: '0.85rem', letterSpacing: '1px', color: '#2124B1' }}>
                     {isAr ? 'المدونة' : 'THE BLOG'}
                   </span>
                 </div>
-                <h1 className="display-2 fw-bold text-dark mb-3" style={{ lineHeight: '1.15' }}>
+                <h1 className="display-2 fw-bold text-white mb-3" style={{ lineHeight: '1.15' }}>
                   {isAr ? 'مدونة' : 'Our'}
-                  <span className="d-block text-primary">{
+                  <span className="d-block" style={{ color: '#fff', opacity: 0.9 }}>{
                     isAr ? 'برق تك' : 'Blog'
                   }</span>
                 </h1>
-                <p className="lead text-muted mb-0" style={{ fontSize: '1.15rem', maxWidth: '520px', lineHeight: '1.8' }}>
+                <p className="lead mb-0 text-white" style={{ fontSize: '1.15rem', maxWidth: '520px', lineHeight: '1.8', opacity: 0.9 }}>
                   {isAr 
                     ? 'استكشف أحدث الرؤى والنصائح حول التقنية والذكاء الاصطناعي وتأثيرها على عملك'
                     : 'Explore the latest insights on technology, AI and business innovation'}
