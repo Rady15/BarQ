@@ -63,7 +63,7 @@ const AutomationServiceDetail = () => {
                   <h4 className="text-primary mb-4 text-center">{isAr ? 'لماذا يمثل هذا أهمية لأعمالك؟' : 'Why it Matters?'}</h4>
                   <div className="row g-4">
                     {whyItMatters.map((item, index) => (
-                      <div className="col-md-6 col-lg-3" key={index}>
+                      <div className={`col-md-6 col-lg-3 ${index % 2 === 0 ? 'scroll-reveal from-left' : 'scroll-reveal from-right'}`} key={index}>
                         <div className="p-4 rounded h-100 shadow-hover text-center" style={cardStyle1}>
                           <div className="icon-animated mb-4">
                             <i className={`fa ${item.icon} fa-3x text-primary`}></i>
@@ -79,7 +79,7 @@ const AutomationServiceDetail = () => {
                   <h4 className="text-primary mb-4 text-center">{isAr ? 'كيف نصنع الفارق؟ How We Help' : 'How We Help'}</h4>
                   <div className="row g-4">
                     {howWeHelp.map((item, index) => (
-                      <div className="col-md-6 col-lg-3" key={index}>
+                      <div className={`col-md-6 col-lg-3 ${index % 2 === 0 ? 'scroll-reveal from-left' : 'scroll-reveal from-right'}`} key={index}>
                         <div className="p-4 rounded h-100 shadow-hover text-center" style={cardStyle2}>
                           <div className="icon-animated mb-4">
                             <i className={`fa ${item.icon} fa-3x text-primary`}></i>

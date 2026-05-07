@@ -81,7 +81,7 @@ const AiAgentServiceDetail = () => {
               
               <div className="row g-4">
                 {results.map((axe, i) => (
-                  <div className="col-sm-6 col-lg-3 scroll-reveal zoom-in" data-delay={i * 100} key={i}>
+                  <div className={`col-sm-6 col-lg-3 ${i % 2 === 0 ? 'scroll-reveal from-left' : 'scroll-reveal from-right'}`} data-delay={i * 100} key={i}>
                     <div className="p-4 rounded h-100 shadow-hover text-center" style={i % 2 === 0 ? cardStyle1 : cardStyle2}>
                       <div className="icon-animated mb-4">
                         <i className={`fa ${axe.icon} fa-3x text-primary`}></i>

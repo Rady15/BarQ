@@ -46,7 +46,7 @@ const ServiceHome = () => {
         </div>
         <div className="row g-4">
           {services.map((service, index) => (
-            <div className="col-lg-4 col-md-6 scroll-reveal from-bottom" key={index} data-delay={index * 100}>
+            <div className={`col-lg-4 col-md-6 ${index % 2 === 0 ? 'scroll-reveal from-left' : 'scroll-reveal from-right'}`} key={index} data-delay={index * 100}>
               <div className="service-item d-flex flex-column justify-content-center text-center rounded h-100 p-4">
                 <div className="service-icon flex-shrink-0 mb-4 mx-auto">
                   <i className={`fa ${service.icon} fa-2x text-white`}></i>
