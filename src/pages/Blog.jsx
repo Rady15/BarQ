@@ -110,7 +110,7 @@ const Blog = () => {
       <Navbar />
 
       <div className="blog-hero-modern position-relative overflow-hidden" style={{ 
-        backgroundImage: 'url(/img/services/blog.png)',
+        backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.65) 100%), url(/img/services/blog.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '55vh'

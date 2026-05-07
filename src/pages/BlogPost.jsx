@@ -120,7 +120,7 @@ const BlogPost = () => {
       <Navbar />
 
       <div className="post-hero-modern" style={{ 
-        backgroundImage: 'url(/img/services/blog.png)',
+        backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.65) 100%), url(/img/services/blog.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
