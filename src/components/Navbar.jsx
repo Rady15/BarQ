@@ -77,6 +77,9 @@ const Navbar = () => {
             <Link to="/project" className={getNavLinkClass('/project')}>
               {isAr ? 'المشاريع' : 'Project'}
             </Link>
+            <Link to="/blog" className={getNavLinkClass('/blog')}>
+              {isAr ? 'المدونة' : 'Blog'}
+            </Link>
             <Link to="/contact" className={getNavLinkClass('/contact')}>
               {isAr ? 'اتصل بنا' : 'Contact'}
             </Link>
@@ -132,6 +135,9 @@ const Navbar = () => {
 
             <Link to="/project" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={toggleMenu}>
               {isAr ? 'المشاريع' : 'Project'}
+            </Link>
+            <Link to="/blog" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={toggleMenu}>
+              {isAr ? 'المدونة' : 'Blog'}
             </Link>
             <Link to="/contact" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={toggleMenu}>
               {isAr ? 'اتصل بنا' : 'Contact'}

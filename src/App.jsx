@@ -7,6 +7,8 @@ import Contact from './pages/Contact';
 import WebService from './pages/WebService';
 import AiAgentService from './pages/AiAgentService';
 import AutomationService from './pages/AutomationService';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
       <Route path="/service/ai-automation" element={<AutomationService />} />
       <Route path="/project" element={<Project />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:id" element={<BlogPost />} />
     </Routes>
   );
 }
