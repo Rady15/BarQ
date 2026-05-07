@@ -110,10 +110,11 @@ const Blog = () => {
       <Navbar />
 
       <div className="blog-hero-modern position-relative overflow-hidden" style={{ 
-        backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.65) 100%), url(/img/services/blog.png)',
+        backgroundImage: 'url(/img/services/blog.png)',
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '55vh'
+        backgroundPosition: 'center top',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh'
       }}>
         <div className="container-xxl py-5 position-relative">
           <div className="container px-lg-5 py-5">
@@ -125,13 +126,13 @@ const Blog = () => {
                     {isAr ? 'المدونة' : 'THE BLOG'}
                   </span>
                 </div>
-                <h1 className="display-2 fw-bold text-white mb-3" style={{ lineHeight: '1.15' }}>
+                <h1 className="display-2 fw-bold text-white mb-3" style={{ lineHeight: '1.15', textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
                   {isAr ? 'مدونة' : 'Our'}
-                  <span className="d-block" style={{ color: '#fff', opacity: 0.9 }}>
+                  <span className="d-block" style={{ color: '#fff', textShadow: '2px 2px 8px rgba(0,0,0,0.8)' }}>
                     {isAr ? 'برق تك' : 'Blog'}
                   </span>
                 </h1>
-                <p className="lead mb-0 text-white" style={{ fontSize: '1.15rem', maxWidth: '520px', lineHeight: '1.8', opacity: 0.9 }}>
+                <p className="lead mb-0 text-white" style={{ fontSize: '1.15rem', maxWidth: '520px', lineHeight: '1.8', textShadow: '1px 1px 4px rgba(0,0,0,0.8)' }}>
                   {isAr 
                     ? 'استكشف أحدث الرؤى والنصائح حول التقنية والذكاء الاصطناعي وتأثيرها على عملك'
                     : 'Explore the latest insights on technology, AI and business innovation'}

@@ -119,10 +119,12 @@ const BlogPost = () => {
       <Spinner loading={loading} />
       <Navbar />
 
-      <div className="post-hero-modern" style={{ 
-        backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.65) 100%), url(/img/services/blog.png)',
+      <div className="post-hero-modern position-relative overflow-hidden" style={{ 
+        backgroundImage: 'url(/img/services/blog.png)',
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center top',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh'
       }}>
         <div className="container-xxl py-5">
           <div className="container px-lg-5 py-5">
