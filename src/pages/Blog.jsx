@@ -88,9 +88,6 @@ const Blog = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}></div>
-        <div className="hero-gradient-overlay position-absolute w-100 h-100" style={{
-          background: 'linear-gradient(180deg, rgba(33,36,177,0.85) 0%, rgba(71,119,245,0.7) 50%, rgba(33,36,177,0.9) 100%)'
-        }}></div>
         {/* Elliptical Decorations */}
         <div className="ellipse-deco ellipse-1"></div>
         <div className="ellipse-deco ellipse-2"></div>

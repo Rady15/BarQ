@@ -105,9 +105,6 @@ const BlogPost = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}></div>
-        <div className="hero-gradient-overlay position-absolute w-100 h-100" style={{
-          background: 'linear-gradient(135deg, rgba(33,36,177,0.92) 0%, rgba(71,119,245,0.88) 100%)'
-        }}></div>
         <div className="ellipse-deco ellipse-1"></div>
         <div className="ellipse-deco ellipse-4"></div>
 
