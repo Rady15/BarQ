@@ -18,8 +18,7 @@ const blogPosts = [
     category: 'AI',
     categoryAr: 'الذكاء الاصطناعي',
     date: '2026-05-01',
-    readTime: '5',
-    color: '#667eea'
+    readTime: '5'
   },
   {
     id: 2,
@@ -31,8 +30,7 @@ const blogPosts = [
     category: 'Automation',
     categoryAr: 'الأتمتة',
     date: '2026-04-25',
-    readTime: '7',
-    color: '#f5576c'
+    readTime: '7'
   },
   {
     id: 3,
@@ -44,8 +42,7 @@ const blogPosts = [
     category: 'Web',
     categoryAr: 'تطوير الويب',
     date: '2026-04-20',
-    readTime: '6',
-    color: '#00f2fe'
+    readTime: '6'
   },
   {
     id: 4,
@@ -57,8 +54,7 @@ const blogPosts = [
     category: 'Web',
     categoryAr: 'تطوير الويب',
     date: '2026-04-15',
-    readTime: '4',
-    color: '#38f9d7'
+    readTime: '4'
   },
   {
     id: 5,
@@ -70,8 +66,7 @@ const blogPosts = [
     category: 'AI',
     categoryAr: 'الذكاء الاصطناعي',
     date: '2026-04-10',
-    readTime: '8',
-    color: '#a8edea'
+    readTime: '8'
   },
   {
     id: 6,
@@ -83,8 +78,7 @@ const blogPosts = [
     category: 'Marketing',
     categoryAr: 'التسويق',
     date: '2026-04-05',
-    readTime: '6',
-    color: '#ff9a9e'
+    readTime: '6'
   }
 ];
 
@@ -103,14 +97,14 @@ const BlogPost = () => {
 
   if (!post) {
     return (
-      <div className="container-fluid p-0" style={{ background: '#0a0a0a' }}>
+      <div className="container-fluid bg-light p-0">
         <Spinner loading={loading} />
         <Navbar />
         <div className="container-xxl py-5">
           <div className="container px-lg-5 text-center py-5">
-            <i className="fa fa-exclamation-circle fa-5x text-white" style={{ opacity: 0.2 }}></i>
-            <h2 className="text-white mt-4">{isAr ? 'المقال غير موجود' : 'Article Not Found'}</h2>
-            <Link to="/blog" className="btn btn-lg btn-primary rounded-pill mt-4">
+            <i className="fa fa-exclamation-circle fa-5x text-muted opacity-25"></i>
+            <h2 className="text-dark mt-4">{isAr ? 'المقال غير موجود' : 'Article Not Found'}</h2>
+            <Link to="/blog" className="btn btn-primary rounded-pill mt-4">
               {isAr ? 'العودة للمدونة' : 'Back to Blog'}
             </Link>
           </div>
@@ -121,148 +115,141 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="container-fluid p-0" style={{ background: '#0a0a0a' }}>
+    <div className="container-fluid bg-light p-0">
       <Spinner loading={loading} />
       <Navbar />
 
-      <div className="post-hero-v2 position-relative overflow-hidden" style={{ background: `linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)` }}>
-        <div className="hero-particles">
-          {[...Array(15)].map((_, i) => (
-            <div key={i} className="particle" style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              background: post.color
-            }}></div>
-          ))}
-        </div>
-        
+      <div className="post-hero-modern" style={{ background: 'linear-gradient(135deg, #2124B1 0%, #4777F5 100%)' }}>
+        <div className="post-hero-overlay"></div>
         <div className="container-xxl py-5">
           <div className="container px-lg-5 py-5">
-            <Link to="/blog" className="back-btn-v2 d-inline-flex align-items-center text-white text-decoration-none mb-4">
+            <Link to="/blog" className="back-link-modern d-inline-flex align-items-center text-white text-decoration-none mb-4">
               <i className={`fa fa-arrow-${isAr ? 'right' : 'left'} me-2`}></i>
               {isAr ? 'العودة للمقالات' : 'Back to Articles'}
             </Link>
             
             <div className="row align-items-center">
               <div className="col-lg-8">
-                <div className="post-category-v2 mb-4" style={{ color: post.color }}>
-                  <span className="badge px-4 py-2 rounded-pill" style={{ background: `${post.color}22`, border: `1px solid ${post.color}` }}>
-                    {isAr ? post.categoryAr : post.category}
-                  </span>
-                </div>
-                <h1 className="display-3 fw-bold text-white mb-4" style={{ lineHeight: '1.2' }}>
+                <span className="badge bg-white bg-opacity-25 text-white px-4 py-2 rounded-pill mb-4 d-inline-block">
+                  {isAr ? post.categoryAr : post.category}
+                </span>
+                <h1 className="display-4 fw-bold text-white mb-4" style={{ lineHeight: '1.25' }}>
                   {isAr ? post.titleAr : post.titleEn}
                 </h1>
-                <div className="post-meta-v2 d-flex align-items-center gap-4 flex-wrap">
-                  <span className="text-white" style={{ opacity: 0.6 }}>
-                    <i className="fa fa-calendar me-2"></i>
-                    {post.date}
-                  </span>
-                  <span className="text-white" style={{ opacity: 0.6 }}>
-                    <i className="fa fa-clock-o me-2"></i>
-                    {post.readTime} {isAr ? 'دقيقة قراءة' : 'min read'}
-                  </span>
+                <div className="post-meta-modern d-flex align-items-center gap-4 text-white" style={{ opacity: 0.9 }}>
+                  <span><i className="fa fa-calendar me-2"></i>{post.date}</span>
+                  <span><i className="fa fa-clock-o me-2"></i>{post.readTime} {isAr ? 'دقيقة قراءة' : 'min read'}</span>
                 </div>
               </div>
-              <div className="col-lg-4 d-none d-lg-block text-end">
-                <div className="post-icon-v2 d-inline-flex align-items-center justify-content-center rounded-circle" 
-                  style={{ width: '150px', height: '150px', background: 'rgba(255,255,255,0.05)', border: `2px solid ${post.color}` }}>
-                  <i className={`fa ${post.image} fa-4x`} style={{ color: post.color }}></i>
+              <div className="col-lg-4 d-none d-lg-block text-center">
+                <div className="post-icon-modern d-inline-flex align-items-center justify-content-center rounded-circle bg-white bg-opacity-10" style={{ width: '140px', height: '140px', border: '2px solid rgba(255,255,255,0.3)' }}>
+                  <i className={`fa ${post.image} fa-4x text-white`}></i>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        
+        <div className="post-hero-curve">
+          <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 100C240 60 480 60 720 40C960 20 1200 20 1440 60L1440 100H0Z" fill="#F7FAFF"/>
+          </svg>
+        </div>
       </div>
 
-      <div className="post-content-v2 py-5">
+      <div className="post-content-modern py-5" style={{ background: '#F7FAFF' }}>
         <div className="container-xxl py-5">
           <div className="container px-lg-5">
             <div className="row justify-content-center">
               <div className="col-lg-8">
-                <div className="post-body-v2">
-                  <p className="lead text-white mb-5" style={{ fontSize: '1.3rem', lineHeight: '1.9', opacity: 0.9 }}>
+                <div className="post-body-modern bg-white rounded-4 p-4 p-md-5 shadow-sm">
+                  <p className="lead text-dark mb-5" style={{ fontSize: '1.25rem', lineHeight: '1.9' }}>
                     {isAr ? post.excerptAr : post.excerptEn}
                   </p>
                   
                   {isAr ? (
                     <>
-                      <h2 className="text-white mb-4" style={{ color: post.color }}>مقدمة</h2>
-                      <p className="text-white mb-4" style={{ opacity: 0.8, lineHeight: '1.9' }}>
-                        في عالم الأعمال الحديث، أصبح الذكاء الاصطناعي ليس مجرد تقنية مستقبلية، بل ضرورة حالية لكل مؤسسة تسعى للنمو والتميز. إن تبني هذه التقنيات يمكن أن يحدث فرقاً كبيراً في نتائج عملك ويمنحك ميزة تنافسية قوية في السوق.
+                      <h2 className="text-primary mb-4">مقدمة</h2>
+                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                        في عالم الأعمال الحديث، أصبح الذكاء الاصطناعي ليس مجرد تقنية مستقبلية، بل ضرورة حالية لكل مؤسسة تسعى للنمو والتميز. إن تبني هذه التقنيات يمكن أن يحدث فرقاً كبيراً في نتائج عملك ويمنحك ميزة تنافسية قوية في السوق المحلي والعالمي.
                       </p>
-                      <h2 className="text-white mt-5 mb-4" style={{ color: post.color }}>ما هو الوكيل الذكي؟</h2>
-                      <p className="text-white mb-4" style={{ opacity: 0.8, lineHeight: '1.9' }}>
-                        الوكيل الذكي هو نظام برمجي متطور يعمل كموظف رقمي مستقل، قادر على فهم المهام وتنفيذها ذاتياً دون الحاجة لتدخل بشري مستمر. يمكنه التعلم من البيانات واتخاذ قرارات ذكية.
+                      <h2 className="text-primary mt-5 mb-4">ما هو الوكيل الذكي؟</h2>
+                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                        الوكيل الذكي هو نظام برمجي متطور يعمل كموظف رقمي مستقل، قادر على فهم المهام وتنفيذها ذاتياً دون الحاجة لتدخل بشري مستمر. يمكنه التعلم من البيانات واتخاذ قرارات ذكية بناءً على أنماط محددة مسبقاً.
                       </p>
-                      <h2 className="text-white mt-5 mb-4" style={{ color: post.color }}>الفوائد الرئيسية</h2>
-                      <div className="benefits-list mb-4">
+                      <h2 className="text-primary mt-5 mb-4">الفوائد الرئيسية</h2>
+                      <div className="benefits-modern mb-4">
                         {[
-                          { title: 'توفير التكاليف', desc: 'تقليل الاعتماد على العمالة البشرية في المهام الروتينية' },
-                          { title: 'السرعة', desc: 'تنفيذ المهام في ثوانٍ بدلاً من ساعات' },
-                          { title: 'الدقة', desc: 'تجنب الأخطاء البشرية بنسبة 99%' },
-                          { title: 'التوفر', desc: 'العمل على مدار الساعة بدون استراحة' }
+                          { title: 'توفير التكاليف', desc: 'تقليل الاعتماد على العمالة البشرية في المهام الروتينية والمتكررة', icon: 'fa-coins' },
+                          { title: 'السرعة', desc: 'تنفيذ المهام في ثوانٍ بدلاً من ساعات أو أيام', icon: 'fa-bolt' },
+                          { title: 'الدقة', desc: 'تجنب الأخطاء البشرية بنسبة تصل إلى 99%', icon: 'fa-check-circle' },
+                          { title: 'التوفر', desc: 'العمل على مدار الساعة طوال أيام الأسبوع', icon: 'fa-clock' }
                         ].map((item, i) => (
-                          <div key={i} className="benefit-item d-flex align-items-start mb-4 p-4 rounded-4" style={{ background: 'rgba(255,255,255,0.03)', borderLeft: `3px solid ${post.color}` }}>
-                            <div className="benefit-number me-4" style={{ color: post.color, fontSize: '1.5rem', fontWeight: '700' }}>0{i + 1}</div>
+                          <div key={i} className="benefit-item-modern d-flex align-items-start p-4 rounded-4 mb-3 bg-light">
+                            <div className="benefit-icon-modern bg-primary rounded-circle me-4 d-flex align-items-center justify-content-center text-white" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
+                              <i className={`fa ${item.icon}`}></i>
+                            </div>
                             <div>
-                              <h4 className="text-white mb-2">{item.title}</h4>
-                              <p className="text-white mb-0" style={{ opacity: 0.7 }}>{item.desc}</p>
+                              <h5 className="text-dark mb-2">{item.title}</h5>
+                              <p className="text-muted mb-0">{item.desc}</p>
                             </div>
                           </div>
                         ))}
                       </div>
-                      <h2 className="text-white mt-5 mb-4" style={{ color: post.color }}>الخاتمة</h2>
-                      <p className="text-white mb-4" style={{ opacity: 0.8, lineHeight: '1.9' }}>
-                        الذكاء الاصطناعي هو المستقبل، والشركات التي تتبناه مبكراً ستحصل على ميزة تنافسية كبيرة في السوق. ابدأ اليوم وحوّل عملك نحو النجاح.
+                      <h2 className="text-primary mt-5 mb-4">الخاتمة</h2>
+                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                        الذكاء الاصطناعي هو المستقبل، والشركات التي تتبناه مبكراً ستحصل على ميزة تنافسية كبيرة في السوق. ابدأ اليوم وحوّل عملك نحو النجاح والتميّز.
                       </p>
                     </>
                   ) : (
                     <>
-                      <h2 className="text-white mb-4" style={{ color: post.color }}>Introduction</h2>
-                      <p className="text-white mb-4" style={{ opacity: 0.8, lineHeight: '1.9' }}>
+                      <h2 className="text-primary mb-4">Introduction</h2>
+                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
                         In today's business world, AI is not just a future technology, but a current necessity for any organization seeking growth and excellence.
                       </p>
-                      <h2 className="text-white mt-5 mb-4" style={{ color: post.color }}>What is an AI Agent?</h2>
-                      <p className="text-white mb-4" style={{ opacity: 0.8, lineHeight: '1.9' }}>An AI agent is a sophisticated software system that works as an independent digital employee.</p>
-                      <h2 className="text-white mt-5 mb-4" style={{ color: post.color }}>Key Benefits</h2>
-                      <div className="benefits-list mb-4">
+                      <h2 className="text-primary mt-5 mb-4">What is an AI Agent?</h2>
+                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                        An AI agent is a sophisticated software system that works as an independent digital employee, capable of understanding and executing tasks autonomously.
+                      </p>
+                      <h2 className="text-primary mt-5 mb-4">Key Benefits</h2>
+                      <div className="benefits-modern mb-4">
                         {[
-                          { title: 'Cost Savings', desc: 'Reduce reliance on human labor for routine tasks' },
-                          { title: 'Speed', desc: 'Execute tasks in seconds instead of hours' },
-                          { title: 'Accuracy', desc: 'Avoid human errors by 99%' },
-                          { title: 'Availability', desc: 'Work around the clock without breaks' }
+                          { title: 'Cost Savings', desc: 'Reduce reliance on human labor for routine tasks', icon: 'fa-coins' },
+                          { title: 'Speed', desc: 'Execute tasks in seconds not hours', icon: 'fa-bolt' },
+                          { title: 'Accuracy', desc: 'Avoid human errors up to 99%', icon: 'fa-check-circle' },
+                          { title: 'Availability', desc: 'Work 24/7 without breaks', icon: 'fa-clock' }
                         ].map((item, i) => (
-                          <div key={i} className="benefit-item d-flex align-items-start mb-4 p-4 rounded-4" style={{ background: 'rgba(255,255,255,0.03)', borderLeft: `3px solid ${post.color}` }}>
-                            <div className="benefit-number me-4" style={{ color: post.color, fontSize: '1.5rem', fontWeight: '700' }}>0{i + 1}</div>
+                          <div key={i} className="benefit-item-modern d-flex align-items-start p-4 rounded-4 mb-3 bg-light">
+                            <div className="benefit-icon-modern bg-primary rounded-circle me-4 d-flex align-items-center justify-content-center text-white" style={{ width: '50px', height: '50px', flexShrink: 0 }}>
+                              <i className={`fa ${item.icon}`}></i>
+                            </div>
                             <div>
-                              <h4 className="text-white mb-2">{item.title}</h4>
-                              <p className="text-white mb-0" style={{ opacity: 0.7 }}>{item.desc}</p>
+                              <h5 className="text-dark mb-2">{item.title}</h5>
+                              <p className="text-muted mb-0">{item.desc}</p>
                             </div>
                           </div>
                         ))}
                       </div>
-                      <h2 className="text-white mt-5 mb-4" style={{ color: post.color }}>Conclusion</h2>
-                      <p className="text-white mb-4" style={{ opacity: 0.8, lineHeight: '1.9' }}>
-                        AI is the future, and companies that adopt it early will gain a significant competitive advantage.
+                      <h2 className="text-primary mt-5 mb-4">Conclusion</h2>
+                      <p className="text-muted mb-4" style={{ lineHeight: '1.9' }}>
+                        AI is the future. Companies that adopt it early will gain a significant competitive advantage.
                       </p>
                     </>
                   )}
 
-                  <div className="post-share-v2 mt-5 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                  <div className="post-share-modern mt-5 pt-4" style={{ borderTop: '2px solid #f0f0f0' }}>
                     <div className="d-flex align-items-center justify-content-between flex-wrap gap-3">
                       <div className="d-flex align-items-center gap-3">
-                        <span className="text-white" style={{ opacity: 0.6 }}>{isAr ? 'مشاركة:' : 'Share:'}</span>
+                        <span className="text-muted">{isAr ? 'مشاركة:' : 'Share:'}</span>
                         <div className="d-flex gap-2">
                           {['facebook', 'twitter', 'linkedin', 'whatsapp'].map((social, i) => (
-                            <button key={i} className="btn btn-sm rounded-circle" style={{ background: 'rgba(255,255,255,0.1)', color: '#fff' }}>
+                            <button key={i} className="btn btn-sm btn-outline-primary rounded-circle">
                               <i className={`fa fa-${social}`}></i>
                             </button>
                           ))}
                         </div>
                       </div>
-                      <Link to="/blog" className="btn btn-lg rounded-pill" style={{ background: post.color, border: 'none' }}>
+                      <Link to="/blog" className="btn btn-primary rounded-pill px-4">
                         <i className={`fa fa-list me-2`}></i>
                         {isAr ? 'كل المقالات' : 'All Articles'}
                       </Link>
@@ -270,20 +257,20 @@ const BlogPost = () => {
                   </div>
                 </div>
 
-                <div className="related-posts-v2 mt-5 pt-5" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                  <h4 className="text-white mb-4">
-                    <i className="fa fa-link me-2" style={{ color: post.color }}></i>
+                <div className="related-posts-modern mt-5">
+                  <h4 className="text-dark fw-bold mb-4">
+                    <i className="fa fa-link text-primary me-2"></i>
                     {isAr ? 'مقالات ذات صلة' : 'Related Articles'}
                   </h4>
                   <div className="row g-4">
                     {relatedPosts.map((related, i) => (
                       <div className="col-md-4" key={related.id}>
                         <Link to={`/blog/${related.id}`} className="text-decoration-none">
-                          <div className="related-card-v2 h-100" style={{ borderColor: related.color }}>
-                            <div className="p-4 text-center">
-                              <i className={`fa ${related.image} fa-2x mb-3 d-block`} style={{ color: related.color }}></i>
+                          <div className="related-card-modern bg-white rounded-4 overflow-hidden h-100 shadow-sm">
+                            <div className="p-4 text-center" style={{ background: 'linear-gradient(135deg, #2124B1 0%, #4777F5 100%)' }}>
+                              <i className={`fa ${related.image} fa-2x text-white mb-3 d-block`}></i>
                               <h6 className="text-white mb-2">{isAr ? related.titleAr : related.titleEn}</h6>
-                              <small className="text-white" style={{ opacity: 0.5 }}>{related.date}</small>
+                              <small className="text-white" style={{ opacity: 0.8 }}>{related.date}</small>
                             </div>
                           </div>
                         </Link>
