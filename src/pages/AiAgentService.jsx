@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
 import PageHeader from '../components/PageHeader';
-import ServiceHome from '../components/ServiceHome';
+import AiAgentServiceDetail from '../components/AiAgentServiceDetail';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
 import { useSpinner, useWow } from '../hooks/useAnimations';
 import { useLanguage } from '../context/LanguageContext';
 
-const Service = () => {
+const AiAgentService = () => {
   const loading = useSpinner();
   useWow();
   const { lang } = useLanguage();
@@ -21,27 +21,19 @@ const Service = () => {
   return (
     <div className="container-fluid bg-white p-0">
       <Spinner loading={loading} />
-
-      {/* Navbar & Hero */}
       <div className="container-fluid position-relative p-0">
         <Navbar />
         <PageHeader 
-          title={isAr ? 'خدماتنا' : 'Our Services'} 
-          breadcrumb={isAr ? 'الخدمات' : 'Services'} 
+          title={isAr ? 'وكلاء الذكاء الاصطناعي' : 'AI Agent'} 
+          breadcrumb={isAr ? 'الوكلاء الذكاء الاصطناعي' : 'AI Agents'} 
+          bgImage="/img/services/ai.png"
         />
       </div>
-
-      {/* Service Section */}
-      <ServiceHome />
-
-      {/* Footer */}
+      <AiAgentServiceDetail />
       <Footer />
-
-
-      {/* Back to Top */}
       <BackToTop />
     </div>
   );
 };
 
-export default Service;
+export default AiAgentService;

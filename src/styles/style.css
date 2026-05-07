@@ -815,3 +815,32 @@ h6,
         font-size: 2.5rem;
     }
 }
+
+.shadow-hover {
+    transition: all 0.3s ease-in-out;
+}
+
+.shadow-hover:hover {
+    background-color: var(--primary) !important;
+    background-image: none !important;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(8, 46, 113, 0.3) !important;
+}
+
+.shadow-hover:hover p, 
+.shadow-hover:hover h5, 
+.shadow-hover:hover h6, 
+.shadow-hover:hover i {
+    color: #fff !important;
+}
+
+@keyframes icon-float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.icon-animated {
+    animation: icon-float 3s ease-in-out infinite;
+    display: inline-block;
+}

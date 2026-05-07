@@ -14,7 +14,12 @@ const Footer = () => {
           <div className="col-md-6 col-lg-3 text-center text-md-start">
             <img src="/white.png" alt="Bark Tech Logo" style={{ maxHeight: '60px' }} className="mb-4" />
             <div className="contact-info">
-              <p><i className="fa fa-map-marker-alt me-3"></i>{isAr ? 'الرياض: حي الملقا' : 'Riyadh: Al Malqa'}</p>
+              <p>
+                <i className="fa fa-map-marker-alt me-3"></i>
+                <a href="https://maps.app.goo.gl/uL98DWCSx767gtjAA?g_st=aw" target="_blank" rel="noopener noreferrer" className="text-light">
+                  {isAr ? 'المملكة العربية السعودية، الخبر' : 'Saudi Arabia, Al Khobar'}
+                </a>
+              </p>
               <p><i className="fa fa-phone-alt me-3"></i><span dir="ltr">+966 55 024 3776</span></p>
               <p><i className="fa fa-envelope me-3"></i>grow@barqtech.ai</p>
             </div>

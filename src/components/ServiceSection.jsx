@@ -18,7 +18,7 @@ const ServiceSection = () => {
         </div>
 
         {/* --- Service 1: Web Applications Development --- */}
-        <div className="row g-5 mb-5 align-items-center scroll-reveal from-left">
+        <div className="row g-5 mb-5 align-items-center scroll-reveal from-left" id="web">
           <div className="col-12">
             <div className="bg-white p-3 p-md-5 rounded shadow-sm">
               <div className="d-flex align-items-center mb-4 flex-wrap">
@@ -29,10 +29,10 @@ const ServiceSection = () => {
                   {isAr ? 'تطوير تطبيقات الويب Web Applications Development' : 'Web Applications Development'}
                 </h3>
               </div>
-              
-              <h5 className="text-primary mb-3">{isAr ? 'الوصف:' : 'Description:'}</h5>
+
+              <h5 className="text-primary mb-3">{isAr ? '' : 'Description:'}</h5>
               <p className="mb-4">
-                {isAr 
+                {isAr
                   ? 'في برق تك، نقوم بتصميم وتطوير تطبيقات ويب عالية الأداء تجمع بين الكفاءة التشغيلية، الأمان المطلق، والتصميم الذي يركز على تجربة المستخدم. بدءً من البوابات الرقمية ومنصات التجارة الإلكترونية وصولاً إلى الحلول البرمجية الضخمة للمؤسسات، نبتكر تطبيقاتٍ صُممت لتقدم أداءً قابلاً للتوسع وتجارب تفاعلية ملهمة عبر مختلف القطاعات. ومن خلال دمج أحدث أطر العمل والتصاميم المتجاوبة، والبنى التحتية القوية، نضمن أن يكون كل حل تقني نقدمه موثوقاً، سهل الوصول، ومتناغماً تماماً مع أهداف أعمالكم.'
                   : 'At Barq Tech, we design and develop high-performance web applications that combine operational efficiency, absolute security, and user-centric design. From digital portals and e-commerce platforms to massive software solutions for enterprises, we create applications designed to provide scalable performance and inspiring interactive experiences across various sectors. By integrating the latest frameworks, responsive designs, and robust infrastructure, we ensure that every technical solution we provide is reliable, accessible, and perfectly aligned with your business goals.'}
               </p>
@@ -69,7 +69,7 @@ const ServiceSection = () => {
         </div>
 
         {/* --- Service 2: AI Agent --- */}
-        <div className="row g-5 mb-5 align-items-center scroll-reveal from-right">
+        <div className="row g-5 mb-5 align-items-center scroll-reveal from-right" id="ai">
           <div className="col-12">
             <div className="bg-light p-3 p-md-5 rounded shadow-sm">
               <div className="d-flex align-items-center mb-4 flex-wrap">
@@ -80,9 +80,9 @@ const ServiceSection = () => {
                   {isAr ? 'وكلاء الذكاء الاصطناعي AI Agent' : 'AI Agent'}
                 </h3>
               </div>
-              
+
               <p className="mb-4">
-                {isAr 
+                {isAr
                   ? 'في "برق تك"، لا نقدم مجرد "بوتات" للدردشة، بل نصمم وكلاء ذكاء اصطناعي مستقلين AI Agents يمتلكون القدرة على التفكير، التحليل، واتخاذ الإجراءات. هؤلاء الوكلاء هم أنظمة برمجية متطورة تعمل كقوة عاملة رقمية، قادرة على تنفيذ مهام معقدة من البداية إلى النهاية دون تدخل بشري دائم، مما يمنح منشأتك "سرعة البرق" في الأداء.'
                   : 'At "Barq Tech", we don\'t just provide "chatbots", but we design autonomous AI agents (AI Agents) that possess the ability to think, analyze, and take actions. These agents are sophisticated software systems that work as a digital workforce, capable of executing complex tasks from start to finish without permanent human intervention, giving your establishment "lightning speed" in performance.'}
               </p>
@@ -91,7 +91,7 @@ const ServiceSection = () => {
                 <i className="fa fa-magic me-2 ms-2"></i>
                 {isAr ? 'كيف نصنع الفارق؟ نحن نبيعك "نتائج":' : 'How We Help? We sell you "results":'}
               </h5>
-              
+
               <div className="row g-3">
                 {[
                   {
@@ -132,7 +132,7 @@ const ServiceSection = () => {
         </div>
 
         {/* --- Service 3: AI Process Automation --- */}
-        <div className="row g-5 mb-5 align-items-center scroll-reveal from-bottom">
+        <div className="row g-5 mb-5 align-items-center scroll-reveal from-bottom" id="automation">
           <div className="col-12">
             <div className="bg-white p-3 p-md-5 rounded shadow-sm">
               <div className="d-flex align-items-center mb-4 flex-wrap">
@@ -143,9 +143,9 @@ const ServiceSection = () => {
                   {isAr ? 'أتمتة العمليات بالذكاء الاصطناعي' : 'AI Process Automation'}
                 </h3>
               </div>
-              
+
               <p className="mb-4">
-                {isAr 
+                {isAr
                   ? 'في برق تك، نقوم بتحويل العمليات التشغيلية اليدوية والورقية إلى مسارات رقمية ذكية تعمل ذاتياً. ندمج تقنيات الـ AI مع أنظمة شركتك لتمكينها من "إدراك" المهام وتنفيذها دون تدخل بشري. من معالجة الفواتير آلياً، إلى إدارة سلاسل الإمداد وتوظيف البيانات، نحن نصمم حلولاً تجعل شركتك تعمل "بأقل جهد بشري وأعلى دقة رقمية".'
                   : 'At Barq Tech, we transform manual and paper-based operational processes into intelligent self-operating digital pathways. We integrate AI technologies with your company\'s systems to enable them to "perceive" tasks and execute them without human intervention. From automated invoice processing to supply chain management, we design solutions that make your company work with minimal human effort.'}
               </p>

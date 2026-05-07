@@ -4,9 +4,9 @@ import { useStickyNavbar } from '../hooks/useAnimations';
 import { useLanguage } from '../context/LanguageContext';
 
 const servicesDropdown = [
-  { name: 'تطوير تطبيقات الويب', nameEn: 'Web Applications', path: '/service#web' },
-  { name: 'وكلاء الذكاء الاصطناعي', nameEn: 'AI Agents', path: '/service#ai' },
-  { name: 'أتمتة العمليات بالذكاء الاصطناعي', nameEn: 'AI Automation', path: '/service#automation' },
+  { name: 'تطوير تطبيقات الويب', nameEn: 'Web Applications', path: '/service/web-applications' },
+  { name: 'وكلاء الذكاء الاصطناعي', nameEn: 'AI Agents', path: '/service/ai-agents' },
+  { name: 'أتمتة العمليات بالذكاء الاصطناعي', nameEn: 'AI Automation', path: '/service/ai-automation' },
 ];
 
 const Navbar = () => {

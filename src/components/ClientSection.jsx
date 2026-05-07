@@ -2,57 +2,14 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-const clientsData = [
-  { name: 'Microsoft', domain: 'microsoft.com' },
-  { name: 'Google', domain: 'google.com' },
-  { name: 'Amazon', domain: 'amazon.com' },
-  { name: 'Meta', domain: 'meta.com' },
-  { name: 'Apple', domain: 'apple.com' },
-  { name: 'NVIDIA', domain: 'nvidia.com' },
-  { name: 'Intel', domain: 'intel.com' },
-  { name: 'IBM', domain: 'ibm.com' },
-  { name: 'Oracle', domain: 'oracle.com' },
-  { name: 'Salesforce', domain: 'salesforce.com' },
-  { name: 'Adobe', domain: 'adobe.com' },
-  { name: 'Netflix', domain: 'netflix.com' },
-  { name: 'Spotify', domain: 'spotify.com' },
-  { name: 'Uber', domain: 'uber.com' },
-  { name: 'Airbnb', domain: 'airbnb.com' },
-  { name: 'Zoom', domain: 'zoom.us' },
-  { name: 'Slack', domain: 'slack.com' },
-  { name: 'LinkedIn', domain: 'linkedin.com' },
-  { name: 'Twitter', domain: 'twitter.com' },
-  { name: 'Shopify', domain: 'shopify.com' },
-  { name: 'PayPal', domain: 'paypal.com' },
-  { name: 'Stripe', domain: 'stripe.com' },
-  { name: 'Cisco', domain: 'cisco.com' },
-  { name: 'Dell', domain: 'dell.com' },
-  { name: 'HP', domain: 'hp.com' },
-  { name: 'Samsung', domain: 'samsung.com' },
-  { name: 'Sony', domain: 'sony.com' },
-  { name: 'Panasonic', domain: 'panasonic.com' },
-  { name: 'LG', domain: 'lg.com' },
-  { name: 'Tesla', domain: 'tesla.com' },
-  { name: 'SpaceX', domain: 'spacex.com' },
-  { name: 'GitHub', domain: 'github.com' },
-  { name: 'GitLab', domain: 'gitlab.com' },
-  { name: 'Atlassian', domain: 'atlassian.com' },
-  { name: 'Asana', domain: 'asana.com' },
-  { name: 'Trello', domain: 'trello.com' },
-  { name: 'Notion', domain: 'notion.so' },
-  { name: 'Figma', domain: 'figma.com' },
-  { name: 'Canva', domain: 'canva.com' },
-  { name: 'Cloudflare', domain: 'cloudflare.com' },
-  { name: 'DigitalOcean', domain: 'digitalocean.com' },
-  { name: 'Heroku', domain: 'heroku.com' },
-  { name: 'Twilio', domain: 'twilio.com' },
-  { name: 'Mailchimp', domain: 'mailchimp.com' },
-  { name: 'HubSpot', domain: 'hubspot.com' },
-  { name: 'Dropbox', domain: 'dropbox.com' },
-  { name: 'Square', domain: 'squareup.com' },
-  { name: 'Reddit', domain: 'reddit.com' },
-  { name: 'Discord', domain: 'discord.com' },
-  { name: 'TikTok', domain: 'tiktok.com' },
+const localClients = [
+  { name: 'Client 1', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.27.58 PM.jpeg' },
+  { name: 'Client 2', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.28.33 PM.jpeg' },
+  { name: 'Client 3', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.29.09 PM.jpeg' },
+  { name: 'Client 4', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.29.14 PM.jpeg' },
+  { name: 'Client 5', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.34.02 PM.jpeg' },
+  { name: 'Client 6', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.49.01 PM.jpeg' },
+  { name: 'Client 7', img: '/img/clients/v1.png' },
 ];
 
 const ClientSection = () => {
@@ -86,20 +43,16 @@ const ClientSection = () => {
 
           {/* Logos Grid */}
           <div className="col-lg-12">
-            <div className="row g-3 align-items-center justify-content-center">
-              {clientsData.map((client, index) => (
-                <div className="col-4 col-md-3 col-lg-2 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={index}>
+            <div className="row g-4 align-items-center justify-content-center">
+              {localClients.map((client, index) => (
+                <div className="col-6 col-md-4 col-lg-3 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={index}>
                   <div className="client-logo-item p-2 text-center transition">
-                    <div className="bg-white p-3 rounded shadow-sm border border-light hover-shadow transition d-flex align-items-center justify-content-center" style={{ height: '100px' }}>
+                    <div className="bg-white p-3 rounded shadow-sm border border-light hover-shadow transition d-flex align-items-center justify-content-center" style={{ height: '120px' }}>
                        <img 
-                         src={`https://logo.clearbit.com/${client.domain}`} 
+                         src={client.img} 
                          alt={client.name} 
                          className="img-fluid grayscale hover-color" 
-                         style={{ maxHeight: '50px', width: 'auto' }}
-                         onError={(e) => {
-                           e.target.onerror = null; 
-                           e.target.src = `https://ui-avatars.com/api/?name=${client.name}&background=f8f9fa&color=2142B1&bold=true`;
-                         }}
+                         style={{ maxHeight: '80px', width: 'auto', objectFit: 'contain' }}
                        />
                     </div>
                   </div>

@@ -16,7 +16,7 @@ const AboutSection = () => {
                 {isAr ? 'من نحن' : 'About Us'}
               </h6>
               <h2 className="mt-2">
-                {isAr ? 'برق تك.. barq tech' : 'Barq Tech.. barq tech'}
+                {isAr ? 'برق تك.. ' : 'Barq Tech..  '}
               </h2>
             </div>
             <p className="mb-4">

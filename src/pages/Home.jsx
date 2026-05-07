@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
 import AboutSection from '../components/AboutSection';
 import ChallengeSection from '../components/ChallengeSection';
-import ServiceSection from '../components/ServiceSection';
+import ServiceHome from '../components/ServiceHome';
 import MethodologySection from '../components/MethodologySection';
 import WhyUsSection from '../components/WhyUsSection';
 import ClientSection from '../components/ClientSection';
@@ -44,13 +44,13 @@ const Home = () => {
             <div className="row g-5 py-5 align-items-center">
               <div className="col-lg-6 text-center text-lg-start order-2 order-lg-1">
                 <h1 className="text-white mb-4 animated zoomIn" style={{ fontSize: 'calc(1.5rem + 1.5vw)' }}>
-                  {isAr ? 'برق تك.. barq tech' : 'Barq Tech.. barq tech'}
+                  {isAr ? 'برق تك..' : 'Barq Tech..'}
                 </h1>
                 <p className="text-white pb-3 animated zoomIn">
                   {isAr ? (
-                    'نحن في برق تك، نؤمن أن الذكاء الاصطناعي ليس مجرد أداة، بل هو المحرك الجديد للنمو. انطلقنا لنطوع أحدث تقنيات الـ AI لخدمة الشركات الطموحة، محولين الأفكار المعقدة إلى تطبيقات واقعية ووكلاء ذكيين يعملون بدقة البرق.'
+                    'نحوّل طموحك الرقمي إلى نتائج حقيقية. في برق تك، نقدم حلولًا تقنية ذكية تجمع بين الذكاء الاصطناعي، التحول الرقمي، وتطوير الأعمال لنساعد شركتك على النمو بسرعة، رفع الكفاءة، وبناء مستقبل أكثر قوة. من المواقع والأنظمة إلى الاستراتيجيات الرقمية المتقدمة — نحن شريكك التقني لصناعة نجاح يسبق المنافسة.'
                   ) : (
-                    'At Barq Tech, we believe that AI is not just a tool, but the new engine for growth. We set out to harness the latest AI technologies to serve ambitious companies, transforming complex ideas into realistic applications and smart agents that work with lightning precision.'
+                    'We transform your digital ambition into real results. At Barq Tech, we provide smart technical solutions that combine artificial intelligence, digital transformation, and business development to help your company grow rapidly, increase efficiency, and build a more powerful future. From websites and systems to advanced digital strategies — we are your technical partner for crafting success that leads the competition.'
                   )}
                 </p>
                 <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start">
@@ -86,8 +86,8 @@ const Home = () => {
       {/* About Section */}
       <AboutSection />
 
-      {/* Detailed Services Section (Description -> Importance -> How We Help) */}
-      <ServiceSection />
+      {/* Simple Services Section */}
+      <ServiceHome />
 
       {/* Client Section */}
       <ClientSection />

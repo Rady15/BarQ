@@ -77,10 +77,12 @@ const ContactSection = () => {
               </div>
               <div className={isAr ? 'ms-3' : 'me-3'}></div>
               <div className="px-3">
-                <h5 className="mb-0">{isAr ? 'المقر الرئيسي (الرياض)' : 'Headquarters (Riyadh)'}</h5>
-                <p className="mb-0 small">{isAr ? 'حي الملقا، طريق الملك فهد، برج الابتكار، الدور 12' : 'Al Malqa, King Fahd Rd, Innovation Tower, 12th Floor'}</p>
-                <h5 className="mb-0 mt-2">{isAr ? 'فرع جدة' : 'Jeddah Branch'}</h5>
-                <p className="mb-0 small">{isAr ? 'طريق الأمير سلطان، برج الأعمال' : 'Prince Sultan Rd, Business Tower'}</p>
+                <h5 className="mb-0">{isAr ? 'المقر الرئيسي' : 'Headquarters'}</h5>
+                <p className="mb-0 small">
+                  <a href="https://maps.app.goo.gl/uL98DWCSx767gtjAA?g_st=aw" target="_blank" rel="noopener noreferrer" className="text-dark">
+                    {isAr ? 'المملكة العربية السعودية، المنطقة الشرقية، الخبر' : 'Saudi Arabia, Eastern Province, Al Khobar'}
+                  </a>
+                </p>
               </div>
             </div>
           </div>
