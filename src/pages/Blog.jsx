@@ -14,12 +14,13 @@ const blogPosts = [
     titleEn: 'How AI is Transforming Your Business',
     excerptAr: 'اكتشف كيف يمكن لوكلاء الذكاء الاصطناعي أن يحدثا ثورة في عمليات شركتك ويوفرا الوقت والموارد.',
     excerptEn: 'Discover how AI agents can revolutionize your business operations and save time and resources.',
-    image: 'fa-robot',
+    image: 'fa-brain',
     category: 'AI',
     categoryAr: 'الذكاء الاصطناعي',
     date: '2026-05-01',
     readTime: '5',
-    color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    color: '#667eea',
+    accent: '#764ba2'
   },
   {
     id: 2,
@@ -32,7 +33,8 @@ const blogPosts = [
     categoryAr: 'الأتمتة',
     date: '2026-04-25',
     readTime: '7',
-    color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+    color: '#f5576c',
+    accent: '#f093fb'
   },
   {
     id: 3,
@@ -45,7 +47,8 @@ const blogPosts = [
     categoryAr: 'تطوير الويب',
     date: '2026-04-20',
     readTime: '6',
-    color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+    color: '#00f2fe',
+    accent: '#4facfe'
   },
   {
     id: 4,
@@ -53,12 +56,41 @@ const blogPosts = [
     titleEn: 'Why Your Business Needs a Professional Website',
     excerptAr: 'الموقع الإلكتروني هو واجهة عملك على الإنترنت وأداة أساسية للتواصل مع عملائك.',
     excerptEn: 'Your website is your business face on the internet and an essential tool for communicating with your customers.',
-    image: 'fa-globe',
+    image: 'fa-globe-americas',
     category: 'Web',
     categoryAr: 'تطوير الويب',
     date: '2026-04-15',
     readTime: '4',
-    color: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+    color: '#38f9d7',
+    accent: '#43e97b'
+  },
+  {
+    id: 5,
+    titleAr: 'حلول الذكاء الاصطناعي للمؤسسات',
+    titleEn: 'Enterprise AI Solutions',
+    excerptAr: 'استراتيجيات متقدمة لتطبيق الذكاء الاصطناعي في المؤسسات الكبيرة.',
+    excerptEn: 'Advanced strategies for implementing AI in large enterprises.',
+    image: 'fa-building',
+    category: 'AI',
+    categoryAr: 'الذكاء الاصطناعي',
+    date: '2026-04-10',
+    readTime: '8',
+    color: '#a8edea',
+    accent: '#fed6e3'
+  },
+  {
+    id: 6,
+    titleAr: 'أفضل ممارسات التسويق الرقمي',
+    titleEn: 'Digital Marketing Best Practices',
+    excerptAr: 'استراتيجيات التسويق الرقمي التي ستقود عملك للنجاح في 2026.',
+    excerptEn: 'Digital marketing strategies that will drive your business success in 2026.',
+    image: 'fa-bullhorn',
+    category: 'Marketing',
+    categoryAr: 'التسويق',
+    date: '2026-04-05',
+    readTime: '6',
+    color: '#ff9a9e',
+    accent: '#fecfef'
   }
 ];
 
@@ -69,177 +101,172 @@ const Blog = () => {
   useWow();
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
-  const [featuredPost, setFeaturedPost] = useState(blogPosts[0]);
+  const [activeCategory, setActiveCategory] = useState('all');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const categories = [...new Set(blogPosts.map(p => isAr ? p.categoryAr : p.category))];
+  const filteredPosts = activeCategory === 'all' 
+    ? blogPosts 
+    : blogPosts.filter(p => (isAr ? p.categoryAr : p.category) === activeCategory);
 
   return (
-    <div className="container-fluid bg-light p-0">
+    <div className="container-fluid p-0" style={{ background: '#0a0a0a' }}>
       <Spinner loading={loading} />
       <Navbar />
 
-      <div className="blog-hero-section position-relative overflow-hidden">
-        <div className="hero-shapes position-absolute w-100 h-100">
-          <div className="shape shape-1"></div>
-          <div className="shape shape-2"></div>
-          <div className="shape shape-3"></div>
+      <div className="blog-hero-v2 position-relative overflow-hidden">
+        <div className="hero-particles">
+          {[...Array(20)].map((_, i) => (
+            <div key={i} className="particle" style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${3 + Math.random() * 4}s`
+            }}></div>
+          ))}
         </div>
+        <div className="hero-grid-lines">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="grid-line" style={{ left: `${(i + 1) * 20}%` }}></div>
+          ))}
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="grid-line horizontal" style={{ top: `${(i + 1) * 20}%` }}></div>
+          ))}
+        </div>
+        
         <div className="container-xxl py-5 position-relative">
           <div className="container px-lg-5 py-5">
-            <div className="row align-items-center min-vh-60">
+            <div className="row min-vh-70 align-items-center">
               <div className="col-lg-8">
-                <div className="hero-content scroll-reveal from-bottom">
-                  <span className="badge bg-white text-primary px-4 py-2 rounded-pill mb-4 shadow">
-                    <i className="fa fa-pencil-alt me-2"></i>
-                    {isAr ? 'المدونة' : 'Blog'}
-                  </span>
-                  <h1 className="display-2 fw-bold text-dark mb-4" style={{ lineHeight: '1.2' }}>
-                    {isAr ? 'آخر المقالات والنصائح' : 'Latest Articles & Tips'}
+                <div className="hero-content-v2 scroll-reveal from-bottom">
+                  <div className="hero-badge d-inline-flex align-items-center gap-2 mb-4">
+                    <span className="badge-dot"></span>
+                    <span className="text-white" style={{ opacity: 0.8, fontSize: '0.9rem', letterSpacing: '2px' }}>
+                      {isAr ? 'المدونة' : 'THE BLOG'}
+                    </span>
+                  </div>
+                  <h1 className="display-1 fw-bold text-white mb-4" style={{ 
+                    lineHeight: '1.1',
+                    background: 'linear-gradient(135deg, #fff 0%, #667eea 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}>
+                    {isAr ? 'المعرفة قوة' : 'KNOWLEDGE'}
                   </h1>
-                  <p className="lead text-muted mb-0" style={{ fontSize: '1.2rem', maxWidth: '600px' }}>
+                  <h1 className="display-1 fw-bold text-white mb-4" style={{ lineHeight: '1.1' }}>
+                    {isAr ? 'في عصر الذكاء' : 'IS POWER'}
+                  </h1>
+                  <p className="lead text-white mb-0" style={{ 
+                    fontSize: '1.2rem', 
+                    maxWidth: '550px',
+                    opacity: 0.7,
+                    lineHeight: '1.8'
+                  }}>
                     {isAr 
-                      ? 'استكشف أحدث المقالات والنصائح حول التقنية والذكاء الاصطناعي وتأثيرها على عملك'
-                      : 'Explore the latest articles and tips about technology and AI and its impact on your business'}
+                      ? 'استكشف أحدث الرؤى حول التقنية والابتكار الذي يحدد مستقبل الأعمال'
+                      : 'Explore the latest insights on technology and innovation that shape business future'}
                   </p>
+                </div>
+              </div>
+              <div className="col-lg-4 d-none d-lg-block">
+                <div className="hero-stats scroll-reveal from-right">
+                  <div className="stat-card">
+                    <span className="stat-number">{blogPosts.length}</span>
+                    <span className="stat-label">{isAr ? 'مقال' : 'Articles'}</span>
+                  </div>
+                  <div className="stat-card">
+                    <span className="stat-number">{categories.length}</span>
+                    <span className="stat-label">{isAr ? 'تصنيف' : 'Categories'}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="hero-wave">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#F7FAFF"/>
-          </svg>
+        
+        <div className="hero-scroll-indicator">
+          <div className="mouse">
+            <div className="wheel"></div>
+          </div>
         </div>
       </div>
 
-      <div className="container-xxl py-5">
-        <div className="container px-lg-5">
-          <div className="row g-5">
-            <div className="col-lg-8">
-              <div className="section-title position-relative text-center mb-5 scroll-reveal from-bottom">
-                <h6 className="position-relative d-inline text-primary ps-4">
-                  {isAr ? 'مقالات مميزة' : 'Featured Articles'}
-                </h6>
-                <h2 className="mt-2" style={{ color: 'var(--primary)' }}>
-                  {isAr ? 'اقرأ وأكتشف' : 'Read & Discover'}
-                </h2>
-              </div>
-
-              <div className="row g-4">
-                {blogPosts.map((post, index) => (
-                  <div className="col-md-6 scroll-reveal" style={{ animationDelay: `${index * 0.1}s` }} key={post.id}>
-                    <Link to={`/blog/${post.id}`} className="text-decoration-none">
-                      <div className="blog-card-modern bg-white rounded-4 overflow-hidden h-100">
-                        <div className="card-image-wrapper position-relative" style={{ height: '200px', background: post.color }}>
-                          <div className="card-icon-layer d-flex align-items-center justify-content-center h-100">
-                            <i className={`fa ${post.image} fa-5x text-white opacity-80`}></i>
-                          </div>
-                          <div className="card-overlay position-absolute top-0 start-0 w-100 h-100" style={{ background: 'rgba(0,0,0,0.1)' }}></div>
-                          <div className="card-category position-absolute top-0 end-0 m-3">
-                            <span className="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold">
-                              {isAr ? post.categoryAr : post.category}
-                            </span>
-                          </div>
-                          <div className="card-date position-absolute bottom-0 start-0 w-100 p-3">
-                            <div className="d-flex align-items-center text-white gap-3">
-                              <span><i className="fa fa-calendar me-2"></i>{post.date}</span>
-                              <span><i className="fa fa-clock-o me-2"></i>{post.readTime} {isAr ? 'دقيقة' : 'min'}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="card-body-custom p-4">
-                          <h4 className="mb-3 text-dark card-title" style={{ fontSize: '1.25rem', lineHeight: '1.4' }}>
-                            {isAr ? post.titleAr : post.titleEn}
-                          </h4>
-                          <p className="text-muted mb-3 card-excerpt" style={{ lineHeight: '1.7' }}>
-                            {isAr ? post.excerptAr : post.excerptEn}
-                          </p>
-                          <div className="card-arrow">
-                            <i className={`fa fa-arrow-${isAr ? 'left' : 'right'} text-primary`}></i>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
+      <div className="blog-content-v2 py-5" style={{ background: '#0a0a0a' }}>
+        <div className="container-xxl py-5">
+          <div className="container px-lg-5">
+            <div className="category-filter mb-5 scroll-reveal from-bottom">
+              <div className="d-flex flex-wrap gap-3 justify-content-center">
+                <button 
+                  className={`filter-btn ${activeCategory === 'all' ? 'active' : ''}`}
+                  onClick={() => setActiveCategory('all')}
+                >
+                  {isAr ? 'الكل' : 'All'}
+                </button>
+                {categories.map((cat, i) => (
+                  <button 
+                    key={i}
+                    className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
+                    onClick={() => setActiveCategory(cat)}
+                  >
+                    {cat}
+                  </button>
                 ))}
               </div>
             </div>
 
-            <div className="col-lg-4">
-              <div className="blog-sidebar-modern">
-                <div className="search-box-modern bg-white rounded-4 p-4 mb-4 scroll-reveal from-right">
-                  <h5 className="mb-4 text-dark fw-bold">
-                    <i className={`fa fa-search text-primary me-2`}></i>
-                    {isAr ? 'بحث سريع' : 'Quick Search'}
-                  </h5>
-                  <div className="position-relative">
-                    <input
-                      type="text"
-                      className="form-control border-0 bg-light rounded-pill py-3 px-4"
-                      placeholder={isAr ? 'ابحث في المقالات...' : 'Search...'}
-                      style={{ paddingRight: '50px' }}
-                    />
-                    <button className="btn btn-primary position-absolute end-0 top-0 h-100 rounded-pill px-4">
-                      <i className="fa fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="categories-box-modern bg-white rounded-4 p-4 mb-4 scroll-reveal from-right">
-                  <h5 className="mb-4 text-dark fw-bold">
-                    <i className={`fa fa-folder-open text-primary me-2`}></i>
-                    {isAr ? 'التصنيفات' : 'Categories'}
-                  </h5>
-                  <div className="d-flex flex-column gap-2">
-                    {categories.map((cat, i) => (
-                      <Link to="#" key={i} className="category-item d-flex align-items-center justify-content-between p-3 rounded-3 text-decoration-none">
-                        <span className="text-dark">{cat}</span>
-                        <span className="badge bg-primary rounded-pill">{blogPosts.filter(p => (isAr ? p.categoryAr : p.category) === cat).length}</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="newsletter-box-modern bg-gradient rounded-4 p-4 mb-4 scroll-reveal from-right">
-                  <div className="text-center">
-                    <i className="fa fa-envelope-open fa-3x text-white mb-3"></i>
-                    <h5 className="text-white mb-3">{isAr ? 'النشرة البريدية' : 'Newsletter'}</h5>
-                    <p className="text-white mb-4" style={{ fontSize: '0.9rem', opacity: 0.9 }}>
-                      {isAr ? 'اشترك للحصول على آخر المقالات' : 'Subscribe for latest articles'}
-                    </p>
-                    <div className="input-group">
-                      <input
-                        type="email"
-                        className="form-control border-0 rounded-pill py-3"
-                        placeholder={isAr ? 'بريدك الإلكتروني' : 'Your email'}
-                      />
+            <div className="row g-4">
+              {filteredPosts.map((post, index) => (
+                <div className="col-lg-4 col-md-6" key={post.id}>
+                  <Link to={`/blog/${post.id}`} className="text-decoration-none">
+                    <div className="blog-card-v2 h-100" style={{ '--accent': post.color }}>
+                      <div className="card-glow" style={{ background: post.color }}></div>
+                      <div className="card-content">
+                        <div className="card-header-v2">
+                          <div className="card-icon-wrap" style={{ background: post.color }}>
+                            <i className={`fa ${post.image} text-white`}></i>
+                          </div>
+                          <span className="card-category-badge" style={{ color: post.color }}>
+                            {isAr ? post.categoryAr : post.category}
+                          </span>
+                        </div>
+                        <h3 className="card-title-v2 text-white mb-3">
+                          {isAr ? post.titleAr : post.titleEn}
+                        </h3>
+                        <p className="card-excerpt-v2 mb-4" style={{ opacity: 0.7 }}>
+                          {isAr ? post.excerptAr : post.excerptEn}
+                        </p>
+                        <div className="card-meta-v2 d-flex align-items-center justify-content-between">
+                          <span className="text-white" style={{ opacity: 0.5, fontSize: '0.85rem' }}>
+                            <i className="fa fa-calendar me-2"></i>
+                            {post.date}
+                          </span>
+                          <span className="text-white" style={{ opacity: 0.5, fontSize: '0.85rem' }}>
+                            <i className="fa fa-clock-o me-2"></i>
+                            {post.readTime} {isAr ? 'دقيقة' : 'min'}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="card-arrow-v2">
+                        <i className={`fa fa-arrow-${isAr ? 'left' : 'right'}`} style={{ color: post.color }}></i>
+                      </div>
                     </div>
-                    <button className="btn btn-white w-100 rounded-pill mt-3 fw-bold">
-                      {isAr ? 'اشتراك' : 'Subscribe'}
-                    </button>
-                  </div>
+                  </Link>
                 </div>
-
-                <div className="tags-box-modern bg-white rounded-4 p-4 scroll-reveal from-right">
-                  <h5 className="mb-4 text-dark fw-bold">
-                    <i className={`fa fa-tags text-primary me-2`}></i>
-                    {isAr ? 'الوسوم' : 'Tags'}
-                  </h5>
-                  <div className="d-flex flex-wrap gap-2">
-                    {['AI', 'Web', 'Automation', 'Marketing', 'Tech'].map((tag, i) => (
-                      <Link to="#" key={i} className="tag-badge bg-light text-dark px-3 py-2 rounded-pill text-decoration-none">
-                        {tag}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
+
+            {filteredPosts.length === 0 && (
+              <div className="text-center py-5">
+                <i className="fa fa-folder-open fa-4x text-white" style={{ opacity: 0.3 }}></i>
+                <p className="text-white mt-4" style={{ opacity: 0.5 }}>
+                  {isAr ? 'لا توجد مقالات في هذا التصنيف' : 'No articles in this category'}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
