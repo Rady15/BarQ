@@ -1,6 +1,8 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'http://localhost:5000';
 
+console.log('Current API URL:', API_URL);
+
 const getAuthToken = () => {
   const auth = localStorage.getItem('barq_admin_auth');
   if (auth) {
