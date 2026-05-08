@@ -93,9 +93,8 @@ const AdminLayout = ({ children, pageTitle }) => {
         <div className="admin-topbar">
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <button
-              className="btn-admin outline d-lg-none"
+              className="btn-admin outline sidebar-toggle"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              style={{ padding: '8px 12px' }}
             >
               <i className="fa fa-bars"></i>
             </button>
