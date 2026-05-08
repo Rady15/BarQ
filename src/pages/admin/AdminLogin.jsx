@@ -74,16 +74,16 @@ const AdminLogin = () => {
               color: '#374151', 
               marginBottom: '8px' 
             }}>
-              البريد الإلكتروني
+              اسم المستخدم
             </label>
             <div className="input-group">
               <span className="input-group-text">
-                <i className="fa fa-envelope"></i>
+                <i className="fa fa-user"></i>
               </span>
               <input
-                type="email"
+                type="text"
                 className="form-control"
-                placeholder="admin@barqtech.ai"
+                placeholder="omar"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

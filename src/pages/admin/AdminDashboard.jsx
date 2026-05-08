@@ -16,7 +16,7 @@ const AdminDashboard = () => {
     topPages: [],
     topCountries: [],
     devices: [],
-    browsers: []
+    sources: { google: 0, direct: 0, social: 0, other: 0 }
   });
   const [activities, setActivities] = useState([]);
 
@@ -126,17 +126,40 @@ const AdminDashboard = () => {
             </div>
             <div style={{ padding: '24px' }}>
               <h6 className="mb-3" style={{ fontSize: '0.85rem', color: '#6b7280' }}>الأجهزة المستخدمة</h6>
-              {analytics.devices.map((d, i) => (
+              {analytics.devices?.map((d, i) => (
                 <div key={i} className="mb-3">
                   <div className="d-flex justify-content-between mb-1" style={{ fontSize: '0.85rem' }}>
                     <span>{d.device === 'Mobile' ? 'جوال' : d.device === 'Tablet' ? 'تابلت' : 'كمبيوتر'}</span>
-                    <span className="fw-bold">{Math.round((d.count / (analytics.visitors.today || 1)) * 100) || 0}%</span>
+                    <span className="fw-bold">{Math.round((d.count / (analytics.visitors?.today || 1)) * 100) || 0}%</span>
                   </div>
                   <div className="progress" style={{ height: '6px' }}>
-                    <div className="progress-bar bg-primary" style={{ width: `${(d.count / (analytics.visitors.today || 1)) * 100}%` }}></div>
+                    <div className="progress-bar bg-primary" style={{ width: `${(d.count / (analytics.visitors?.today || 1)) * 100}%` }}></div>
                   </div>
                 </div>
               ))}
+
+              <hr className="my-4" />
+
+              <h6 className="mb-3" style={{ fontSize: '0.85rem', color: '#6b7280' }}>مصادر الزيارات</h6>
+              <div className="d-flex flex-column gap-2" style={{ fontSize: '0.85rem' }}>
+                {[
+                  { label: 'بحث Google', key: 'google', color: '#4285F4' },
+                  { label: 'مباشر (Direct)', key: 'direct', color: '#34A853' },
+                  { label: 'وسائل التواصل', key: 'social', color: '#FBBC05' },
+                  { label: 'مصادر أخرى', key: 'other', color: '#EA4335' }
+                ].map((s, i) => {
+                  const total = (analytics.sources?.google || 0) + (analytics.sources?.direct || 0) + (analytics.sources?.social || 0) + (analytics.sources?.other || 0) || 1;
+                  const count = analytics.sources?.[s.key] || 0;
+                  const percent = Math.round((count / total) * 100);
+                  return (
+                    <div key={i} className="d-flex align-items-center gap-2">
+                      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: s.color }}></div>
+                      <div style={{ flex: 1 }}>{s.label}</div>
+                      <div className="fw-bold">{percent}%</div>
+                    </div>
+                  );
+                })}
+              </div>
 
               <hr className="my-4" />
 
@@ -150,7 +173,7 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {analytics.topPages.map((p, i) => (
+                    {analytics.topPages?.map((p, i) => (
                       <tr key={i}>
                         <td className="text-truncate" style={{ maxWidth: '150px' }}>{p.page_path}</td>
                         <td className="text-end fw-bold">{p.views}</td>

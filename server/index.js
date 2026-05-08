@@ -545,7 +545,18 @@ app.get('/api/analytics/summary', authMiddleware, (req, res) => {
   const topPages = db.prepare("SELECT page_path, COUNT(*) as views FROM analytics_log GROUP BY page_path ORDER BY views DESC LIMIT 10").all();
   const topCountries = db.prepare("SELECT country, COUNT(*) as count FROM analytics_log GROUP BY country ORDER BY count DESC LIMIT 5").all();
   const devices = db.prepare("SELECT device, COUNT(*) as count FROM analytics_log GROUP BY device").all();
-  const browsers = db.prepare("SELECT browser, COUNT(*) as count FROM analytics_log GROUP BY browser").all();
+  
+  // Real Traffic Sources Analysis
+  const allLogs = db.prepare("SELECT referrer FROM analytics_log").all();
+  let sources = { google: 0, social: 0, direct: 0, other: 0 };
+  allLogs.forEach(log => {
+    const ref = log.referrer?.toLowerCase() || '';
+    if (!ref) sources.direct++;
+    else if (ref.includes('google.com') || ref.includes('bing.com')) sources.google++;
+    else if (ref.includes('facebook.com') || ref.includes('t.co') || ref.includes('instagram.com')) sources.social++;
+    else sources.other++;
+  });
+
   const unreadMessages = db.prepare('SELECT COUNT(*) as count FROM contact_messages WHERE is_read = 0').get();
   
   res.json({
@@ -553,7 +564,7 @@ app.get('/api/analytics/summary', authMiddleware, (req, res) => {
     topPages,
     topCountries,
     devices,
-    browsers,
+    sources,
     unreadMessages: unreadMessages.count
   });
 });

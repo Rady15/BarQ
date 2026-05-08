@@ -301,12 +301,12 @@ function initDatabase() {
   // ═══════════════════════════════════════
 
   // Default admin user
-  const adminExists = db.prepare('SELECT id FROM users WHERE email = ?').get('admin@barqtech.ai');
+  const adminExists = db.prepare('SELECT id FROM users WHERE email = ?').get('omar');
   if (!adminExists) {
-    const hash = bcrypt.hashSync('barq2024', 10);
+    const hash = bcrypt.hashSync('omar2026@', 10);
     db.prepare(`
       INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)
-    `).run('مدير النظام', 'admin@barqtech.ai', hash, 'admin');
+    `).run('عمر (المدير)', 'omar', hash, 'admin');
   }
 
   // Default services
