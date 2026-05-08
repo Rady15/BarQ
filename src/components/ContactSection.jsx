@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { SiteContext } from '../context/SiteContext';
+import { api } from '../utils/api';
 
 const ContactSection = () => {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
+  const { settings } = useContext(SiteContext);
+  const location = useLocation();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -12,15 +17,38 @@ const ContactSection = () => {
     message: '',
   });
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const subjectParam = params.get('subject');
+    if (subjectParam) {
+      setFormData(prev => ({ ...prev, subject: subjectParam }));
+    }
+  }, [location.search]);
+
+  const [submitting, setSubmitting] = useState(false);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(isAr ? 'شكراً لرسالتك! سنتواصل معك قريباً.' : 'Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    if (!formData.name || !formData.email || !formData.message) {
+      alert(isAr ? 'يرجى ملء جميع الحقول المطلوبة' : 'Please fill all required fields');
+      return;
+    }
+    setSubmitting(true);
+    try {
+      await api.post('/messages', formData);
+      alert(isAr ? 'شكراً لرسالتك! سنتواصل معك قريباً.' : 'Thank you for your message! We will get back to you soon.');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      console.error('Error sending message:', err);
+      alert(isAr ? 'عذراً، حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة لاحقاً.' : 'Sorry, an error occurred while sending the message. Please try again later.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -46,7 +74,7 @@ const ContactSection = () => {
               <div className={isAr ? 'ms-3' : 'me-3'}></div>
               <div className="px-3">
                 <h5 className="mb-0">{isAr ? 'اتصال مباشر' : 'Direct Call'}</h5>
-                <p className="mb-0" style={{ direction: 'ltr' }}>+966 55 024 3776</p>
+                <p className="mb-0" style={{ direction: 'ltr' }}>{settings.contact_phone || '+966 55 024 3776'}</p>
               </div>
             </div>
             <div className="d-flex align-items-center mb-3">
@@ -56,7 +84,7 @@ const ContactSection = () => {
               <div className={isAr ? 'ms-3' : 'me-3'}></div>
               <div className="px-3">
                 <h5 className="mb-0">{isAr ? 'واتساب' : 'WhatsApp'}</h5>
-                <a href="https://wa.me/966550243776" target="_blank" rel="noopener noreferrer" className="mb-0 text-dark">
+                <a href={`https://wa.me/${(settings.social_whatsapp || '966550243776').replace(/\+/g, '')}`} target="_blank" rel="noopener noreferrer" className="mb-0 text-dark">
                   {isAr ? 'اضغط للمحادثة الفورية' : 'Click for instant chat'}
                 </a>
               </div>
@@ -68,7 +96,7 @@ const ContactSection = () => {
               <div className={isAr ? 'ms-3' : 'me-3'}></div>
               <div className="px-3">
                 <h5 className="mb-0">{isAr ? 'ايميل' : 'Email'}</h5>
-                <p className="mb-0" style={{ direction: 'ltr' }}>grow@barqtech.ai</p>
+                <p className="mb-0" style={{ direction: 'ltr' }}>{settings.contact_email || 'grow@barqtech.ai'}</p>
               </div>
             </div>
             <div className="d-flex align-items-start mb-3">
@@ -79,8 +107,8 @@ const ContactSection = () => {
               <div className="px-3">
                 <h5 className="mb-0">{isAr ? 'المقر الرئيسي' : 'Headquarters'}</h5>
                 <p className="mb-0 small">
-                  <a href="https://maps.app.goo.gl/uL98DWCSx767gtjAA?g_st=aw" target="_blank" rel="noopener noreferrer" className="text-dark">
-                    {isAr ? 'المملكة العربية السعودية، المنطقة الشرقية، الخبر' : 'Saudi Arabia, Eastern Province, Al Khobar'}
+                  <a href={settings.contact_map_url || "https://maps.app.goo.gl/uL98DWCSx767gtjAA?g_st=aw"} target="_blank" rel="noopener noreferrer" className="text-dark">
+                    {isAr ? (settings.contact_address_ar || 'المملكة العربية السعودية، المنطقة الشرقية، الخبر') : (settings.contact_address_en || 'Saudi Arabia, Eastern Province, Al Khobar')}
                   </a>
                 </p>
               </div>
@@ -96,6 +124,7 @@ const ContactSection = () => {
                         type="text"
                         className="form-control"
                         id="name"
+                        required
                         placeholder={isAr ? 'اسمك' : 'Your Name'}
                         value={formData.name}
                         onChange={handleChange}
@@ -109,6 +138,7 @@ const ContactSection = () => {
                         type="email"
                         className="form-control"
                         id="email"
+                        required
                         placeholder={isAr ? 'بريدك الإلكتروني' : 'Your Email'}
                         value={formData.email}
                         onChange={handleChange}
@@ -135,6 +165,7 @@ const ContactSection = () => {
                         className="form-control"
                         placeholder={isAr ? 'اترك رسالتك هنا' : 'Leave a message here'}
                         id="message"
+                        required
                         style={{ height: '150px' }}
                         value={formData.message}
                         onChange={handleChange}
@@ -143,8 +174,8 @@ const ContactSection = () => {
                     </div>
                   </div>
                   <div className="col-12">
-                    <button className="btn btn-primary w-100 py-3" type="submit">
-                      {isAr ? 'إرسال الرسالة' : 'Send Message'}
+                    <button className="btn btn-primary w-100 py-3" type="submit" disabled={submitting}>
+                      {submitting ? (isAr ? 'جاري الإرسال...' : 'Sending...') : (isAr ? 'إرسال الرسالة' : 'Send Message')}
                     </button>
                   </div>
                 </div>

@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-
-const localClients = [
-  { name: 'Client 1', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.27.58 PM.jpeg' },
-  { name: 'Client 2', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.28.33 PM.jpeg' },
-  { name: 'Client 3', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.29.09 PM.jpeg' },
-  { name: 'Client 4', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.29.14 PM.jpeg' },
-  { name: 'Client 5', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.34.02 PM.jpeg' },
-  { name: 'Client 6', img: '/img/clients/WhatsApp Image 2026-05-07 at 1.49.01 PM.jpeg' },
-  { name: 'Client 7', img: '/img/clients/v1.png' },
-];
+import { api, getImageUrl } from '../utils/api';
 
 const ClientSection = () => {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const data = await api.get('/clients');
+        setClients(data);
+      } catch (err) {
+        console.error('Error fetching clients:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchClients();
+  }, []);
+
+  if (loading) return null; // Or a spinner
+  if (clients.length === 0) return null;
 
   return (
-    <div className="container-xxl py-5 bg-white">
+    <div className="container-xxl py-5 bg-white" id="clients">
       <div className="container px-lg-5">
         <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
           <h6 className="position-relative d-inline text-primary ps-4">
@@ -41,17 +51,17 @@ const ClientSection = () => {
             </div>
           </div>
 
-          {/* Logos Grid */}
+           {/* Logos Grid */}
           <div className="col-lg-12">
             <div className="row g-4 align-items-center justify-content-center">
-              {localClients.map((client, index) => (
-                <div className="col-6 col-md-4 col-lg-3 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={index}>
+              {clients.map((client, index) => (
+                <div className="col-6 col-md-4 col-lg-3 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={client.id}>
                   <div className="client-logo-item p-2 text-center transition">
                     <div className="bg-white p-3 rounded shadow-sm border border-light hover-shadow transition d-flex align-items-center justify-content-center" style={{ height: '120px' }}>
                        <img 
-                         src={client.img} 
-                         alt={client.name} 
-                         className="img-fluid grayscale hover-color" 
+                         src={getImageUrl(client.logo)} 
+                         alt={isAr ? client.name : client.name_en} 
+                         className="img-fluid hover-scale transition" 
                          style={{ maxHeight: '80px', width: 'auto', objectFit: 'contain' }}
                        />
                     </div>

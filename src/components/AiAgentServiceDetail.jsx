@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { api } from '../utils/api';
 
 const AiAgentServiceDetail = () => {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServiceData = async () => {
+      try {
+        const allServices = await api.get('/services');
+        const currentService = allServices.find(s => s.route === '/service/ai-agents');
+        if (currentService) {
+          const detail = await api.get(`/services/${currentService.id}`);
+          setService(detail);
+        }
+      } catch (err) {
+        console.error('Error fetching service detail:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServiceData();
+  }, []);
+
+  if (loading || !service) return null;
+
+  const results = service.features || [];
 
   const cardStyle1 = {
     backgroundImage: 'url(/img/bg-bottom-hero.png)',
@@ -23,37 +48,6 @@ const AiAgentServiceDetail = () => {
     transition: 'all 0.3s ease'
   };
 
-  const results = [
-    {
-      titleAr: 'تحرير الطاقة البشرية',
-      titleEn: 'Liberating Human Energy',
-      descAr: 'إيقاف استنزاف موظفيك في المهام الرتيبة؛ يقوم الوكيل بالمهام في ثوانٍ، مما يتيح لفريقك التركيز على الإبداع.',
-      descEn: 'Stopping the drain on your employees in monotonous tasks; the agent performs tasks in seconds.',
-      icon: 'fa-user-clock'
-    },
-    {
-      titleAr: 'الاستجابة بسرعة الضوء',
-      titleEn: 'Response at the Speed of Light',
-      descAr: 'القدرة على التوسع اللحظي؛ كل عميل يحصل على اهتمام كامل وفوري دون زيادة موظفين.',
-      descEn: 'Instant expansion capability; every customer receives full and immediate attention.',
-      icon: 'fa-bolt'
-    },
-    {
-      titleAr: 'تحويل البيانات إلى قرارات',
-      titleEn: 'Turning Data into Decisions',
-      descAr: 'جعل الوكيل "عقلاً تحليلياً" يربط البيانات ليخبرك بفرص الربح والعملاء المتوقع مغادرتهم.',
-      descEn: 'Making the agent an "analytical mind" that connects data to tell you about profit opportunities.',
-      icon: 'fa-brain'
-    },
-    {
-      titleAr: 'تجربة عملاء "شخصية"',
-      titleEn: 'Personal Customer Experience',
-      descAr: 'كسر حاجز الردود المملة؛ الوكيل يعرف السياق وتفضيلات العميل ويتحدث بلهجة ودودة.',
-      descEn: 'Breaking the barrier of boring responses; the agent knows the context and preferences.',
-      icon: 'fa-smile'
-    }
-  ];
-
   return (
     <div className="container-xxl py-5">
       <div className="container px-lg-5">
@@ -62,35 +56,67 @@ const AiAgentServiceDetail = () => {
             <div className="bg-light p-3 p-md-5 rounded shadow-sm">
               <div className="d-flex align-items-center mb-4 flex-wrap">
                 <div className="btn-square bg-primary rounded-circle me-3 ms-3 mb-2">
-                  <i className="fa fa-robot text-white"></i>
+                  <i className={`fa ${service.icon || 'fa-robot'} text-white`}></i>
                 </div>
                 <h3 className="mb-2" style={{ fontSize: 'calc(1.1rem + 0.5vw)', color: 'var(--primary)' }}>
-                  {isAr ? 'وكلاء الذكاء الاصطناعي AI Agent' : 'AI Agent'}
+                  {isAr ? service.title_ar : service.title_en}
                 </h3>
               </div>
               
-              <p className="mb-5 lead">
-                {isAr 
-                  ? 'في "برق تك"، لا نقدم مجرد "بوتات" للدردشة، بل نصمم وكلاء ذكاء اصطناعي مستقلين AI Agents يمتلكون القدرة على التفكير، التحليل، واتخاذ الإجراءات. هؤلاء الوكلاء هم أنظمة برمجية متطورة تعمل كقوة عاملة رقمية، قادرة على تنفيذ مهام معقدة من البداية إلى النهاية دون تدخل بشري دائم، مما يمنح منشأتك "سرعة البرق" في الأداء.'
-                  : 'At "Barq Tech", we don\'t just provide "chatbots", but we design autonomous AI agents (AI Agents) that possess the ability to think, analyze, and take actions. These agents are sophisticated software systems that work as a digital workforce, capable of executing complex tasks from start to finish without permanent human intervention, giving your establishment "lightning speed" in performance.'}
-              </p>
+              <div 
+                className="mb-5 lead"
+                dangerouslySetInnerHTML={{ __html: isAr ? service.description_ar : service.description_en }}
+              />
 
-              <h4 className="text-primary mb-4 text-center">
-                {isAr ? 'كيف نصنع الفارق؟ نحن نبيعك "نتائج":' : 'How We Help? We sell you "results":'}
-              </h4>
-              
               <div className="row g-4">
-                {results.map((axe, i) => (
-                  <div className={`col-sm-6 col-lg-3 ${i % 2 === 0 ? 'scroll-reveal from-left' : 'scroll-reveal from-right'}`} data-delay={i * 100} key={i}>
-                    <div className="p-4 rounded h-100 shadow-hover text-center" style={i % 2 === 0 ? cardStyle1 : cardStyle2}>
-                      <div className="icon-animated mb-4">
-                        <i className={`fa ${axe.icon} fa-3x text-primary`}></i>
-                      </div>
-                      <h6 className="mb-3 text-primary">{isAr ? axe.titleAr : axe.titleEn}</h6>
-                      <p className="small mb-0 text-dark fw-bold">{isAr ? axe.descAr : axe.descEn}</p>
+                {results.filter(f => f.section === 'why').length > 0 && (
+                  <div className="col-12">
+                    <h4 className="text-primary mb-4 text-center">
+                      {isAr ? 'لماذا يمثل هذا أهمية لأعمالك؟' : 'Why it Matters?'}
+                    </h4>
+                    <div className="row g-4">
+                      {results.filter(f => f.section === 'why').map((item, index) => (
+                        <div className={`col-md-6 col-lg-3 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 100} key={item.id}>
+                          <div className="p-4 rounded h-100 shadow-hover text-center" style={cardStyle1}>
+                            <div className="icon-animated mb-4">
+                              <i className={`fa ${item.icon || 'fa-check'} fa-3x text-primary`}></i>
+                            </div>
+                            <h6 className="mb-2 text-primary">{isAr ? item.title_ar : item.title_en}</h6>
+                            <p className="mb-0 small fw-bold text-dark">{isAr ? item.description_ar : item.description_en}</p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
+                )}
+
+                {results.filter(f => f.section === 'how').length > 0 && (
+                  <div className="col-12 mt-5">
+                    <h4 className="text-primary mb-4 text-center">
+                      {isAr ? 'كيف نصنع الفارق؟ How We Help' : 'How We Help'}
+                    </h4>
+                    <div className="row g-4">
+                      {results.filter(f => f.section === 'how').map((item, index) => (
+                        <div className={`col-md-6 col-lg-3 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 100} key={item.id}>
+                          <div className="p-4 rounded h-100 shadow-hover text-center" style={cardStyle2}>
+                            <div className="icon-animated mb-4">
+                              <i className={`fa ${item.icon || 'fa-rocket'} fa-3x text-primary`}></i>
+                            </div>
+                            <h6 className="mb-2 text-primary">{isAr ? item.title_ar : item.title_en}</h6>
+                            <p className="mb-0 small fw-bold text-dark">{isAr ? item.description_ar : item.description_en}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="text-center mt-5">
+                <a href={`/contact?subject=${encodeURIComponent(isAr ? 'طلب خدمة وكلاء الذكاء الاصطناعي' : 'AI Agents Service Request')}`} className="btn btn-primary py-3 px-5 rounded-pill shadow-sm">
+                  {isAr ? 'اطلب الخدمة الآن' : 'Order This Service Now'}
+                  <i className={`fa fa-arrow-${isAr ? 'left' : 'right'} ms-2 me-2`}></i>
+                </a>
               </div>
             </div>
           </div>

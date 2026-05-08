@@ -12,29 +12,44 @@ export function useScrollReveal() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const elements = document.querySelectorAll('.scroll-reveal');
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Add delay if specified
             const delay = entry.target.getAttribute('data-delay') || '0';
             setTimeout(() => {
               entry.target.classList.add('in-view');
             }, parseInt(delay));
           } else {
-            // Remove to allow re-animation on scroll back
             entry.target.classList.remove('in-view');
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
 
-    elements.forEach((el) => observer.observe(el));
+    const observeElements = () => {
+      const elements = document.querySelectorAll('.scroll-reveal');
+      elements.forEach((el) => observer.observe(el));
+    };
 
-    return () => observer.disconnect();
+    // Initial observation
+    observeElements();
+
+    // Re-observe when DOM changes (for dynamically loaded components)
+    const mutationObserver = new MutationObserver(() => {
+      observeElements();
+    });
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, [pathname]);
 }
 
@@ -112,7 +127,7 @@ export function useSpinner() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2000);
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 

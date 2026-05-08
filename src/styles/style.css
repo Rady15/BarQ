@@ -20,6 +20,21 @@
     background-color: var(--primary) !important;
 }
 
+.grayscale {
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.hover-color:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.bg-dark-50 {
+    background-color: rgba(29, 29, 39, 0.7) !important;
+}
+
 .text-primary {
     color: var(--primary) !important;
 }
@@ -128,6 +143,15 @@ h2,
 h3,
 .fw-bold {
     font-weight: 700 !important;
+    color: var(--dark);
+}
+
+.bg-primary h1,
+.bg-primary h2,
+.bg-primary h3,
+.bg-primary p,
+.bg-primary .fw-bold {
+    color: #FFFFFF !important;
 }
 
 h4,
@@ -177,6 +201,8 @@ h6,
     margin-left: 25px;
     padding: 35px 0;
     color: var(--light) !important;
+    font-size: 1.1rem;
+    font-weight: 700;
     outline: none;
     transition: .5s;
 }
@@ -602,6 +628,11 @@ h6,
     background: var(--light);
 }
 
+.bg-dark-50 {
+    background-color: rgba(29, 29, 39, 0.7) !important;
+}
+
+
 
 /*** Project Portfolio ***/
 .portfolio-overlay {
@@ -776,34 +807,38 @@ h6,
     width: 220px;
     height: 220px;
     border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
-    border: 5px solid var(--primary);
+    background: var(--primary);
+    box-shadow: 0 0 45px rgba(8, 46, 113, .2);
+    border: 5px solid rgba(3, 34, 87, 0.2);
     transition: .5s;
     position: relative;
     z-index: 1;
 }
 
 .stat-circle:hover {
-    background: var(--primary);
+    background: rgb(255, 255, 255);
+    border-color: var(--primary);
     transform: scale(1.05);
 }
 
 .stat-circle h2 {
     font-size: 3.5rem;
     transition: .5s;
+    color: #fff;
 }
 
 .stat-circle p {
     font-size: 1rem;
     padding: 0 15px;
     transition: .5s;
+    color: #fff;
 }
 
 .stat-circle:hover h2,
 .stat-circle:hover p {
-    color: #fff !important;
+    color: var(--primary) !important;
 }
+
 
 @media (max-width: 576px) {
     .stat-circle {
@@ -827,17 +862,25 @@ h6,
     box-shadow: 0 15px 35px rgba(8, 46, 113, 0.3) !important;
 }
 
-.shadow-hover:hover p, 
-.shadow-hover:hover h5, 
-.shadow-hover:hover h6, 
+.shadow-hover:hover p,
+.shadow-hover:hover h5,
+.shadow-hover:hover h6,
 .shadow-hover:hover i {
     color: #fff !important;
 }
 
 @keyframes icon-float {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(5deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
 }
 
 .icon-animated {
@@ -1020,7 +1063,7 @@ h6,
 }
 
 .card-date {
-    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
 }
 
 .card-date span {
@@ -1051,7 +1094,7 @@ h6,
 }
 
 .category-item:hover .badge {
-    background: rgba(255,255,255,0.2) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
 }
 
 .newsletter-box-modern {
@@ -1168,8 +1211,17 @@ h6,
 }
 
 @keyframes particle-float {
-    0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
-    50% { transform: translateY(-30px) scale(1.5); opacity: 0.8; }
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translateY(-30px) scale(1.5);
+        opacity: 0.8;
+    }
 }
 
 .hero-grid-lines {
@@ -1241,7 +1293,7 @@ h6,
 .mouse {
     width: 26px;
     height: 40px;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     position: relative;
 }
@@ -1259,8 +1311,17 @@ h6,
 }
 
 @keyframes scroll-wheel {
-    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
-    50% { transform: translateX(-50%) translateY(10px); opacity: 0.3; }
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(10px);
+        opacity: 0.3;
+    }
 }
 
 .blog-content-v2 {
@@ -1273,7 +1334,7 @@ h6,
 
 .filter-btn {
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
     padding: 0.75rem 1.5rem;
     border-radius: 50px;
@@ -1295,8 +1356,8 @@ h6,
 }
 
 .blog-card-v2 {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 2rem;
     position: relative;
@@ -1310,7 +1371,7 @@ h6,
 .blog-card-v2:hover {
     transform: translateY(-10px);
     border-color: var(--accent);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .blog-card-v2:hover .card-glow {
@@ -1380,7 +1441,7 @@ h6,
 
 .card-meta-v2 {
     padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: auto;
 }
 
@@ -1437,7 +1498,7 @@ h6,
 }
 
 .benefit-item:hover {
-    background: rgba(255,255,255,0.06) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
     transform: translateX(5px);
 }
 
@@ -1446,7 +1507,7 @@ h6,
 }
 
 .related-card-v2 {
-    background: rgba(255,255,255,0.03);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid;
     border-radius: 16px;
     transition: all 0.3s ease;
@@ -1454,7 +1515,7 @@ h6,
 
 .related-card-v2:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== Modern White Blog V3 ===== */
@@ -1511,8 +1572,17 @@ h6,
 }
 
 @keyframes dot-pulse {
-    0%, 100% { transform: scale(1); opacity: 0.3; }
-    50% { transform: scale(1.5); opacity: 0.6; }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0.6;
+    }
 }
 
 .badge-dot-modern {
@@ -1629,7 +1699,7 @@ h6,
 }
 
 .sidebar-card-modern {
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .sidebar-title-modern {
@@ -1696,7 +1766,7 @@ h6,
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .post-hero-modern .container-xxl {
@@ -1735,7 +1805,7 @@ h6,
 }
 
 .post-body-modern {
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .post-body-modern h2 {
@@ -1830,8 +1900,15 @@ h6,
 }
 
 @keyframes ellipse-float {
-    0%, 100% { transform: translateY(0) rotate(-25deg); }
-    50% { transform: translateY(-20px) rotate(-15deg); }
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-25deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(-15deg);
+    }
 }
 
 .ellipse-badge {
@@ -1996,4 +2073,162 @@ h6,
 .ellipse-related-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(33, 36, 177, 0.15) !important;
+}
+
+/* Service Detail Cards */
+.shadow-hover {
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.shadow-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 45px rgba(8, 46, 113, 0.15) !important;
+    background-color: #fff !important;
+}
+
+.icon-animated {
+    display: inline-block;
+    transition: all 0.5s ease;
+}
+
+.shadow-hover:hover .icon-animated {
+    transform: rotateY(360deg);
+}
+
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.1);
+}
+
+.transition {
+    transition: all 0.3s ease;
+}
+
+/* Blog Redesign Premium */
+.blog-card-premium {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid rgba(0,0,0,0.03);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-card-premium:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(33, 36, 177, 0.12);
+}
+
+.card-image-premium {
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+}
+
+.blog-img-premium {
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.blog-card-premium:hover .blog-img-premium {
+    transform: scale(1.1);
+}
+
+.card-category-premium {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 2;
+    box-shadow: 0 5px 15px rgba(33, 36, 177, 0.3);
+}
+
+[dir="rtl"] .card-category-premium {
+    right: auto;
+    left: 20px;
+}
+
+.card-overlay-premium {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(33, 36, 177, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 1;
+    backdrop-filter: blur(3px);
+}
+
+.blog-card-premium:hover .card-overlay-premium {
+    opacity: 1;
+}
+
+.card-title-premium {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.card-title-premium:hover {
+    color: var(--primary) !important;
+}
+
+.card-text-premium {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.read-more-premium {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: var(--primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.read-more-premium:hover {
+    letter-spacing: 0.5px;
+    color: var(--secondary);
+}
+
+/* Responsive fixes */
+@media (max-width: 991px) {
+    .card-image-premium {
+        height: 220px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-image-premium {
+        height: 200px;
+    }
+    .card-title-premium {
+        font-size: 1.2rem;
+    }
 }

@@ -10,13 +10,13 @@ import WhyUsSection from '../components/WhyUsSection';
 import ClientSection from '../components/ClientSection';
 import PortfolioSection from '../components/PortfolioSection';
 import FaqSection from '../components/FaqSection';
+import LatestBlogSection from '../components/LatestBlogSection';
 import TestimonialSection from '../components/TestimonialSection';
 import TeamSection from '../components/TeamSection';
 import ContactSection from '../components/ContactSection';
 import StatsSection from '../components/StatsSection';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
-import WhatsAppFloat from '../components/WhatsAppFloat';
 import { useSpinner, useWow } from '../hooks/useAnimations';
 import { useLanguage } from '../context/LanguageContext';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -83,20 +83,29 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Client Section */}
+      <ClientSection />
+
       {/* About Section */}
       <AboutSection />
 
       {/* Simple Services Section */}
       <ServiceHome />
 
-      {/* Client Section */}
-      <ClientSection />
+      {/* Why Us Section */}
+      <WhyUsSection />
+
+      {/* Methodology Section */}
+      <MethodologySection />
 
       {/* Portfolio Section */}
       <PortfolioSection limit={3} />
 
       {/* FAQ Section */}
       <FaqSection />
+
+      {/* Blog Section */}
+      <LatestBlogSection />
 
       {/* Testimonial Section */}
       <TestimonialSection />
@@ -112,9 +121,6 @@ const Home = () => {
 
       {/* Back to Top */}
       <BackToTop />
-
-      {/* WhatsApp Float */}
-      <WhatsAppFloat />
     </div>
   );
 };

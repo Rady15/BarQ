@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { SiteContext } from '../context/SiteContext';
 
 const AboutSection = () => {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
+  const { settings } = useContext(SiteContext);
 
   return (
     <div className="container-xxl py-5" id="about">
@@ -19,29 +21,21 @@ const AboutSection = () => {
                 {isAr ? 'برق تك.. ' : 'Barq Tech..  '}
               </h2>
             </div>
-            <p className="mb-4">
+            <div className="mb-4 text-muted" style={{ lineHeight: '1.9' }}>
               {isAr ? (
                 <>
-                  نحن في برق تك، شركة تقنية سعودية المنشأ، نؤمن أن الذكاء الاصطناعي ليس مجرد أداة، بل هو المحرك الجديد للنمو. انطلقنا لنطوع أحدث تقنيات الـ AI لخدمة الشركات الطموحة، محولين الأفكار المعقدة إلى تطبيقات واقعية ووكلاء ذكيين يعملون بدقة البرق.
-                  <br /><br />
-                  بصفتنا شركاء معتمدين لعمالقة التقنية مثل Microsoft، Oracle، وOdoo، نضمن لك حلولاً برمجية تتوافق مع أعلى المعايير العالمية وبلمسة إبداعية محلية.
-                  <br /><br />
-                  <strong>الرؤية والأهداف:</strong>
-                  <br />
-                  التزاماً منا بدعم رؤية المملكة 2030، نضع نصب أعيننا تسخير نقاط القوة الفريدة لوطننا لتلبية المتطلبات التقنية المحلية بكفاءة عالية. ومن خلال حصيلة خبراتنا العميقة وتخصصنا الدقيق، نقود الابتكارات الرقمية ونقدم خدمات ذكية مدعومة تكنولوجياً لتمكين عملائنا من تحقيق التفوق والريادة.
+                  <p>{settings.about_text_ar || 'نقدم حلولًا تقنية متكاملة تشمل تطوير المواقع والمتاجر الإلكترونية، الأنظمة الإدارية (ERP)، التحول الرقمي، حلول الذكاء الاصطناعي، الأتمتة، والاستشارات التقنية المصممة لدعم نمو الأعمال.'}</p>
+                  <p><strong>{isAr ? 'من نحن:' : 'About Us:'}</strong></p>
+                  <p>{settings.vision_text_ar || 'نحن في برق تك، شركة تقنية سعودية المنشأ، نؤمن أن الذكاء الاصطناعي ليس مجرد أداة، بل هو المحرك الجديد للنمو.'}</p>
                 </>
               ) : (
                 <>
-                  We at Barq Tech, a Saudi-born technology company, believe that artificial intelligence is not just a tool, but the new engine for growth. We set out to harness the latest AI technologies to serve ambitious companies, transforming complex ideas into realistic applications and smart agents that work with lightning precision.
-                  <br /><br />
-                  As certified partners with technology giants such as Microsoft, Oracle, and Odoo, we guarantee software solutions that comply with the highest international standards with a local creative touch.
-                  <br /><br />
-                  <strong>Vision and Goals:</strong>
-                  <br />
-                  In commitment to supporting the Kingdom's Vision 2030, we aim to harness the unique strengths of our homeland to meet local technical requirements with high efficiency. Through our deep expertise and precise specialization, we lead digital innovations and provide technologically-supported smart services to enable our clients to achieve excellence and leadership.
+                  <p>{settings.about_text_en || 'We at Barq Tech, a Saudi-born technology company...'}</p>
+                  <p><strong>Vision and Goals:</strong></p>
+                  <p>{settings.vision_text_en || 'In commitment to supporting the Kingdom\'s Vision 2030...'}</p>
                 </>
               )}
-            </p>
+            </div>
             <div className="row g-3">
               <div className="col-sm-6">
                 <h6 className="mb-3">

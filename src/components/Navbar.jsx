@@ -2,14 +2,10 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useStickyNavbar } from '../hooks/useAnimations';
 import { useLanguage } from '../context/LanguageContext';
-
-const servicesDropdown = [
-  { name: 'تطوير تطبيقات الويب', nameEn: 'Web Applications', path: '/service/web-applications' },
-  { name: 'وكلاء الذكاء الاصطناعي', nameEn: 'AI Agents', path: '/service/ai-agents' },
-  { name: 'أتمتة العمليات بالذكاء الاصطناعي', nameEn: 'AI Automation', path: '/service/ai-automation' },
-];
+import { useSite } from '../context/SiteContext';
 
 const Navbar = () => {
+  const { services } = useSite();
   const isSticky = useStickyNavbar();
   const location = useLocation();
   const { lang, toggleLanguage } = useLanguage();
@@ -17,8 +13,15 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
+  // Map services for dropdown
+  const servicesDropdown = services.map(s => ({
+    name: s.title_ar,
+    nameEn: s.title_en,
+    path: s.route || `/service/${s.id}`
+  }));
+
   const getNavLinkClass = (path) => {
-    return `nav-item nav-link ${location.pathname === path ? 'active' : ''}`;
+    return `nav-item nav-link fw-bold ${location.pathname === path ? 'active' : ''}`;
   };
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -55,6 +58,14 @@ const Navbar = () => {
             <Link to="/about" className={getNavLinkClass('/about')}>
               {isAr ? 'من نحن' : 'About'}
             </Link>
+            {/* <a href="/#clients" className="nav-item nav-link fw-bold" onClick={() => {
+              if (location.pathname === '/') {
+                const el = document.getElementById('clients');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}>
+              {isAr ? 'العملاء' : 'Clients'}
+            </a> */}
 
             {/* Desktop Dropdown */}
             <div
@@ -62,7 +73,7 @@ const Navbar = () => {
               onMouseEnter={() => setShowDropdown(true)}
               onMouseLeave={() => setShowDropdown(false)}
             >
-              <Link to="/service" className={`nav-link dropdown-toggle ${location.pathname === '/service' ? 'active' : ''}`}>
+              <Link to="/service" className={`nav-link dropdown-toggle fw-bold ${location.pathname === '/service' ? 'active' : ''}`}>
                 {isAr ? 'الخدمات' : 'Services'}
               </Link>
               <div className={`dropdown-menu border-0 shadow-sm m-0 ${showDropdown ? 'show' : ''}`}>
@@ -86,6 +97,13 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-nav">
+            <Link
+              to="/admin"
+              className="btn border-0 bg-transparent nav-item nav-link d-flex align-items-center"
+              style={{ fontWeight: 'bold', fontSize: '1rem', boxShadow: 'none' }}
+            >
+              <i className="fa fa-user-shield"></i>
+            </Link>
             <button
               onClick={toggleLanguage}
               className="btn border-0 bg-transparent nav-item nav-link d-flex align-items-center"
@@ -113,6 +131,17 @@ const Navbar = () => {
             <Link to="/about" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={toggleMenu}>
               {isAr ? 'من نحن' : 'About'}
             </Link>
+            <a href="/#clients" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={() => {
+              toggleMenu();
+              if (location.pathname === '/') {
+                setTimeout(() => {
+                  const el = document.getElementById('clients');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+              }
+            }}>
+              {isAr ? 'العملاء' : 'Clients'}
+            </a>
 
             {/* Mobile Dropdown */}
             <div className="mobile-dropdown py-3 border-bottom">
@@ -150,6 +179,10 @@ const Navbar = () => {
               <i className={`fa fa-globe ${isAr ? 'ms-2' : 'me-2'}`}></i>
               {isAr ? 'Switch to English' : 'تحويل للعربية'}
             </button>
+            <Link to="/admin" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={toggleMenu}>
+              <i className={`fa fa-user-shield ${isAr ? 'ms-2' : 'me-2'}`}></i>
+              {isAr ? 'لوحة التحكم' : 'Dashboard'}
+            </Link>
           </div>
         </div>
       </div>
