@@ -4,7 +4,7 @@ import '../../styles/admin.css';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const AdminLogin = () => {
       const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email: username, password }) // We still send as 'email' property to the backend for compatibility
       });
       const data = await response.json();
       
@@ -84,8 +84,8 @@ const AdminLogin = () => {
                 type="text"
                 className="form-control"
                 placeholder="omar"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 dir="ltr"
               />
