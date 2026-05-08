@@ -15,6 +15,8 @@ const Blog = () => {
   const isAr = lang === 'ar'
   const [articles, setArticles] = useState([]);
   const [dataLoading, setDataLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,7 +35,14 @@ const Blog = () => {
 
   if (dataLoading) return null;
 
-  const categories = [...new Set(articles.map(p => isAr ? p.category_ar || 'عام' : p.category_en || 'General'))]
+  const categories = ['all', ...new Set(articles.map(p => isAr ? p.category : p.category_en || p.category))];
+
+  const filteredArticles = articles.filter(post => {
+    const matchesSearch = (isAr ? post.title_ar : post.title_en).toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          (isAr ? post.excerpt_ar : post.excerpt_en).toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || (isAr ? post.category : post.category_en || post.category) === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="container-fluid p-0" style={{ background: '#F7FAFF' }}>
@@ -84,17 +93,38 @@ const Blog = () => {
       <div className="blog-content-v2 py-5">
         <div className="container-xxl py-5">
           <div className="container px-lg-5">
-            <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
-              <h6 className="position-relative d-inline text-primary ps-4">
-                {isAr ? 'مدونة برق تك' : 'Barq Tech Blog'}
-              </h6>
-              <h2 className="mt-2">
-                {isAr ? 'مقالات ملهمة لمستقبل رقمي واعد' : 'Inspiring Articles for a Promising Digital Future'}
-              </h2>
+            <div className="search-filter-v2 mb-5 scroll-reveal from-bottom">
+              <div className="row g-4 align-items-center">
+                <div className="col-lg-6">
+                  <div className="position-relative">
+                    <input 
+                      type="text" 
+                      className="form-control rounded-pill ps-5 pe-4 py-3 border-0 shadow-sm" 
+                      placeholder={isAr ? 'ابحث عن مقال...' : 'Search for an article...'}
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <i className={`fa fa-search position-absolute top-50 translate-middle-y text-primary ${isAr ? 'start-0 ms-4' : 'end-0 me-4'}`}></i>
+                  </div>
+                </div>
+                <div className="col-lg-6">
+                  <div className="d-flex flex-wrap gap-2 justify-content-lg-end">
+                    {categories.map(cat => (
+                      <button 
+                        key={cat}
+                        className={`btn rounded-pill px-4 py-2 shadow-sm ${selectedCategory === cat ? 'btn-primary' : 'btn-white bg-white'}`}
+                        onClick={() => setSelectedCategory(cat)}
+                      >
+                        {cat === 'all' ? (isAr ? 'الكل' : 'All') : cat}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="row g-4">
-              {articles.map((post, index) => (
+              {filteredArticles.length > 0 ? filteredArticles.map((post, index) => (
                 <div className="col-lg-4 col-md-6" key={post.id}>
                   <div className="blog-card-v2 h-100 scroll-reveal from-bottom" style={{ transitionDelay: `${index * 0.1}s` }}>
                     <div className="card-image-wrap overflow-hidden position-relative">
@@ -135,7 +165,12 @@ const Blog = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+              )) : (
+                <div className="col-12 text-center py-5">
+                  <i className="fa fa-search fa-3x text-muted mb-3"></i>
+                  <p className="text-muted">{isAr ? 'لم يتم العثور على مقالات تطابق بحثك' : 'No articles found matching your search'}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>

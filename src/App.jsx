@@ -11,6 +11,8 @@ import AutomationService from './pages/AutomationService';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import GenericService from './pages/GenericService';
+import Privacy from './pages/Privacy';
+import Faqs from './pages/Faqs';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -25,6 +27,7 @@ import AdminMedia from './pages/admin/AdminMedia';
 import AdminLogs from './pages/admin/AdminLogs';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminUsers from './pages/admin/AdminUsers';
+import AdminMessages from './pages/admin/AdminMessages';
 
 import SEO from './components/SEO';
 import GoogleAnalytics from './components/GoogleAnalytics';
@@ -66,6 +69,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/faqs" element={<Faqs />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLogin />} />
@@ -80,6 +85,7 @@ function App() {
         <Route path="/admin/logs" element={<ProtectedRoute><AdminLogs /></ProtectedRoute>} />
         <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
         <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
+        <Route path="/admin/messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
 
         {/* 404 Catch All */}
         <Route path="*" element={<NotFound />} />

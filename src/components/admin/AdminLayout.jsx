@@ -33,6 +33,7 @@ const AdminLayout = ({ children, pageTitle }) => {
     { label: 'الخدمات', icon: 'fa-cogs', path: '/admin/services' },
     { label: 'العملاء والشركاء', icon: 'fa-handshake', path: '/admin/clients' },
     { label: 'المدونة والمقالات', icon: 'fa-newspaper', path: '/admin/blog' },
+    { label: 'الرسائل والطلبات', icon: 'fa-envelope', path: '/admin/messages' },
     { label: 'المشاريع', icon: 'fa-project-diagram', path: '/admin/projects' },
     { label: 'مكتبة الوسائط', icon: 'fa-images', path: '/admin/media' },
     { section: 'التحسينات' },

@@ -120,10 +120,10 @@ const Footer = () => {
             </div>
             <div className="col-md-6 text-center text-md-end">
               <div className="footer-menu">
-                <Link to="/">Home</Link>
-                <a href="#">Cookies</a>
-                <a href="#">Help</a>
-                <a href="#">FAQs</a>
+                <Link to="/">{isAr ? 'الرئيسية' : 'Home'}</Link>
+                <Link to="/privacy">{isAr ? 'الخصوصية' : 'Cookies'}</Link>
+                <Link to="/contact">{isAr ? 'المساعدة' : 'Help'}</Link>
+                <Link to="/faqs">{isAr ? 'الأسئلة الشائعة' : 'FAQs'}</Link>
               </div>
             </div>
           </div>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { useSite } from '../context/SiteContext';
 
 const GenericServiceDetail = ({ service }) => {
   const { lang } = useLanguage();
+  const { settings } = useSite();
   const isAr = lang === 'ar';
 
   if (!service) return null;
@@ -90,11 +92,74 @@ const GenericServiceDetail = ({ service }) => {
                   </div>
                 )}
 
-                <div className="col-12 mt-5 text-center">
-                  <a href={`/contact?subject=${encodeURIComponent(isAr ? `طلب خدمة ${service.title_ar}` : `${service.title_en} Service Request`)}`} className="btn btn-primary py-3 px-5 rounded-pill shadow-sm">
-                    {isAr ? 'اطلب الخدمة الآن' : 'Order This Service Now'}
-                    <i className={`fa fa-arrow-${isAr ? 'left' : 'right'} ms-2 me-2`}></i>
-                  </a>
+                <div className="col-12 mt-5">
+                  <div className="card border-0 shadow-lg overflow-hidden rounded-4">
+                    <div className="row g-0">
+                      <div className="col-lg-5 bg-primary p-5 text-white d-flex flex-column justify-content-center">
+                        <h4 className="text-white mb-4">{isAr ? 'ابدأ مشروعك معنا اليوم' : 'Start Your Project Today'}</h4>
+                        <p className="mb-4">{isAr ? 'فريقنا جاهز لتحويل أفكارك إلى واقع رقمي ملموس. اترك بياناتك وسنتواصل معك خلال أقل من 24 ساعة.' : 'Our team is ready to turn your ideas into digital reality. Leave your details and we will contact you within 24 hours.'}</p>
+                        <div className="d-flex align-items-center mb-3">
+                          <div className="btn-square bg-white rounded-circle me-3 ms-3">
+                            <i className="fa fa-phone-alt text-primary"></i>
+                          </div>
+                          <span>+966 55 024 3776</span>
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <div className="btn-square bg-white rounded-circle me-3 ms-3">
+                            <i className="fa fa-envelope text-primary"></i>
+                          </div>
+                          <span>grow@barqtech.ai</span>
+                        </div>
+                      </div>
+                      <div className="col-lg-7 p-5 bg-white">
+                        <form onSubmit={async (e) => {
+                          e.preventDefault();
+                          const formData = {
+                            name: e.target.name.value,
+                            email: e.target.email.value,
+                            phone: e.target.phone.value,
+                            subject: isAr ? `طلب خدمة: ${service.title_ar}` : `Service Request: ${service.title_en}`,
+                            message: `طلب خدمة سريع من صفحة: ${service.title_ar}`
+                          };
+                          try {
+                            const { api } = await import('../utils/api');
+                            await api.post('/messages', formData);
+                            alert(isAr ? 'تم استلام طلبك بنجاح! سنتواصل معك قريباً.' : 'Order received successfully! We will contact you soon.');
+                            e.target.reset();
+                          } catch (err) {
+                            alert(isAr ? 'حدث خطأ ما، يرجى المحاولة لاحقاً' : 'Error sending request');
+                          }
+                        }}>
+                          <div className="row g-3">
+                            <div className="col-md-6">
+                              <input type="text" name="name" className="form-control border-0 bg-light p-3 rounded-pill" placeholder={isAr ? 'الاسم بالكامل' : 'Full Name'} required />
+                            </div>
+                            <div className="col-md-6">
+                              <input type="email" name="email" className="form-control border-0 bg-light p-3 rounded-pill" placeholder={isAr ? 'البريد الإلكتروني' : 'Email'} required />
+                            </div>
+                            <div className="col-12">
+                              <input type="text" name="phone" className="form-control border-0 bg-light p-3 rounded-pill" placeholder={isAr ? 'رقم الهاتف' : 'Phone Number'} required />
+                            </div>
+                            <div className="col-12">
+                              <button type="submit" className="btn btn-primary w-100 py-3 rounded-pill shadow-sm mb-3">
+                                {isAr ? 'إرسال طلب الخدمة (عبر الموقع)' : 'Submit Service Request (Website)'}
+                              </button>
+                              <a 
+                                href={`https://wa.me/${settings.site_whatsapp?.replace(/\+/g, '') || '966550243776'}?text=${encodeURIComponent(isAr ? `مرحباً برق تك، أريد الاستفسار عن خدمة: ${service.title_ar}` : `Hello Barq Tech, I want to inquire about: ${service.title_en}`)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-success w-100 py-3 rounded-pill shadow-sm d-flex align-items-center justify-content-center"
+                                style={{ backgroundColor: '#25D366', borderColor: '#25D366' }}
+                              >
+                                <i className="fab fa-whatsapp me-2 ms-2 fs-4"></i>
+                                {isAr ? 'اطلب عبر الواتساب مباشرة' : 'Order via WhatsApp Directly'}
+                              </a>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
