@@ -10,6 +10,7 @@ import AiAgentService from './pages/AiAgentService';
 import AutomationService from './pages/AutomationService';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import GenericService from './pages/GenericService';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -60,6 +61,7 @@ function App() {
         <Route path="/service/web-applications" element={<WebService />} />
         <Route path="/service/ai-agents" element={<AiAgentService />} />
         <Route path="/service/ai-automation" element={<AutomationService />} />
+        <Route path="/service/:slug" element={<GenericService />} />
         <Route path="/project" element={<Project />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
