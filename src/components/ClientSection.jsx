@@ -26,51 +26,71 @@ const ClientSection = () => {
   if (loading) return null; // Or a spinner
   if (clients.length === 0) return null;
 
+  const partners = clients.filter(c => c.type === 'partner');
+  const regularClients = clients.filter(c => c.type === 'client');
+
   return (
     <div className="container-xxl py-5 bg-white" id="clients">
       <div className="container px-lg-5">
-        <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
-          <h6 className="position-relative d-inline text-primary ps-4">
-            {isAr ? 'شركاء النجاح' : 'Success Partners'}
-          </h6>
-          <h2 className="mt-2">
-            {isAr ? 'أكثر من 50 عميل يثقون في حلولنا التقنية' : 'More than 50 Clients Trust Our Technical Solutions'}
-          </h2>
-        </div>
         
-        <div className="row g-4 align-items-center">
-          {/* Lottie Animation */}
-          <div className="col-lg-12 mb-4 scroll-reveal zoom-in">
-            <div className="mx-auto" style={{ maxWidth: '200px' }}>
-              <DotLottieReact
-                src="https://lottie.host/69c446f6-fb2b-4d1a-a205-ea530ab53a93/htZAphvAz9.lottie"
-                loop
-                autoplay
-                style={{ width: '100%' }}
-              />
+        {/* Success Partners Section */}
+        {regularClients.length > 0 && (
+          <>
+            <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
+              <h6 className="position-relative d-inline text-primary ps-4">
+                {isAr ? 'شركاء النجاح' : 'Success Partners'}
+              </h6>
+              <h2 className="mt-2">
+                {isAr ? 'أكثر من 50 عميل يثقون في حلولنا التقنية' : 'More than 50 Clients Trust Our Technical Solutions'}
+              </h2>
             </div>
-          </div>
+            
+            <div className="row g-4 align-items-center justify-content-center mb-5">
+              {regularClients.map((client, index) => (
+                <div className="col-4 col-md-3 col-lg-2 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={client.id}>
+                  <div className="text-center transition p-2">
+                    <img 
+                      src={getImageUrl(client.logo)} 
+                      alt={isAr ? client.name : client.name_en} 
+                      className="img-fluid hover-scale transition filter-grayscale-hover" 
+                      style={{ maxHeight: '60px', width: 'auto', objectFit: 'contain' }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
-           {/* Logos Grid */}
-          <div className="col-lg-12">
+        {/* Partners Section */}
+        {partners.length > 0 && (
+          <div className="mt-5 pt-5 border-top">
+            <div className="section-title position-relative text-center mb-5 pb-2 scroll-reveal from-bottom">
+              <h6 className="position-relative d-inline text-primary ps-4">
+                {isAr ? 'شركاؤنا' : 'Our Partners'}
+              </h6>
+              <h2 className="mt-2">
+                {isAr ? 'نتعاون مع الأفضل عالمياً' : 'Collaborating with the World\'s Best'}
+              </h2>
+            </div>
+            
             <div className="row g-4 align-items-center justify-content-center">
-              {clients.map((client, index) => (
-                <div className="col-6 col-md-4 col-lg-3 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={client.id}>
-                  <div className="client-logo-item p-2 text-center transition">
-                    <div className="bg-white p-3 rounded shadow-sm border border-light hover-shadow transition d-flex align-items-center justify-content-center" style={{ height: '120px' }}>
-                       <img 
-                         src={getImageUrl(client.logo)} 
-                         alt={isAr ? client.name : client.name_en} 
-                         className="img-fluid hover-scale transition" 
-                         style={{ maxHeight: '80px', width: 'auto', objectFit: 'contain' }}
-                       />
-                    </div>
+              {partners.map((partner, index) => (
+                <div className="col-4 col-md-3 col-lg-2 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={partner.id}>
+                  <div className="text-center transition p-2">
+                    <img 
+                      src={getImageUrl(partner.logo)} 
+                      alt={isAr ? partner.name : partner.name_en} 
+                      className="img-fluid hover-scale transition filter-grayscale-hover" 
+                      style={{ maxHeight: '70px', width: 'auto', objectFit: 'contain' }}
+                    />
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        )}
+
       </div>
     </div>
   );
