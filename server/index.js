@@ -168,6 +168,21 @@ app.delete('/api/services/:id', authMiddleware, (req, res) => {
   res.json({ message: 'تم حذف الخدمة' });
 });
 
+// ─── SERVICE FEATURES ROUTES ───
+app.post('/api/services/:id/features', authMiddleware, (req, res) => {
+  const { title_ar, title_en, description_ar, description_en, icon, section, sort_order } = req.body;
+  const result = db.prepare(`
+    INSERT INTO service_features (service_id, title_ar, title_en, description_ar, description_en, icon, section, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(req.params.id, title_ar, title_en, description_ar || '', description_en || '', icon, section, sort_order || 0);
+  res.status(201).json({ id: result.lastInsertRowid, message: 'تمت إضافة الميزة' });
+});
+
+app.delete('/api/services/features/:id', authMiddleware, (req, res) => {
+  db.prepare('DELETE FROM service_features WHERE id = ?').run(req.params.id);
+  res.json({ message: 'تم حذف الميزة' });
+});
+
 // ═══════════════════════════════════════
 //  CLIENTS ROUTES
 // ═══════════════════════════════════════

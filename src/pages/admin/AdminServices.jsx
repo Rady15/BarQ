@@ -220,6 +220,84 @@ const AdminServices = () => {
                   }
                 }}
               />
+              <div className="mt-4 pt-4 border-top">
+                <h6 style={{ fontWeight: 700, color: '#082e71', marginBottom: '15px' }}>
+                  <i className="fa fa-th-large me-2"></i>
+                  مميزات الخدمة (كروت الأهمية والفرق)
+                </h6>
+                <div style={{ background: '#f8fafc', padding: '15px', borderRadius: '12px' }}>
+                  {!editingService ? (
+                    <p style={{ fontSize: '0.85rem', color: '#64748b' }}>يرجى حفظ الخدمة أولاً لكي تتمكن من إضافة المميزات.</p>
+                  ) : (
+                    <>
+                      <div className="admin-table-wrapper" style={{ maxHeight: '200px', overflowY: 'auto', marginBottom: '15px' }}>
+                        <table className="admin-table table-sm">
+                          <thead>
+                            <tr>
+                              <th>الأيقونة</th>
+                              <th>العنوان</th>
+                              <th>القسم</th>
+                              <th>إجراء</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {editingService.features?.map(f => (
+                              <tr key={f.id}>
+                                <td><i className={`fa ${f.icon}`}></i></td>
+                                <td>{f.title_ar}</td>
+                                <td>{f.section === 'why' ? 'الأهمية' : 'الفرق'}</td>
+                                <td>
+                                  <button className="btn-admin danger btn-admin-sm" onClick={async () => {
+                                    if(window.confirm('حذف الميزة؟')) {
+                                      await api.delete(`/services/features/${f.id}`);
+                                      const updated = await api.get(`/services/${editingService.id}`);
+                                      setEditingService(updated);
+                                    }
+                                  }}>✕</button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      
+                      <div className="row g-2 align-items-end">
+                        <div className="col-md-3">
+                          <label style={{fontSize: '0.75rem'}}>الأيقونة</label>
+                          <input id="f_icon" className="form-control form-control-sm" placeholder="fa-check" />
+                        </div>
+                        <div className="col-md-3">
+                          <label style={{fontSize: '0.75rem'}}>العنوان (عربي)</label>
+                          <input id="f_title" className="form-control form-control-sm" />
+                        </div>
+                        <div className="col-md-3">
+                          <label style={{fontSize: '0.75rem'}}>القسم</label>
+                          <select id="f_section" className="form-select form-select-sm">
+                            <option value="why">الأهمية</option>
+                            <option value="how">الفرق</option>
+                          </select>
+                        </div>
+                        <div className="col-md-3">
+                          <button className="btn-admin primary btn-admin-sm w-100" onClick={async () => {
+                            const feat = {
+                              service_id: editingService.id,
+                              icon: document.getElementById('f_icon').value,
+                              title_ar: document.getElementById('f_title').value,
+                              section: document.getElementById('f_section').value,
+                              description_ar: 'وصف تلقائي', // Simplified for now
+                            };
+                            await api.post(`/services/${editingService.id}/features`, feat);
+                            const updated = await api.get(`/services/${editingService.id}`);
+                            setEditingService(updated);
+                            document.getElementById('f_icon').value = '';
+                            document.getElementById('f_title').value = '';
+                          }}>إضافة ميزة</button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
             <div className="modal-footer">
               <button className="btn-admin outline" onClick={() => setShowModal(false)}>إلغاء</button>
