@@ -131,7 +131,7 @@ const Navbar = () => {
             <Link to="/about" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={toggleMenu}>
               {isAr ? 'من نحن' : 'About'}
             </Link>
-            <a href="/#clients" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={() => {
+            {/* <a href="/#clients" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={() => {
               toggleMenu();
               if (location.pathname === '/') {
                 setTimeout(() => {
@@ -141,7 +141,7 @@ const Navbar = () => {
               }
             }}>
               {isAr ? 'العملاء' : 'Clients'}
-            </a>
+            </a> */}
 
             {/* Mobile Dropdown */}
             <div className="mobile-dropdown py-3 border-bottom">

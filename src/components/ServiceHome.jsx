@@ -9,8 +9,8 @@ const ServiceHome = () => {
   const { services } = useSite();
   const isAr = lang === 'ar';
 
-  // Take first 3 services for homepage
-  const displayServices = services.slice(0, 3);
+  // Take first 6 services for homepage
+  const displayServices = services.slice(0, 6);
 
   const stripHtml = (html) => {
     if (!html) return '';
@@ -54,6 +54,14 @@ const ServiceHome = () => {
             </div>
           ))}
         </div>
+        
+        {services.length > 6 && (
+          <div className="text-center mt-5 scroll-reveal from-bottom">
+            <Link to="/service" className="btn btn-primary rounded-pill py-3 px-5">
+              {isAr ? 'عرض المزيد من الخدمات' : 'View More Services'}
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
