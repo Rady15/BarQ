@@ -429,7 +429,44 @@ app.put('/api/messages/:id/read', authMiddleware, (req, res) => {
 
 app.delete('/api/messages/:id', authMiddleware, (req, res) => {
   db.prepare('DELETE FROM contact_messages WHERE id = ?').run(req.params.id);
-  res.json({ message: 'تم الحذف' });
+  res.json({ message: 'تم الحذف بنجاح' });
+});
+
+app.post('/api/messages/reply', authMiddleware, async (req, res) => {
+  console.log('Received reply request for:', req.body.email);
+  const { email, subject, message } = req.body;
+  
+  if (!email || !message) {
+    return res.status(400).json({ error: 'البريد والمحتوى مطلوبان' });
+  }
+
+  try {
+    await transporter.sendMail({
+      from: `"${process.env.SITE_NAME || 'برق تك'}" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: subject || 'رد على استفسارك - برق تك',
+      text: message,
+      html: `
+        <div dir="rtl" style="font-family: 'Cairo', sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+          <h2 style="color: #082e71;">مرحباً،</h2>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+            ${message.replace(/\n/g, '<br>')}
+          </p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+          <p style="font-size: 14px; color: #777;">
+            مع تحيات فريق عمل <b>برق تك</b><br>
+            <a href="https://barqtech.ai" style="color: #082e71; text-decoration: none;">www.barqtech.ai</a>
+          </p>
+        </div>
+      `,
+    });
+
+    logAction(req, 'REPLY_TO_MESSAGE', 'contact_messages', null, { to: email });
+    res.json({ message: 'تم إرسال الرد بنجاح' });
+  } catch (err) {
+    console.error('Email Reply Error:', err);
+    res.status(500).json({ error: 'حدث خطأ أثناء إرسال الإيميل' });
+  }
 });
 
 // ═══════════════════════════════════════
