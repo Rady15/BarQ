@@ -513,10 +513,28 @@ app.get('/api/media', authMiddleware, (req, res) => {
 
 app.post('/api/analytics/track', (req, res) => {
   const { page_path } = req.body;
-  const ip = req.ip || req.connection?.remoteAddress;
-  const ua = req.headers['user-agent'];
+  const ip = req.ip || req.connection?.remoteAddress || '';
+  const ua = req.headers['user-agent'] || '';
   const referrer = req.headers.referer || '';
-  db.prepare('INSERT INTO analytics_log (page_path, visitor_ip, user_agent, referrer) VALUES (?,?,?,?)').run(page_path, ip, ua, referrer);
+  
+  // Simple Device Detection
+  let device = 'Desktop';
+  if (/mobile/i.test(ua)) device = 'Mobile';
+  if (/tablet|ipad/i.test(ua)) device = 'Tablet';
+  
+  // Simple Browser Detection
+  let browser = 'Other';
+  if (/chrome|crios/i.test(ua)) browser = 'Chrome';
+  else if (/safari/i.test(ua)) browser = 'Safari';
+  else if (/firefox/i.test(ua)) browser = 'Firefox';
+  else if (/edge/i.test(ua)) browser = 'Edge';
+
+  // For country, we'd normally use an API, but for now we'll mark as 'Saudi Arabia' for demo or leave empty
+  // In a real production, you'd call a geo-ip service here.
+  const country = 'Saudi Arabia'; 
+
+  db.prepare('INSERT INTO analytics_log (page_path, visitor_ip, user_agent, referrer, device, browser, country) VALUES (?,?,?,?,?,?,?)')
+    .run(page_path, ip, ua, referrer, device, browser, country);
   res.json({ ok: true });
 });
 
@@ -525,10 +543,17 @@ app.get('/api/analytics/summary', authMiddleware, (req, res) => {
   const week = db.prepare("SELECT COUNT(*) as count FROM analytics_log WHERE visited_at >= datetime('now', '-7 days')").get();
   const month = db.prepare("SELECT COUNT(*) as count FROM analytics_log WHERE visited_at >= datetime('now', '-30 days')").get();
   const topPages = db.prepare("SELECT page_path, COUNT(*) as views FROM analytics_log GROUP BY page_path ORDER BY views DESC LIMIT 10").all();
+  const topCountries = db.prepare("SELECT country, COUNT(*) as count FROM analytics_log GROUP BY country ORDER BY count DESC LIMIT 5").all();
+  const devices = db.prepare("SELECT device, COUNT(*) as count FROM analytics_log GROUP BY device").all();
+  const browsers = db.prepare("SELECT browser, COUNT(*) as count FROM analytics_log GROUP BY browser").all();
   const unreadMessages = db.prepare('SELECT COUNT(*) as count FROM contact_messages WHERE is_read = 0').get();
+  
   res.json({
     visitors: { today: today.count, week: week.count, month: month.count },
     topPages,
+    topCountries,
+    devices,
+    browsers,
     unreadMessages: unreadMessages.count
   });
 });

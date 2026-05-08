@@ -261,6 +261,9 @@ function initDatabase() {
       visitor_ip TEXT,
       user_agent TEXT,
       referrer TEXT,
+      country TEXT,
+      device TEXT,
+      browser TEXT,
       visited_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);

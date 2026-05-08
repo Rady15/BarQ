@@ -52,7 +52,7 @@ function App() {
     <>
       <SEO />
       <GoogleAnalytics />
-      <WhatsAppButton />
+      {!location.pathname.startsWith('/admin') && <WhatsAppButton />}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
