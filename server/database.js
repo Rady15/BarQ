@@ -268,6 +268,19 @@ function initDatabase() {
     )
   `);
 
+  // Migration for analytics_log columns
+  try {
+    const columns = db.pragma('table_info(analytics_log)');
+    const hasCountry = columns.some(c => c.name === 'country');
+    if (!hasCountry) {
+      db.exec('ALTER TABLE analytics_log ADD COLUMN country TEXT');
+      db.exec('ALTER TABLE analytics_log ADD COLUMN device TEXT');
+      db.exec('ALTER TABLE analytics_log ADD COLUMN browser TEXT');
+    }
+  } catch (e) {
+    console.log('Migration Note (Analytics):', e.message);
+  }
+
   // ─── NEWSLETTER SUBSCRIPTIONS ───
   db.exec(`
     CREATE TABLE IF NOT EXISTS newsletter_subs (
@@ -518,7 +531,7 @@ function initDatabase() {
       ['linkedin_url', '', 'social'],
       ['instagram_url', '', 'social'],
       ['tiktok_url', '', 'social'],
-      ['ga_measurement_id', '', 'analytics'],
+      ['ga_measurement_id', 'G-DT4Y4BNB9H', 'analytics'],
       ['google_verification', '', 'seo'],
       ['about_text_ar', 'نحن في برق تك، شركة تقنية سعودية المنشأ، نؤمن أن الذكاء الاصطناعي ليس مجرد أداة، بل هو المحرك الجديد للنمو. انطلقنا لنطوع أحدث تقنيات الـ AI لخدمة الشركات الطموحة، محولين الأفكار المعقدة إلى تطبيقات واقعية ووكلاء ذكيين يعملون بدقة البرق.', 'general'],
       ['about_text_en', 'We at Barq Tech, a Saudi-born technology company, believe that artificial intelligence is not just a tool, but the new engine for growth. We set out to harness the latest AI technologies to serve ambitious companies, transforming complex ideas into realistic applications and smart agents that work with lightning precision.', 'general'],
@@ -527,6 +540,9 @@ function initDatabase() {
     ];
     defaults.forEach(s => insertSetting.run(...s));
   }
+
+  // Force update GA ID to ensure it stays even after restarts
+  db.prepare("UPDATE settings SET setting_value = ? WHERE setting_key = 'ga_measurement_id'").run('G-DT4Y4BNB9H');
 
   console.log('✅ Database initialized successfully');
   return db;
