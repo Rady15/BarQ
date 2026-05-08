@@ -12,7 +12,7 @@ const nodemailer = require('nodemailer');
 const { initDatabase } = require('./database');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 7860;
 const JWT_SECRET = process.env.JWT_SECRET || 'barqtech-secret-key-2024';
 
 // ─── Initialize Database ───
@@ -739,7 +739,7 @@ const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 // ─── Start Server ───
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`
   ╔══════════════════════════════════════╗
   ║   🚀 Barq Tech API Server           ║
