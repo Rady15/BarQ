@@ -28,7 +28,7 @@ const AdminLayout = ({ children, pageTitle }) => {
   };
 
   const navItems = [
-    { label: 'لوحة التحكم', icon: 'fa-th-large', path: '/admin/dashboard' },
+    { label: 'تسجيل الدخول  ', icon: 'fa-th-large', path: '/admin/dashboard' },
     { section: 'إدارة المحتوى' },
     { label: 'الخدمات', icon: 'fa-cogs', path: '/admin/services' },
     { label: 'العملاء والشركاء', icon: 'fa-handshake', path: '/admin/clients' },

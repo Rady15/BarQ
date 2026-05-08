@@ -585,6 +585,7 @@
   .admin-sidebar {
     transform: translateX(100%);
     box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    width: 280px;
   }
   .admin-sidebar.open {
     transform: translateX(0);
@@ -600,7 +601,7 @@
     padding: 16px;
   }
   .sidebar-toggle {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     padding: 8px 12px;
@@ -608,23 +609,58 @@
   .admin-login-card {
     padding: 32px 24px;
     margin: 16px;
-    max-width: 100%;
+    max-width: 90%;
   }
   .admin-login-wrapper::before,
   .admin-login-wrapper::after {
     display: none;
   }
+  
+  /* Table adjustments for mobile */
+  .admin-table-card .card-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    text-align: center;
+  }
+  .admin-table-card .card-header .btn-admin {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 576px) {
+  .admin-stat-card {
+    padding: 16px;
+  }
   .admin-stat-card .stat-number {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
   .admin-topbar .page-title {
-    font-size: 1.1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px;
+    font-size: 1rem;
+    max-width: 120px;
+  }
+  .admin-content {
+    padding: 12px;
+  }
+  
+  /* Make table rows feel more like cards on very small screens */
+  .admin-table th:nth-child(n+4), 
+  .admin-table td:nth-child(n+4) {
+    /* Optional: hide less important columns on mobile */
+  }
+
+  .admin-modal {
+    width: 95%;
+    margin: 10px;
+    max-height: 90vh;
+  }
+  .modal-header, .modal-body, .modal-footer {
+    padding: 16px 20px;
+  }
+
+  /* Form groups on mobile */
+  .form-group {
+    margin-bottom: 15px;
   }
 }

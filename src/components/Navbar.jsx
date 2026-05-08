@@ -181,7 +181,7 @@ const Navbar = () => {
             </button>
             <Link to="/admin" className="nav-link py-3 border-bottom fw-bold fs-4" onClick={toggleMenu}>
               <i className={`fa fa-user-shield ${isAr ? 'ms-2' : 'me-2'}`}></i>
-              {isAr ? 'لوحة التحكم' : 'Dashboard'}
+              {isAr ? 'تسجيل الدخول' : 'Login'}
             </Link>
           </div>
         </div>
