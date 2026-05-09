@@ -51,21 +51,26 @@ const MethodologySection = () => {
             {isAr ? 'منهجية عملنا: 4 خطوات للانطلاق خلال 14 يوم' : 'Our Methodology: 4 Steps to Launch in 14 Days'}
           </h2>
         </div>
-        <div className="row g-4">
-          {stepsData.map((step, index) => (
-            <div className={`col-lg-3 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 200} key={index}>
-              <div className="service-item d-flex flex-column justify-content-center text-center rounded bg-light p-4 h-100">
-                <div className="service-icon flex-shrink-0 mb-4 mx-auto">
-                  <i className={`${step.icon} fa-2x`}></i>
+        <div className="timeline-container">
+          {stepsData.map((step, index) => {
+            const isStart = index % 2 === 0;
+            return (
+              <div className={`timeline-row ${isStart ? 'justify-start' : 'justify-end'} scroll-reveal ${isStart ? 'from-right' : 'from-left'}`} data-delay={index * 150} key={index}>
+                <div className="timeline-item">
+                  <div className="timeline-dot">
+                    <i className={`${step.icon}`}></i>
+                  </div>
+                  <div className="timeline-content text-start" style={{ textAlign: isAr ? 'right' : 'left' }}>
+                    <h3 className="mb-2 text-primary" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{step.stepNum}</h3>
+                    <h4 className="mb-3 fw-bold">{isAr ? step.title : step.titleEn}</h4>
+                    <p className="m-0 text-muted" style={{ direction: isAr ? 'rtl' : 'ltr', lineHeight: '1.8' }}>
+                      {isAr ? step.desc : step.descEn}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="mb-3 text-primary">{step.stepNum}</h3>
-                <h5 className="mb-3">{isAr ? step.title : step.titleEn}</h5>
-                <p className="m-0" style={{ direction: isAr ? 'rtl' : 'ltr' }}>
-                  {isAr ? step.desc : step.descEn}
-                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

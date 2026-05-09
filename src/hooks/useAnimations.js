@@ -83,7 +83,8 @@ export function useBackToTop() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setVisible(window.scrollY > 100);
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 800;
+      setVisible(isAtBottom);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);

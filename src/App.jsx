@@ -34,6 +34,7 @@ import AdminTeam from './pages/admin/AdminTeam';
 import SEO from './components/SEO';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import WhatsAppButton from './components/WhatsAppButton';
+import ConsultationFloat from './components/ConsultationFloat';
 import NotFound from './pages/NotFound';
 import { api } from './utils/api';
 
@@ -57,7 +58,12 @@ function App() {
     <>
       <SEO />
       <GoogleAnalytics />
-      {!location.pathname.startsWith('/admin') && <WhatsAppButton />}
+      {!location.pathname.startsWith('/admin') && (
+        <>
+          <WhatsAppButton />
+          <ConsultationFloat />
+        </>
+      )}
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />

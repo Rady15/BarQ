@@ -827,12 +827,45 @@ h6,
 
 @media (max-width: 576px) {
     .stat-circle {
-        width: 180px;
-        height: 180px;
+        width: 140px;
+        height: 140px;
+        margin: 0 auto;
     }
 
     .stat-circle h2 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+    }
+
+    .stat-circle p {
+        font-size: 0.75rem !important;
+        padding: 0 5px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    /* Reduce hero height so the background image (cover) scales down */
+    .hero-header {
+        background-image: url(/img/bg-bottom-hero.png), url(/img/heromob.png?v=3) !important;
+        background-position: center bottom -1px, center center !important;
+        background-size: 100% auto, cover !important;
+    }
+
+    .hero-header.py-5 {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    .hero-header .my-5.py-5 {
+        margin-top: 1.5rem !important;
+        margin-bottom: 1.5rem !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+
+    .hero-header .row.py-5 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
     }
 }
 
@@ -2241,32 +2274,234 @@ h6,
 }
 
 /* Duplicated content for seamless loop */
-.marquee-content > * {
+.marquee-content>* {
     flex-shrink: 0;
-    width: 350px; /* Fixed width for each testimonial card */
-    white-space: normal; /* Allow text wrapping inside the card */
+    width: 350px;
+    /* Fixed width for each testimonial card */
+    white-space: normal;
+    /* Allow text wrapping inside the card */
 }
 
 @keyframes marquee {
     0% {
         transform: translateX(0);
     }
+
     100% {
-        /* Move left. Assuming RTL, might need to adjust direction */
-        transform: translateX(50%); /* For RTL, moving right means positive X */
+        transform: translateX(calc(-50% - 15px));
     }
 }
 
-/* If direction is LTR, it's translateX(-50%). For RTL: translateX(50%) */
-html[dir="rtl"] .marquee-content {
-    animation: marquee-rtl 30s linear infinite;
+/* =========================================
+   Vertical Timeline (Methodology)
+========================================= */
+.timeline-container {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
 }
 
-@keyframes marquee-rtl {
+/* Timeline Line */
+.timeline-container::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background: var(--primary);
+    opacity: 0.2;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.timeline-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.timeline-row.justify-start {
+    justify-content: flex-start;
+}
+
+.timeline-row.justify-end {
+    justify-content: flex-end;
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+}
+
+.timeline-row.justify-start .timeline-item {
+    padding-inline-end: 40px;
+}
+
+.timeline-row.justify-end .timeline-item {
+    padding-inline-start: 40px;
+}
+
+/* The Dot */
+.timeline-dot {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary);
+    border: 4px solid white;
+    border-radius: 50%;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    z-index: 1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-row.justify-start .timeline-dot {
+    inset-inline-end: -30px;
+}
+
+.timeline-row.justify-end .timeline-dot {
+    inset-inline-start: -30px;
+}
+
+/* Timeline Content Card */
+.timeline-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+    position: relative;
+    border: 1px solid var(--light);
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .timeline-container::after {
+        left: 30px;
+        transform: none;
+    }
+
+    html[dir="rtl"] .timeline-container::after {
+        left: auto;
+        right: 30px;
+        transform: none;
+    }
+
+    .timeline-row.justify-start,
+    .timeline-row.justify-end {
+        justify-content: flex-start;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-inline-start: 80px !important;
+        padding-inline-end: 20px !important;
+    }
+
+    .timeline-row.justify-start .timeline-dot,
+    .timeline-row.justify-end .timeline-dot {
+        inset-inline-start: 0 !important;
+        inset-inline-end: auto !important;
+    }
+}
+
+/* =========================================
+   Consultation Float Button
+========================================= */
+.consultation-float {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    overflow: hidden;
+    white-space: nowrap;
+    width: 60px;
+    height: 60px;
+}
+
+.consultation-float:hover {
+    width: 200px;
+    background: var(--secondary);
+    color: white;
+}
+
+/* LTR Default (Right Side) */
+.consultation-float.en {
+    right: 20px;
+    flex-direction: row-reverse;
+}
+
+/* RTL (Left Side) */
+.consultation-float.ar {
+    left: 20px;
+    flex-direction: row;
+}
+
+.consultation-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+}
+
+.consultation-text {
+    font-weight: bold;
+    font-size: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    padding: 0 10px;
+}
+
+.consultation-float:hover .consultation-text {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.1s;
+}
+
+@keyframes pulse {
     0% {
-        transform: translateX(0);
+        transform: scale(1);
     }
+
+    50% {
+        transform: scale(1.1);
+    }
+
     100% {
-        transform: translateX(50%); /* Slides rightward in RTL, bringing elements from the left */
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .consultation-float {
+        top: 65%;
     }
 }

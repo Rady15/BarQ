@@ -45,15 +45,15 @@ const ClientSection = () => {
               </h2>
             </div>
             
-            <div className="row g-4 align-items-center justify-content-center mb-5">
+            <div className="row g-3 g-md-4 align-items-center justify-content-center mb-5">
               {regularClients.map((client, index) => (
-                <div className="col-4 col-md-3 col-lg-2 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={client.id}>
-                  <div className="text-center transition p-2">
+                <div className="col-6 col-sm-4 col-md-3 col-lg-2 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={client.id}>
+                  <div className="text-center transition p-2 bg-light rounded shadow-sm d-flex align-items-center justify-content-center hover-scale" style={{ height: '100px' }}>
                     <img 
                       src={getImageUrl(client.logo)} 
                       alt={isAr ? client.name : client.name_en} 
-                      className="img-fluid hover-scale transition filter-grayscale-hover" 
-                      style={{ maxHeight: '80px', width: 'auto', maxWidth: '140px', objectFit: 'contain' }}
+                      className="img-fluid transition filter-grayscale-hover" 
+                      style={{ maxHeight: '70px', maxWidth: '100%', objectFit: 'contain' }}
                     />
                   </div>
                 </div>
@@ -74,15 +74,15 @@ const ClientSection = () => {
               </h2>
             </div>
             
-            <div className="row g-4 align-items-center justify-content-center">
+            <div className="row g-3 g-md-4 align-items-center justify-content-center">
               {partners.map((partner, index) => (
-                <div className="col-4 col-md-3 col-lg-2 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={partner.id}>
-                  <div className="text-center transition p-2">
+                <div className="col-6 col-sm-4 col-md-3 col-lg-2 scroll-reveal zoom-in" data-delay={(index % 10) * 100} key={partner.id}>
+                  <div className="text-center transition p-2 bg-light rounded shadow-sm d-flex align-items-center justify-content-center hover-scale" style={{ height: '100px' }}>
                     <img 
                       src={getImageUrl(partner.logo)} 
                       alt={isAr ? partner.name : partner.name_en} 
-                      className="img-fluid hover-scale transition filter-grayscale-hover" 
-                      style={{ maxHeight: '80px', width: 'auto', maxWidth: '140px', objectFit: 'contain' }}
+                      className="img-fluid transition filter-grayscale-hover" 
+                      style={{ maxHeight: '70px', maxWidth: '100%', objectFit: 'contain' }}
                     />
                   </div>
                 </div>

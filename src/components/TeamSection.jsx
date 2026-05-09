@@ -38,39 +38,38 @@ const TeamSection = () => {
         <div className="row g-4">
           {team.map((member, index) => (
             <div className={`col-lg-3 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 150} key={member.id || index}>
-              <div className="team-item bg-light rounded text-center p-4 h-100 shadow-sm">
-                <div className="btn-square bg-white rounded-circle mx-auto mb-4 border overflow-hidden" style={{ width: '100px', height: '100px' }}>
+              <div className="team-item bg-light rounded text-center h-100 shadow-sm overflow-hidden" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div className="team-img position-relative" style={{ width: '100%', height: '300px' }}>
                   {member.image ? (
                     <img src={getImageUrl(member.image)} alt={isAr ? member.name_ar : member.name_en} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : (
-                    <i className="fa fa-user text-primary fa-3x" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}></i>
+                    <div className="bg-white d-flex align-items-center justify-content-center border-bottom" style={{ width: '100%', height: '100%' }}>
+                      <i className="fa fa-user text-primary fa-5x"></i>
+                    </div>
                   )}
                 </div>
-                <h5 className="mb-1">{isAr ? member.name_ar : member.name_en}</h5>
-                <small>{isAr ? member.role_ar : member.role_en}</small>
-                {/* Optional Bio section if we wanted to show it
-                {(member.bio_ar || member.bio_en) && (
-                  <p className="mt-2 text-muted" style={{ fontSize: '0.85rem' }}>
-                    {isAr ? member.bio_ar : member.bio_en}
-                  </p>
-                )}
-                */}
-                <div className="d-flex justify-content-center mt-3">
-                  {member.linkedin && (
-                    <a className="btn btn-square btn-primary rounded-circle mx-1" href={member.linkedin} target="_blank" rel="noopener noreferrer">
-                      <i className="fab fa-linkedin-in"></i>
-                    </a>
-                  )}
-                  {member.twitter && (
-                    <a className="btn btn-square btn-primary rounded-circle mx-1" href={member.twitter} target="_blank" rel="noopener noreferrer">
-                      <i className="fab fa-twitter"></i>
-                    </a>
-                  )}
-                  {member.email && (
-                    <a className="btn btn-square btn-primary rounded-circle mx-1" href={`mailto:${member.email}`}>
-                      <i className="fa fa-envelope"></i>
-                    </a>
-                  )}
+                
+                <div className="p-4 d-flex flex-column align-items-center justify-content-center flex-grow-1">
+                  <h5 className="mb-1">{isAr ? member.name_ar : member.name_en}</h5>
+                  <small className="text-primary fw-bold mb-3">{isAr ? member.role_ar : member.role_en}</small>
+                  
+                  <div className="d-flex justify-content-center mt-auto">
+                    {member.linkedin && (
+                      <a className="btn btn-square btn-outline-primary rounded-circle mx-1" href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                        <i className="fab fa-linkedin-in"></i>
+                      </a>
+                    )}
+                    {member.twitter && (
+                      <a className="btn btn-square btn-outline-primary rounded-circle mx-1" href={member.twitter} target="_blank" rel="noopener noreferrer">
+                        <i className="fab fa-twitter"></i>
+                      </a>
+                    )}
+                    {member.email && (
+                      <a className="btn btn-square btn-outline-primary rounded-circle mx-1" href={`mailto:${member.email}`}>
+                        <i className="fa fa-envelope"></i>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
