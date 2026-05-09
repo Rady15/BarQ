@@ -39,10 +39,10 @@ const Home = () => {
       <div className="container-fluid position-relative p-0">
         <Navbar />
 
-        <div className="container-fluid py-5 bg-primary hero-header">
+        <div className="container-fluid py-5 hero-header">
           <div className="container my-5 py-5 px-lg-5">
             <div className="row g-5 py-5 align-items-center">
-              <div className="col-lg-6 text-center text-lg-start order-2 order-lg-1">
+              <div className="col-lg-10 mx-auto text-center">
                 <h1 className="text-white mb-4 animated zoomIn" style={{ fontSize: 'calc(1.5rem + 1.5vw)' }}>
                   {isAr ? 'برق تك..' : 'Barq Tech..'}
                 </h1>
@@ -53,7 +53,7 @@ const Home = () => {
                     'We transform your digital ambition into real results. At Barq Tech, we provide smart technical solutions that combine artificial intelligence, digital transformation, and business development to help your company grow rapidly, increase efficiency, and build a more powerful future. From websites and systems to advanced digital strategies — we are your technical partner for crafting success that leads the competition.'
                   )}
                 </p>
-                <div className="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start">
+                <div className="d-flex flex-column flex-sm-row justify-content-center">
                   <Link
                     to="/contact"
                     className={`btn btn-light py-sm-3 px-sm-5 rounded-pill animated slideInLeft mb-3 mb-sm-0 ${isAr ? 'ms-sm-3' : 'me-sm-3'}`}
@@ -66,15 +66,6 @@ const Home = () => {
                   >
                     {isAr ? 'اطلب عرض سعر' : 'Request a Quote'}
                   </Link>
-                </div>
-              </div>
-              <div className="col-lg-6 text-center order-1 order-lg-2">
-                <div className="mx-auto" style={{ maxWidth: '500px' }}>
-                  <img
-                    src="/img/hero.png"
-                    alt="Hero Image"
-                    className="img-fluid animated zoomIn hero-image-float"
-                  />
                 </div>
               </div>
             </div>

@@ -477,26 +477,11 @@ h6,
 
 /*** Hero Header ***/
 .hero-header {
-    background-color: #082e71 !important;
-    background:
-        url(/img/bg-dot.png),
-        url(/img/bg-dot.png),
-        url(/img/bg-round.png),
-        url(/img/bg-tree.png),
-        url(/img/bg-bottom-hero.png);
-    background-position:
-        10px 10px,
-        bottom 190px right 10px,
-        left 55% top -1px,
-        left 45% bottom -1px,
-        center bottom -1px;
-    background-repeat: no-repeat;
-    background-size:
-        auto,
-        auto,
-        auto,
-        auto,
-        100% auto;
+    background-image: url(/img/bg-bottom-hero.png), url(/img/herofull.png?v=3) !important;
+    background-position: center bottom -1px, center center !important;
+    background-size: 100% auto, cover !important;
+    background-repeat: no-repeat, no-repeat !important;
+    position: relative;
 }
 
 
@@ -2112,9 +2097,9 @@ h6,
 .blog-card-premium {
     background: #fff;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    border: 1px solid rgba(0,0,0,0.03);
+    border: 1px solid rgba(0, 0, 0, 0.03);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -2228,7 +2213,8 @@ h6,
     .card-image-premium {
         height: 200px;
     }
+
     .card-title-premium {
         font-size: 1.2rem;
     }
-}
+}

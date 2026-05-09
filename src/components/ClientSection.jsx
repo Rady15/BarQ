@@ -53,7 +53,7 @@ const ClientSection = () => {
                       src={getImageUrl(client.logo)} 
                       alt={isAr ? client.name : client.name_en} 
                       className="img-fluid hover-scale transition filter-grayscale-hover" 
-                      style={{ maxHeight: '60px', width: 'auto', objectFit: 'contain' }}
+                      style={{ maxHeight: '80px', width: 'auto', maxWidth: '140px', objectFit: 'contain' }}
                     />
                   </div>
                 </div>
@@ -82,7 +82,7 @@ const ClientSection = () => {
                       src={getImageUrl(partner.logo)} 
                       alt={isAr ? partner.name : partner.name_en} 
                       className="img-fluid hover-scale transition filter-grayscale-hover" 
-                      style={{ maxHeight: '70px', width: 'auto', objectFit: 'contain' }}
+                      style={{ maxHeight: '80px', width: 'auto', maxWidth: '140px', objectFit: 'contain' }}
                     />
                   </div>
                 </div>
