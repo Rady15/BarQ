@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useSite } from '../context/SiteContext';
 import { api, getImageUrl } from '../utils/api';
+import { showSuccess, showError } from '../utils/alerts';
 
 const Footer = () => {
   const { lang } = useLanguage();
@@ -91,10 +92,10 @@ const Footer = () => {
               if (!email) return;
               try {
                 const res = await api.post('/newsletter/subscribe', { email });
-                alert(res.message || (isAr ? 'تم الاشتراك بنجاح!' : 'Subscribed successfully!'));
+                showSuccess(isAr ? 'تم الاشتراك' : 'Subscribed', res.message || (isAr ? 'تم الاشتراك بنجاح!' : 'Subscribed successfully!'));
                 e.target.reset();
               } catch (err) {
-                alert(isAr ? 'حدث خطأ ما، يرجى المحاولة لاحقاً' : 'Something went wrong, please try again later');
+                showError(isAr ? 'خطأ' : 'Error', isAr ? 'حدث خطأ ما، يرجى المحاولة لاحقاً' : 'Something went wrong, please try again later');
               }
             }} className="position-relative w-100">
               <input name="email" className="form-control border-0 rounded-pill w-100 ps-4 pe-5" type="email" placeholder={isAr ? 'بريدك الإلكتروني' : 'Your Email'} style={{ height: '48px' }} required />

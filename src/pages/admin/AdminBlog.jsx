@@ -3,6 +3,7 @@ import AdminLayout from '../../components/admin/AdminLayout';
 import ImageUploader from '../../components/admin/ImageUploader';
 import RichTextEditor from '../../components/admin/RichTextEditor';
 import { api, getImageUrl } from '../../utils/api';
+import { showSuccess, showError, showConfirm } from '../../utils/alerts';
 
 const AdminBlog = () => {
   const [articles, setArticles] = useState([]);
@@ -44,23 +45,27 @@ const AdminBlog = () => {
     try {
       if (editingArticle) {
         await api.put(`/articles/${editingArticle.id}`, form);
+        showSuccess('تم التحديث', 'تم تحديث المقال بنجاح');
       } else {
         await api.post('/articles', form);
+        showSuccess('تم النشر', 'تم إضافة المقال الجديد بنجاح');
       }
       setShowModal(false);
       fetchArticles();
     } catch (err) {
-      alert('خطأ: ' + err.message);
+      showError('خطأ', err.message);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('هل أنت متأكد من حذف هذا المقال؟')) {
+    const result = await showConfirm('حذف المقال', 'هل أنت متأكد من حذف هذا المقال نهائياً؟');
+    if (result.isConfirmed) {
       try {
         await api.delete(`/articles/${id}`);
         fetchArticles();
+        showSuccess('تم الحذف', 'تم حذف المقال بنجاح');
       } catch (err) {
-        alert('خطأ: ' + err.message);
+        showError('خطأ', err.message);
       }
     }
   };
@@ -71,8 +76,9 @@ const AdminBlog = () => {
       const article = articles.find(a => a.id === id);
       await api.put(`/articles/${id}`, { ...article, status: newStatus });
       fetchArticles();
+      showSuccess('تم تغيير الحالة', `تم تحويل المقال إلى ${newStatus === 'published' ? 'منشور' : 'مسودة'}`);
     } catch (err) {
-      alert('خطأ: ' + err.message);
+      showError('خطأ', err.message);
     }
   };
 

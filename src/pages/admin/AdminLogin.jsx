@@ -23,7 +23,7 @@ const AdminLogin = () => {
         body: JSON.stringify({ email: username, password }) // We still send as 'email' property to the backend for compatibility
       });
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || 'فشل تسجيل الدخول');
       }
@@ -67,12 +67,12 @@ const AdminLogin = () => {
 
         <form onSubmit={handleLogin}>
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ 
-              display: 'block', 
-              fontSize: '0.85rem', 
-              fontWeight: 600, 
-              color: '#374151', 
-              marginBottom: '8px' 
+            <label style={{
+              display: 'block',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              color: '#374151',
+              marginBottom: '8px'
             }}>
               اسم المستخدم
             </label>
@@ -83,7 +83,7 @@ const AdminLogin = () => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="omar"
+                placeholder="barq user"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -93,12 +93,12 @@ const AdminLogin = () => {
           </div>
 
           <div style={{ marginBottom: '24px' }}>
-            <label style={{ 
-              display: 'block', 
-              fontSize: '0.85rem', 
-              fontWeight: 600, 
-              color: '#374151', 
-              marginBottom: '8px' 
+            <label style={{
+              display: 'block',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              color: '#374151',
+              marginBottom: '8px'
             }}>
               كلمة المرور
             </label>
@@ -145,11 +145,11 @@ const AdminLogin = () => {
           </button>
         </form>
 
-        <div style={{ 
-          textAlign: 'center', 
-          marginTop: '24px', 
-          paddingTop: '20px', 
-          borderTop: '1px solid #e5e7eb' 
+        <div style={{
+          textAlign: 'center',
+          marginTop: '24px',
+          paddingTop: '20px',
+          borderTop: '1px solid #e5e7eb'
         }}>
           <p style={{ color: '#9ca3af', fontSize: '0.8rem', margin: 0 }}>
             © {new Date().getFullYear()} Barq Tech — لوحة التحكم

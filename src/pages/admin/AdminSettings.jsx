@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { api } from '../../utils/api';
+import { showSuccess, showError } from '../../utils/alerts';
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -49,27 +50,28 @@ const AdminSettings = () => {
     try {
       await api.put('/settings', settings);
       setSaved(true);
+      showSuccess('تم الحفظ', 'تم تحديث الإعدادات بنجاح');
       setTimeout(() => setSaved(false), 3000);
     } catch (err) {
-      alert('خطأ في حفظ الإعدادات: ' + err.message);
+      showError('خطأ', 'فشل في حفظ الإعدادات: ' + err.message);
     }
   };
 
   const handlePasswordChange = async () => {
     if (!passwords.current || !passwords.new) {
-      alert('يرجى إدخال كلمة المرور الحالية والجديدة');
+      showError('حقول ناقصة', 'يرجى إدخال كلمة المرور الحالية والجديدة');
       return;
     }
     if (passwords.new !== passwords.confirm) {
-      alert('كلمات المرور الجديدة غير متطابقة');
+      showError('خطأ', 'كلمات المرور الجديدة غير متطابقة');
       return;
     }
     try {
       await api.put('/auth/password', { currentPassword: passwords.current, newPassword: passwords.new });
-      alert('تم تغيير كلمة المرور بنجاح');
+      showSuccess('تم التغيير', 'تم تغيير كلمة المرور بنجاح');
       setPasswords({ current: '', new: '', confirm: '' });
     } catch (err) {
-      alert('خطأ: ' + err.message);
+      showError('خطأ', err.message);
     }
   };
 

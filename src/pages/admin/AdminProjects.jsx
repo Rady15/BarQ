@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import ImageUploader from '../../components/admin/ImageUploader';
 import { api, getImageUrl } from '../../utils/api';
+import { showSuccess, showError, showConfirm } from '../../utils/alerts';
 
 const AdminProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -42,23 +43,27 @@ const AdminProjects = () => {
     try {
       if (editingProject) {
         await api.put(`/projects/${editingProject.id}`, form);
+        showSuccess('تم التحديث', 'تم تحديث بيانات المشروع بنجاح');
       } else {
         await api.post('/projects', form);
+        showSuccess('تمت الإضافة', 'تمت إضافة المشروع الجديد بنجاح');
       }
       setShowModal(false);
       fetchProjects();
     } catch (err) {
-      alert('خطأ: ' + err.message);
+      showError('خطأ', err.message);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('هل أنت متأكد من حذف هذا المشروع؟')) {
+    const result = await showConfirm('حذف المشروع', 'هل أنت متأكد من حذف هذا المشروع نهائياً؟');
+    if (result.isConfirmed) {
       try {
         await api.delete(`/projects/${id}`);
         fetchProjects();
+        showSuccess('تم الحذف', 'تم حذف المشروع بنجاح');
       } catch (err) {
-        alert('خطأ: ' + err.message);
+        showError('خطأ', err.message);
       }
     }
   };

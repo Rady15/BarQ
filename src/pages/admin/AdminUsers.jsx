@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { api } from '../../utils/api';
 
+import { showSuccess, showError, showConfirm } from '../../utils/alerts';
+
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -30,24 +32,27 @@ const AdminUsers = () => {
   const handleSave = async () => {
     try {
       if (editingUser) {
-        // Edit logic if needed, but for now we just add
+        // Edit logic if needed
       } else {
         await api.post('/users', form);
       }
       setShowModal(false);
       fetchUsers();
+      showSuccess('تم الحفظ', 'تم حفظ بيانات المستخدم بنجاح');
     } catch (err) {
-      alert('خطأ: ' + (err.response?.data?.error || err.message));
+      showError('خطأ', err.response?.data?.error || err.message);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
+    const result = await showConfirm('حذف المستخدم', 'هل أنت متأكد من حذف هذا المستخدم نهائياً؟');
+    if (result.isConfirmed) {
       try {
         await api.delete(`/users/${id}`);
         fetchUsers();
+        showSuccess('تم الحذف', 'تم حذف المستخدم بنجاح');
       } catch (err) {
-        alert('خطأ: ' + (err.response?.data?.error || err.message));
+        showError('خطأ', err.response?.data?.error || err.message);
       }
     }
   };

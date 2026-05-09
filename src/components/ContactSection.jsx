@@ -4,6 +4,8 @@ import { useLanguage } from '../context/LanguageContext';
 import { SiteContext } from '../context/SiteContext';
 import { api } from '../utils/api';
 
+import { showSuccess, showError } from '../utils/alerts';
+
 const ContactSection = () => {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
@@ -35,17 +37,26 @@ const ContactSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
-      alert(isAr ? 'يرجى ملء جميع الحقول المطلوبة' : 'Please fill all required fields');
+      showError(
+        isAr ? 'حقول ناقصة' : 'Missing Fields',
+        isAr ? 'يرجى ملء جميع الحقول المطلوبة' : 'Please fill all required fields'
+      );
       return;
     }
     setSubmitting(true);
     try {
       await api.post('/messages', formData);
-      alert(isAr ? 'شكراً لرسالتك! سنتواصل معك قريباً.' : 'Thank you for your message! We will get back to you soon.');
+      showSuccess(
+        isAr ? 'تم الإرسال بنجاح' : 'Sent Successfully',
+        isAr ? 'شكراً لرسالتك! سنتواصل معك قريباً.' : 'Thank you for your message! We will get back to you soon.'
+      );
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
       console.error('Error sending message:', err);
-      alert(isAr ? 'عذراً، حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة لاحقاً.' : 'Sorry, an error occurred while sending the message. Please try again later.');
+      showError(
+        isAr ? 'خطأ في الإرسال' : 'Send Error',
+        isAr ? 'عذراً، حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة لاحقاً.' : 'Sorry, an error occurred while sending the message. Please try again later.'
+      );
     } finally {
       setSubmitting(false);
     }

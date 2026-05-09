@@ -161,6 +161,20 @@ function initDatabase() {
     )
   `);
 
+  // ─── MESSAGE REPLIES TABLE ───
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS message_replies (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      message_id INTEGER,
+      admin_id INTEGER,
+      subject TEXT,
+      message TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(message_id) REFERENCES contact_messages(id) ON DELETE CASCADE,
+      FOREIGN KEY(admin_id) REFERENCES users(id)
+    )
+  `);
+
   // ─── TESTIMONIALS TABLE ───
   db.exec(`
     CREATE TABLE IF NOT EXISTS testimonials (
@@ -314,12 +328,12 @@ function initDatabase() {
   // ═══════════════════════════════════════
 
   // Default admin user
-  const adminExists = db.prepare('SELECT id FROM users WHERE email = ?').get('omar');
+  const adminExists = db.prepare('SELECT id FROM users WHERE email = ?').get('Omar');
   if (!adminExists) {
-    const hash = bcrypt.hashSync('omar2026@', 10);
+    const hash = bcrypt.hashSync('Omar2026@', 10);
     db.prepare(`
       INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)
-    `).run('عمر (المدير)', 'omar', hash, 'admin');
+    `).run('عمر (المدير)', 'Omar', hash, 'admin');
   }
 
   // Default services

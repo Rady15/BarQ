@@ -67,12 +67,20 @@ const logAction = (req, action, entityType = null, entityId = null, details = nu
   try {
     const userId = req.user?.id || null;
     const ip = req.ip || req.connection?.remoteAddress;
+    
+    // Ensure userId is valid if foreign key exists
+    let validUserId = userId;
+    if (userId) {
+      const userExists = db.prepare('SELECT id FROM users WHERE id = ?').get(userId);
+      if (!userExists) validUserId = null;
+    }
+
     db.prepare(`
       INSERT INTO audit_logs (user_id, action, entity_type, entity_id, details, ip_address)
       VALUES (?, ?, ?, ?, ?, ?)
-    `).run(userId, action, entityType, entityId, details ? JSON.stringify(details) : null, ip);
+    `).run(validUserId, action, entityType, entityId, details ? JSON.stringify(details) : null, ip);
   } catch (err) {
-    console.error('Audit Log Error:', err);
+    console.warn('Silent Audit Log Error:', err.message);
   }
 };
 
@@ -386,7 +394,15 @@ app.delete('/api/testimonials/:id', authMiddleware, (req, res) => {
 // ═══════════════════════════════════════
 
 app.get('/api/messages', authMiddleware, (req, res) => {
-  res.json(db.prepare('SELECT * FROM contact_messages ORDER BY created_at DESC').all());
+  const messages = db.prepare('SELECT * FROM contact_messages ORDER BY created_at DESC').all();
+  
+  // Attach replies to each message
+  const messagesWithReplies = messages.map(msg => {
+    const replies = db.prepare('SELECT * FROM message_replies WHERE message_id = ? ORDER BY created_at ASC').all(msg.id);
+    return { ...msg, replies };
+  });
+  
+  res.json(messagesWithReplies);
 });
 
 app.post('/api/messages', async (req, res) => {
@@ -461,8 +477,14 @@ app.post('/api/messages/reply', authMiddleware, async (req, res) => {
       `,
     });
 
-    logAction(req, 'REPLY_TO_MESSAGE', 'contact_messages', null, { to: email });
-    res.json({ message: 'تم إرسال الرد بنجاح' });
+    // Save to database
+    if (req.body.message_id) {
+      db.prepare('INSERT INTO message_replies (message_id, admin_id, subject, message) VALUES (?, ?, ?, ?)')
+        .run(req.body.message_id, req.user.id, subject || 'رد على استفسارك', message);
+    }
+
+    logAction(req, 'REPLY_TO_MESSAGE', 'contact_messages', req.body.message_id, { to: email });
+    res.json({ message: 'تم إرسال الرد وحفظه بنجاح' });
   } catch (err) {
     console.error('Email Reply Error:', err);
     res.status(500).json({ error: 'حدث خطأ أثناء إرسال الإيميل' });
@@ -792,12 +814,17 @@ app.get('/api/search', (req, res) => {
 // ─── Email Transporter ───
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: process.env.EMAIL_PORT == 465,
+  port: parseInt(process.env.EMAIL_PORT) || 587,
+  secure: parseInt(process.env.EMAIL_PORT) === 465,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  tls: {
+    rejectUnauthorized: false,
+    minVersion: 'TLSv1.2'
+  },
+  connectionTimeout: 20000, // زيادة المهلة لـ 20 ثانية
 });
 
 // ─── Sitemap Endpoint ───

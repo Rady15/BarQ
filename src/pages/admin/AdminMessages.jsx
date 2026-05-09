@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../../utils/api';
 import AdminLayout from '../../components/admin/AdminLayout';
+import { showSuccess, showError, showConfirm } from '../../utils/alerts';
 
 const AdminMessages = () => {
   const [messages, setMessages] = useState([]);
@@ -29,29 +30,34 @@ const AdminMessages = () => {
     e.preventDefault();
     setSending(true);
     try {
-      const response = await api.post('/messages/reply', {
+      await api.post('/messages/reply', {
+        message_id: replyingTo.id, // ربط الرد بالرسالة
         email: replyingTo.email,
         subject: replySubject,
         message: replyMessage
       });
-      alert(response.message || 'تم إرسال الرد بنجاح');
+      showSuccess('تم إرسال الرد', 'تم إرسال الإيميل وحفظ النسخة في السجل بنجاح');
       setReplyingTo(null);
       setReplySubject('');
       setReplyMessage('');
+      fetchMessages(); // تحديث القائمة لرؤية الرد الجديد
     } catch (err) {
-      alert('حدث خطأ أثناء إرسال الإيميل');
+      showError('فشل الإرسال', 'حدث خطأ أثناء إرسال الإيميل');
     } finally {
       setSending(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('هل أنت متأكد من حذف هذه الرسالة؟')) return;
-    try {
-      await api.delete(`/messages/${id}`);
-      setMessages(messages.filter(m => m.id !== id));
-    } catch (err) {
-      alert('حدث خطأ أثناء الحذف');
+    const result = await showConfirm('حذف الرسالة', 'هل أنت متأكد من حذف هذه الرسالة؟');
+    if (result.isConfirmed) {
+      try {
+        await api.delete(`/messages/${id}`);
+        showSuccess('تم الحذف', 'تم حذف الرسالة بنجاح');
+        setMessages(messages.filter(m => m.id !== id));
+      } catch (err) {
+        showError('خطأ', 'حدث خطأ أثناء الحذف');
+      }
     }
   };
 
@@ -135,9 +141,25 @@ const AdminMessages = () => {
                         {new Date(msg.created_at).toLocaleDateString('ar-SA')}
                       </td>
                       <td>
-                        <div className="fw-bold">{msg.name}</div>
-                        <div className="small text-muted">{msg.email}</div>
-                        <div className="small text-primary">{msg.phone}</div>
+                        <div className="fw-bold">{msg.subject || 'بدون عنوان'}</div>
+                        <div className="small text-muted text-truncate" style={{ maxWidth: '300px' }}>
+                          {msg.message}
+                        </div>
+                        {/* عرض الردود السابقة */}
+                        {msg.replies && msg.replies.length > 0 && (
+                          <div className="mt-2 pt-2 border-top">
+                            <div className="small fw-bold text-primary mb-1">الردود السابقة:</div>
+                            {msg.replies.map((reply, rid) => (
+                              <div key={rid} className="bg-light p-2 rounded mb-1 small border-start border-primary border-3">
+                                <div className="d-flex justify-content-between">
+                                  <span className="fw-bold">{reply.subject}</span>
+                                  <span className="text-muted" style={{fontSize: '10px'}}>{new Date(reply.created_at).toLocaleDateString('ar-EG')}</span>
+                                </div>
+                                <div className="text-dark">{reply.message}</div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </td>
                       <td>
                         <span className={`badge ${msg.subject?.includes('طلب خدمة') ? 'bg-success' : 'bg-info'}`}>

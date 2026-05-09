@@ -3,6 +3,7 @@ import AdminLayout from '../../components/admin/AdminLayout';
 import ImageUploader from '../../components/admin/ImageUploader';
 import RichTextEditor from '../../components/admin/RichTextEditor';
 import { api, getImageUrl } from '../../utils/api';
+import { showSuccess, showError, showConfirm } from '../../utils/alerts';
 
 const AdminServices = () => {
   const [services, setServices] = useState([]);
@@ -55,23 +56,27 @@ const AdminServices = () => {
     try {
       if (editingService) {
         await api.put(`/services/${editingService.id}`, form);
+        showSuccess('تم التحديث', 'تم تحديث بيانات الخدمة بنجاح');
       } else {
         await api.post('/services', form);
+        showSuccess('تمت الإضافة', 'تمت إضافة الخدمة الجديدة بنجاح');
       }
       setShowModal(false);
       fetchServices();
     } catch (err) {
-      alert('خطأ: ' + err.message);
+      showError('خطأ', err.message);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('هل أنت متأكد من حذف هذه الخدمة؟')) {
+    const result = await showConfirm('حذف الخدمة', 'هل أنت متأكد من حذف هذه الخدمة؟');
+    if (result.isConfirmed) {
       try {
         await api.delete(`/services/${id}`);
         fetchServices();
+        showSuccess('تم الحذف', 'تم حذف الخدمة بنجاح');
       } catch (err) {
-        alert('خطأ: ' + err.message);
+        showError('خطأ', err.message);
       }
     }
   };
