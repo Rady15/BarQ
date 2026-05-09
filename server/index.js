@@ -416,25 +416,35 @@ app.post('/api/messages', async (req, res) => {
     db.prepare('INSERT INTO contact_messages (name, email, phone, subject, message) VALUES (?,?,?,?,?)').run(name, email, phone, subject, message);
     
     // Send Email Notification
+    let notificationSent = false;
     if (resend) {
-      await resend.emails.send({
-        from: 'برق تك <onboarding@resend.dev>',
-        to: process.env.ADMIN_EMAIL,
-        subject: `رسالة جديدة من الموقع: ${subject || 'بدون عنوان'}`,
-        html: `
-          <div dir="rtl" style="font-family: sans-serif;">
-            <h3>لديك رسالة جديدة من الموقع</h3>
-            <p><strong>الاسم:</strong> ${name}</p>
-            <p><strong>الإيميل:</strong> ${email}</p>
-            <p><strong>الهاتف:</strong> ${phone || 'غير متوفر'}</p>
-            <p><strong>الرسالة:</strong></p>
-            <p style="padding: 10px; background: #f3f4f6; border-radius: 5px;">${message}</p>
-          </div>
-        `
-      }).catch(e => console.error('Resend error:', e));
-    } else if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      try {
+        const response = await resend.emails.send({
+          from: 'برق تك <onboarding@resend.dev>',
+          to: process.env.ADMIN_EMAIL,
+          subject: `رسالة جديدة من الموقع: ${subject || 'بدون عنوان'}`,
+          html: `
+            <div dir="rtl" style="font-family: sans-serif;">
+              <h3>لديك رسالة جديدة من الموقع</h3>
+              <p><strong>الاسم:</strong> ${name}</p>
+              <p><strong>الإيميل:</strong> ${email}</p>
+              <p><strong>الهاتف:</strong> ${phone || 'غير متوفر'}</p>
+              <p><strong>الرسالة:</strong></p>
+              <p style="padding: 10px; background: #f3f4f6; border-radius: 5px;">${message}</p>
+            </div>
+          `
+        });
+        console.log('Contact Notification Resend Response:', response);
+        if (!response.error) notificationSent = true;
+      } catch (e) {
+        console.error('Resend notification error:', e);
+      }
+    }
+
+    if (!notificationSent && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      console.log('Attempting SMTP Fallback for notification...');
       const mailOptions = {
-        from: process.env.EMAIL_FROM,
+        from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
         to: process.env.ADMIN_EMAIL,
         subject: `رسالة جديدة من الموقع: ${subject || 'بدون عنوان'}`,
         html: `
@@ -448,7 +458,7 @@ app.post('/api/messages', async (req, res) => {
           </div>
         `
       };
-      transporter.sendMail(mailOptions).catch(e => console.error('Email error:', e));
+      transporter.sendMail(mailOptions).catch(e => console.error('SMTP notification fallback error:', e));
     }
     
     res.status(201).json({ message: 'تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.' });
@@ -489,23 +499,39 @@ app.post('/api/messages/reply', authMiddleware, async (req, res) => {
     </div>
   `;
 
-  try {
-    if (resend) {
-      await resend.emails.send({
-        from: `برق تك <onboarding@resend.dev>`, // سيتم تغييره لإيميلك لاحقاً عند ربط الدومين
-        to: email,
-        subject: subject || 'رد على استفسارك - برق تك',
-        html: mailHtml,
-      });
-    } else {
-      await transporter.sendMail({
-        from: `"${process.env.SITE_NAME || 'برق تك'}" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: subject || 'رد على استفسارك - برق تك',
-        text: message,
-        html: mailHtml,
-      });
-    }
+    try {
+      let sentSuccessfully = false;
+      
+      if (resend) {
+        const response = await resend.emails.send({
+          from: `برق تك <onboarding@resend.dev>`, 
+          to: email,
+          subject: subject || 'رد على استفسارك - برق تك',
+          html: mailHtml,
+        });
+        
+        console.log('Resend Response:', response);
+        
+        if (!response.error) {
+          sentSuccessfully = true;
+        } else {
+          console.warn('Resend failed, trying SMTP fallback...', response.error);
+        }
+      }
+
+      // Fallback to SMTP if Resend is not available or failed
+      if (!sentSuccessfully) {
+        console.log('Attempting SMTP Fallback...');
+        await transporter.sendMail({
+          from: `"${process.env.SITE_NAME || 'برق تك'}" <${process.env.EMAIL_USER}>`,
+          to: email,
+          subject: subject || 'رد على استفسارك - برق تك',
+          text: message,
+          html: mailHtml,
+        });
+        sentSuccessfully = true;
+        console.log('SMTP Fallback Successful');
+      }
 
     // Save to database
     if (req.body.message_id) {
