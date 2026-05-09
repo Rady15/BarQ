@@ -93,7 +93,7 @@ const Home = () => {
       <ServiceHome />
 
       {/* Why Us Section */}
-      <WhyUsSection />
+      {/* <WhyUsSection /> */}
 
       {/* Methodology Section */}
       <MethodologySection />
