@@ -19,6 +19,7 @@
     "react-helmet-async": "^3.0.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^7.14.2",
+    "resend": "^6.12.3",
     "sweetalert2": "^11.26.24"
   },
   "overrides": {

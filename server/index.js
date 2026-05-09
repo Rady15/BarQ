@@ -9,7 +9,10 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const sharp = require('sharp');
 const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const { initDatabase } = require('./database');
+
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 const app = express();
 app.set('trust proxy', 1);
@@ -413,7 +416,23 @@ app.post('/api/messages', async (req, res) => {
     db.prepare('INSERT INTO contact_messages (name, email, phone, subject, message) VALUES (?,?,?,?,?)').run(name, email, phone, subject, message);
     
     // Send Email Notification
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    if (resend) {
+      await resend.emails.send({
+        from: 'برق تك <onboarding@resend.dev>',
+        to: process.env.ADMIN_EMAIL,
+        subject: `رسالة جديدة من الموقع: ${subject || 'بدون عنوان'}`,
+        html: `
+          <div dir="rtl" style="font-family: sans-serif;">
+            <h3>لديك رسالة جديدة من الموقع</h3>
+            <p><strong>الاسم:</strong> ${name}</p>
+            <p><strong>الإيميل:</strong> ${email}</p>
+            <p><strong>الهاتف:</strong> ${phone || 'غير متوفر'}</p>
+            <p><strong>الرسالة:</strong></p>
+            <p style="padding: 10px; background: #f3f4f6; border-radius: 5px;">${message}</p>
+          </div>
+        `
+      }).catch(e => console.error('Resend error:', e));
+    } else if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
       const mailOptions = {
         from: process.env.EMAIL_FROM,
         to: process.env.ADMIN_EMAIL,
@@ -456,26 +475,37 @@ app.post('/api/messages/reply', authMiddleware, async (req, res) => {
     return res.status(400).json({ error: 'البريد والمحتوى مطلوبان' });
   }
 
+  const mailHtml = `
+    <div dir="rtl" style="font-family: 'Cairo', sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+      <h2 style="color: #082e71;">مرحباً،</h2>
+      <p style="font-size: 16px; line-height: 1.6; color: #333;">
+        ${message.replace(/\n/g, '<br>')}
+      </p>
+      <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+      <p style="font-size: 14px; color: #777;">
+        مع تحيات فريق عمل <b>برق تك</b><br>
+        <a href="https://barqtech.ai" style="color: #082e71; text-decoration: none;">www.barqtech.ai</a>
+      </p>
+    </div>
+  `;
+
   try {
-    await transporter.sendMail({
-      from: `"${process.env.SITE_NAME || 'برق تك'}" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: subject || 'رد على استفسارك - برق تك',
-      text: message,
-      html: `
-        <div dir="rtl" style="font-family: 'Cairo', sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-          <h2 style="color: #082e71;">مرحباً،</h2>
-          <p style="font-size: 16px; line-height: 1.6; color: #333;">
-            ${message.replace(/\n/g, '<br>')}
-          </p>
-          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
-          <p style="font-size: 14px; color: #777;">
-            مع تحيات فريق عمل <b>برق تك</b><br>
-            <a href="https://barqtech.ai" style="color: #082e71; text-decoration: none;">www.barqtech.ai</a>
-          </p>
-        </div>
-      `,
-    });
+    if (resend) {
+      await resend.emails.send({
+        from: `برق تك <onboarding@resend.dev>`, // سيتم تغييره لإيميلك لاحقاً عند ربط الدومين
+        to: email,
+        subject: subject || 'رد على استفسارك - برق تك',
+        html: mailHtml,
+      });
+    } else {
+      await transporter.sendMail({
+        from: `"${process.env.SITE_NAME || 'برق تك'}" <${process.env.EMAIL_USER}>`,
+        to: email,
+        subject: subject || 'رد على استفسارك - برق تك',
+        text: message,
+        html: mailHtml,
+      });
+    }
 
     // Save to database
     if (req.body.message_id) {
@@ -814,7 +844,7 @@ app.get('/api/search', (req, res) => {
 // ─── Email Transporter ───
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
-  port: parseInt(process.env.EMAIL_PORT) || 587,
+  port: parseInt(process.env.EMAIL_PORT) || 465,
   secure: parseInt(process.env.EMAIL_PORT) === 465,
   auth: {
     user: process.env.EMAIL_USER,
@@ -824,7 +854,8 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false,
     minVersion: 'TLSv1.2'
   },
-  connectionTimeout: 20000, // زيادة المهلة لـ 20 ثانية
+  family: 4, // إجبار استخدام IPv4 لحل مشكلة ENETUNREACH
+  connectionTimeout: 20000,
 });
 
 // ─── Sitemap Endpoint ───

@@ -80,9 +80,9 @@ const AdminMessages = () => {
                   </div>
                   <div className="mb-3">
                     <label className="form-label fw-bold">عنوان الرد:</label>
-                    <input 
-                      type="text" 
-                      className="form-control" 
+                    <input
+                      type="text"
+                      className="form-control"
                       placeholder="رد على استفسارك - برق تك"
                       value={replySubject}
                       onChange={(e) => setReplySubject(e.target.value)}
@@ -90,9 +90,9 @@ const AdminMessages = () => {
                   </div>
                   <div className="mb-3">
                     <label className="form-label fw-bold">محتوى الرسالة:</label>
-                    <textarea 
-                      className="form-control" 
-                      rows="5" 
+                    <textarea
+                      className="form-control"
+                      rows="5"
                       required
                       value={replyMessage}
                       onChange={(e) => setReplyMessage(e.target.value)}
@@ -150,10 +150,10 @@ const AdminMessages = () => {
                           <div className="mt-2 pt-2 border-top">
                             <div className="small fw-bold text-primary mb-1">الردود السابقة:</div>
                             {msg.replies.map((reply, rid) => (
-                              <div key={rid} className="bg-light p-2 rounded mb-1 small border-start border-primary border-3">
+                              <div key={rid} className="bg-light p-2 rounded mb-1 small ">
                                 <div className="d-flex justify-content-between">
                                   <span className="fw-bold">{reply.subject}</span>
-                                  <span className="text-muted" style={{fontSize: '10px'}}>{new Date(reply.created_at).toLocaleDateString('ar-EG')}</span>
+                                  <span className="text-muted" style={{ fontSize: '10px' }}>{new Date(reply.created_at).toLocaleDateString('ar-EG')}</span>
                                 </div>
                                 <div className="text-dark">{reply.message}</div>
                               </div>
@@ -173,14 +173,14 @@ const AdminMessages = () => {
                       </td>
                       <td>
                         <div className="d-flex gap-2">
-                          <button 
+                          <button
                             className="btn btn-sm btn-outline-primary"
                             onClick={() => setReplyingTo(msg)}
                             title="رد عبر الإيميل"
                           >
                             <i className="fa fa-reply"></i>
                           </button>
-                          <button 
+                          <button
                             className="btn btn-sm btn-outline-danger"
                             onClick={() => handleDelete(msg.id)}
                             title="حذف"
