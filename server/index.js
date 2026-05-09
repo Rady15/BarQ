@@ -29,8 +29,8 @@ app.use(helmet({
 app.use(cors());
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 2000, // Increased to prevent dev/admin dashboard from locking out
   message: { error: 'طلبات كثيرة جداً، يرجى المحاولة لاحقاً' }
 });
 app.use('/api/', limiter);
@@ -270,6 +270,74 @@ app.delete('/api/projects/:id', authMiddleware, (req, res) => {
   db.prepare('DELETE FROM projects WHERE id = ?').run(req.params.id);
   logAction(req, 'DELETE_PROJECT', 'projects', req.params.id);
   res.json({ message: 'تم حذف المشروع' });
+});
+
+// ═══════════════════════════════════════
+//  TESTIMONIALS ROUTES
+// ═══════════════════════════════════════
+
+app.get('/api/testimonials', (req, res) => {
+  const { all } = req.query;
+  const testimonials = all 
+    ? db.prepare('SELECT * FROM testimonials ORDER BY created_at DESC').all()
+    : db.prepare('SELECT * FROM testimonials WHERE is_active = 1 ORDER BY created_at DESC').all();
+  res.json(testimonials);
+});
+
+app.post('/api/testimonials', authMiddleware, (req, res) => {
+  const { name_ar, name_en, role_ar, role_en, company, text_ar, text_en, image, rating } = req.body;
+  const result = db.prepare(`
+    INSERT INTO testimonials (name_ar, name_en, role_ar, role_en, company, text_ar, text_en, image, rating)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(name_ar, name_en, role_ar, role_en, company, text_ar, text_en, image, rating || 5);
+  res.status(201).json({ id: result.lastInsertRowid, message: 'تمت إضافة الرأي بنجاح' });
+});
+
+app.put('/api/testimonials/:id', authMiddleware, (req, res) => {
+  const { name_ar, name_en, role_ar, role_en, company, text_ar, text_en, image, rating, is_active } = req.body;
+  db.prepare(`
+    UPDATE testimonials SET name_ar=?, name_en=?, role_ar=?, role_en=?, company=?, text_ar=?, text_en=?, image=?, rating=?, is_active=? WHERE id=?
+  `).run(name_ar, name_en, role_ar, role_en, company, text_ar, text_en, image, rating, is_active, req.params.id);
+  res.json({ message: 'تم التحديث بنجاح' });
+});
+
+app.delete('/api/testimonials/:id', authMiddleware, (req, res) => {
+  db.prepare('DELETE FROM testimonials WHERE id = ?').run(req.params.id);
+  res.json({ message: 'تم الحذف' });
+});
+
+// ═══════════════════════════════════════
+//  TEAM MEMBERS ROUTES
+// ═══════════════════════════════════════
+
+app.get('/api/team', (req, res) => {
+  const { all } = req.query;
+  const team = all
+    ? db.prepare('SELECT * FROM team_members ORDER BY sort_order ASC, created_at DESC').all()
+    : db.prepare('SELECT * FROM team_members WHERE is_active = 1 ORDER BY sort_order ASC, created_at DESC').all();
+  res.json(team);
+});
+
+app.post('/api/team', authMiddleware, (req, res) => {
+  const { name_ar, name_en, role_ar, role_en, bio_ar, bio_en, image, email, linkedin, twitter, sort_order } = req.body;
+  const result = db.prepare(`
+    INSERT INTO team_members (name_ar, name_en, role_ar, role_en, bio_ar, bio_en, image, email, linkedin, twitter, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(name_ar, name_en, role_ar, role_en, bio_ar, bio_en, image, email, linkedin, twitter, sort_order || 0);
+  res.status(201).json({ id: result.lastInsertRowid, message: 'تمت الإضافة بنجاح' });
+});
+
+app.put('/api/team/:id', authMiddleware, (req, res) => {
+  const { name_ar, name_en, role_ar, role_en, bio_ar, bio_en, image, email, linkedin, twitter, sort_order, is_active } = req.body;
+  db.prepare(`
+    UPDATE team_members SET name_ar=?, name_en=?, role_ar=?, role_en=?, bio_ar=?, bio_en=?, image=?, email=?, linkedin=?, twitter=?, sort_order=?, is_active=? WHERE id=?
+  `).run(name_ar, name_en, role_ar, role_en, bio_ar, bio_en, image, email, linkedin, twitter, sort_order, is_active, req.params.id);
+  res.json({ message: 'تم التحديث بنجاح' });
+});
+
+app.delete('/api/team/:id', authMiddleware, (req, res) => {
+  db.prepare('DELETE FROM team_members WHERE id = ?').run(req.params.id);
+  res.json({ message: 'تم الحذف' });
 });
 
 // ═══════════════════════════════════════

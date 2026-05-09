@@ -35,22 +35,32 @@ const TestimonialSection = () => {
             {isAr ? 'ماذا يقول عملاؤنا عنا؟' : 'What Our Clients Say About Us'}
           </h2>
         </div>
-        <div className="row g-4 justify-content-center">
-          {testimonials.map((t, index) => (
-            <div className={`col-lg-4 col-md-6 scroll-reveal ${index === 0 ? 'from-left' : index === 2 ? 'from-right' : 'from-bottom'}`} data-delay={index * 200} key={t.id || index}>
-              <div className="testimonial-item bg-white rounded p-4 h-100 shadow-sm border border-light">
+        
+        <div className="marquee-container" dir="ltr">
+          {/* We render the content twice to create an infinite seamless loop effect */}
+          <div className="marquee-content">
+            {[...testimonials, ...testimonials].map((t, index) => (
+              <div className="testimonial-item bg-white rounded p-4 h-100 shadow-sm border border-light" key={`${t.id}-${index}`}>
                 <i className="fa fa-quote-left fa-2x text-primary mb-3"></i>
-                <p style={{ direction: isAr ? 'rtl' : 'ltr' }}>{isAr ? t.text_ar : t.text_en}</p>
-                <div className="d-flex align-items-center border-top pt-3">
-                  {t.image && <img className="img-fluid flex-shrink-0 rounded-circle me-3" src={getImageUrl(t.image)} style={{ width: '50px', height: '50px', objectFit: 'cover' }} alt={isAr ? t.name_ar : t.name_en} />}
-                  <div className="ps-0 w-100" style={{ textAlign: isAr ? 'right' : 'left' }}>
+                <p style={{ direction: isAr ? 'rtl' : 'ltr', textAlign: isAr ? 'right' : 'left' }}>
+                  {isAr ? t.text_ar : t.text_en}
+                </p>
+                <div className="d-flex align-items-center border-top pt-3" style={{ direction: isAr ? 'rtl' : 'ltr' }}>
+                  {t.image ? (
+                    <img className="img-fluid flex-shrink-0 rounded-circle" src={getImageUrl(t.image)} style={{ width: '50px', height: '50px', objectFit: 'cover', marginLeft: isAr ? '1rem' : '0', marginRight: isAr ? '0' : '1rem' }} alt={isAr ? t.name_ar : t.name_en} />
+                  ) : (
+                    <div className="rounded-circle bg-light d-flex align-items-center justify-content-center" style={{ width: '50px', height: '50px', marginLeft: isAr ? '1rem' : '0', marginRight: isAr ? '0' : '1rem' }}>
+                      <i className="fa fa-user text-primary"></i>
+                    </div>
+                  )}
+                  <div className="w-100" style={{ textAlign: isAr ? 'right' : 'left' }}>
                     <h6 className="mb-1">{isAr ? t.name_ar : t.name_en}</h6>
-                    <small>{isAr ? t.role_ar : t.role_en}</small>
+                    <small>{isAr ? t.role_ar : t.role_en} {t.company ? `- ${t.company}` : ''}</small>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

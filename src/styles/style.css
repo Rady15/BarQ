@@ -2218,3 +2218,55 @@ h6,
         font-size: 1.2rem;
     }
 }
+
+/* =========================================
+   Marquee Slider (Testimonials)
+========================================= */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.marquee-content {
+    display: inline-flex;
+    animation: marquee 30s linear infinite;
+    gap: 30px;
+}
+
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+
+/* Duplicated content for seamless loop */
+.marquee-content > * {
+    flex-shrink: 0;
+    width: 350px; /* Fixed width for each testimonial card */
+    white-space: normal; /* Allow text wrapping inside the card */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Move left. Assuming RTL, might need to adjust direction */
+        transform: translateX(50%); /* For RTL, moving right means positive X */
+    }
+}
+
+/* If direction is LTR, it's translateX(-50%). For RTL: translateX(50%) */
+html[dir="rtl"] .marquee-content {
+    animation: marquee-rtl 30s linear infinite;
+}
+
+@keyframes marquee-rtl {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(50%); /* Slides rightward in RTL, bringing elements from the left */
+    }
+}

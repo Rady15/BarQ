@@ -69,7 +69,7 @@ const AboutSection = () => {
           </div>
           <div className="col-lg-6 scroll-reveal from-right text-center" data-delay="300">
             <img
-              className="img-fluid rounded shadow-sm"
+              className="img-fluid"
               src="/img/about.png"
               alt="About Bark Tech"
               style={{ maxWidth: '600px', width: '100%' }}

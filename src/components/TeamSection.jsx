@@ -1,40 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-
-const teamData = [
-  {
-    name: 'فريق علماء البيانات',
-    nameEn: 'Data Scientists Team',
-    role: 'خبراء الذكاء الاصطناعي',
-    roleEn: 'AI Experts',
-    icon: 'fa fa-brain'
-  },
-  {
-    name: 'فريق تطوير البرمجيات',
-    nameEn: 'Software Development Team',
-    role: 'مطورون Full-Stack',
-    roleEn: 'Full-Stack Developers',
-    icon: 'fa fa-laptop-code'
-  },
-  {
-    name: 'فريق تجربة المستخدم',
-    nameEn: 'UX/UI Design Team',
-    role: 'مصممو واجهات محترفون',
-    roleEn: 'Professional UI Designers',
-    icon: 'fa fa-palette'
-  },
-  {
-    name: 'فريق الدعم الفني',
-    nameEn: 'Technical Support Team',
-    role: 'استجابة فورية ',
-    roleEn: ' Instant Response',
-    icon: 'fa fa-headset'
-  }
-];
+import { api, getImageUrl } from '../utils/api';
 
 const TeamSection = () => {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
+  const [team, setTeam] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const data = await api.get('/team');
+        setTeam(data);
+      } catch (err) {
+        console.error('Error fetching team data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTeam();
+  }, []);
+
+  if (loading || team.length === 0) return null;
 
   return (
     <div className="container-xxl py-5">
@@ -48,17 +36,41 @@ const TeamSection = () => {
           </h2>
         </div>
         <div className="row g-4">
-          {teamData.map((member, index) => (
-            <div className={`col-lg-3 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 150} key={index}>
+          {team.map((member, index) => (
+            <div className={`col-lg-3 col-md-6 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 150} key={member.id || index}>
               <div className="team-item bg-light rounded text-center p-4 h-100 shadow-sm">
-                <div className="btn-square bg-white rounded-circle mx-auto mb-4 border" style={{ width: '100px', height: '100px' }}>
-                  <i className={`${member.icon} text-primary fa-3x`}></i>
+                <div className="btn-square bg-white rounded-circle mx-auto mb-4 border overflow-hidden" style={{ width: '100px', height: '100px' }}>
+                  {member.image ? (
+                    <img src={getImageUrl(member.image)} alt={isAr ? member.name_ar : member.name_en} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <i className="fa fa-user text-primary fa-3x" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}></i>
+                  )}
                 </div>
-                <h5 className="mb-1">{isAr ? member.name : member.nameEn}</h5>
-                <small>{isAr ? member.role : member.roleEn}</small>
+                <h5 className="mb-1">{isAr ? member.name_ar : member.name_en}</h5>
+                <small>{isAr ? member.role_ar : member.role_en}</small>
+                {/* Optional Bio section if we wanted to show it
+                {(member.bio_ar || member.bio_en) && (
+                  <p className="mt-2 text-muted" style={{ fontSize: '0.85rem' }}>
+                    {isAr ? member.bio_ar : member.bio_en}
+                  </p>
+                )}
+                */}
                 <div className="d-flex justify-content-center mt-3">
-                  <a className="btn btn-square btn-primary rounded-circle mx-1" href="#"><i className="fab fa-linkedin-in"></i></a>
-                  <a className="btn btn-square btn-primary rounded-circle mx-1" href="#"><i className="fab fa-twitter"></i></a>
+                  {member.linkedin && (
+                    <a className="btn btn-square btn-primary rounded-circle mx-1" href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                      <i className="fab fa-linkedin-in"></i>
+                    </a>
+                  )}
+                  {member.twitter && (
+                    <a className="btn btn-square btn-primary rounded-circle mx-1" href={member.twitter} target="_blank" rel="noopener noreferrer">
+                      <i className="fab fa-twitter"></i>
+                    </a>
+                  )}
+                  {member.email && (
+                    <a className="btn btn-square btn-primary rounded-circle mx-1" href={`mailto:${member.email}`}>
+                      <i className="fa fa-envelope"></i>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

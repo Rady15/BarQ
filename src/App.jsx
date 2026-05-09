@@ -28,6 +28,8 @@ import AdminLogs from './pages/admin/AdminLogs';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminMessages from './pages/admin/AdminMessages';
+import AdminTestimonials from './pages/admin/AdminTestimonials';
+import AdminTeam from './pages/admin/AdminTeam';
 
 import SEO from './components/SEO';
 import GoogleAnalytics from './components/GoogleAnalytics';
@@ -85,6 +87,8 @@ function App() {
         <Route path="/admin/logs" element={<ProtectedRoute><AdminLogs /></ProtectedRoute>} />
         <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
         <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
+        <Route path="/admin/testimonials" element={<ProtectedRoute><AdminTestimonials /></ProtectedRoute>} />
+        <Route path="/admin/team" element={<ProtectedRoute><AdminTeam /></ProtectedRoute>} />
         <Route path="/admin/messages" element={<ProtectedRoute><AdminMessages /></ProtectedRoute>} />
 
         {/* 404 Catch All */}
