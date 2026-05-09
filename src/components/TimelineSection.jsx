@@ -51,24 +51,26 @@ const TimelineSection = () => {
             {isAr ? 'رحلة تنفيذ مشروعك معنا' : 'Your Project Execution Journey with Us'}
           </h2>
         </div>
-        <div className="row g-0 justify-content-center timeline-container position-relative">
-          {/* Central Line */}
-          <div className="position-absolute bg-primary d-none d-lg-block" style={{ height: '2px', top: '50%', left: '10%', right: '10%', zIndex: 0 }}></div>
-          
-          {timelineData.map((item, index) => (
-            <div className={`col-lg-3 col-md-6 mb-4 mb-lg-0 scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`} data-delay={index * 200} key={index}>
-              <div className="timeline-item text-center px-4 position-relative" style={{ zIndex: 1 }}>
-                <div className="timeline-icon bg-white border border-primary rounded-circle mx-auto mb-4 d-flex align-items-center justify-content-center shadow-sm" style={{ width: '80px', height: '80px' }}>
-                  <i className={`${item.icon} text-primary fa-2x`}></i>
-                </div>
-                <div className="timeline-content bg-white p-4 rounded shadow-sm">
-                  <h3 className="text-primary mb-2">{item.step}</h3>
-                  <h5 className="mb-2">{isAr ? item.title : item.titleEn}</h5>
-                  <p className="mb-0 small">{isAr ? item.desc : item.descEn}</p>
+        <div className="timeline-container">
+          {timelineData.map((step, index) => {
+            const isStart = index % 2 === 0;
+            return (
+              <div className={`timeline-row ${isStart ? 'justify-start' : 'justify-end'} scroll-reveal ${isStart ? 'from-right' : 'from-left'}`} data-delay={index * 150} key={index}>
+                <div className="timeline-item">
+                  <div className="timeline-dot">
+                    <i className={`${step.icon}`}></i>
+                  </div>
+                  <div className="timeline-content text-start" style={{ textAlign: isAr ? 'right' : 'left' }}>
+                    <h3 className="mb-2 text-primary" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{step.step}</h3>
+                    <h4 className="mb-3 fw-bold">{isAr ? step.title : step.titleEn}</h4>
+                    <p className="m-0 text-muted" style={{ direction: isAr ? 'rtl' : 'ltr', lineHeight: '1.8' }}>
+                      {isAr ? step.desc : step.descEn}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

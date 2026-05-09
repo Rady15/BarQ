@@ -266,8 +266,8 @@ const AdminServices = () => {
                         </table>
                       </div>
                       
-                      <div className="row g-2 align-items-end">
-                        <div className="col-md-3">
+                      <div className="row g-2 align-items-end mt-2">
+                        <div className="col-md-2">
                           <label style={{fontSize: '0.75rem'}}>الأيقونة</label>
                           <input id="f_icon" className="form-control form-control-sm" placeholder="fa-check" />
                         </div>
@@ -275,7 +275,7 @@ const AdminServices = () => {
                           <label style={{fontSize: '0.75rem'}}>العنوان (عربي)</label>
                           <input id="f_title" className="form-control form-control-sm" />
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-md-2">
                           <label style={{fontSize: '0.75rem'}}>القسم</label>
                           <select id="f_section" className="form-select form-select-sm">
                             <option value="why">الأهمية</option>
@@ -283,19 +283,24 @@ const AdminServices = () => {
                           </select>
                         </div>
                         <div className="col-md-3">
+                          <label style={{fontSize: '0.75rem'}}>الوصف النصي</label>
+                          <input id="f_desc" className="form-control form-control-sm" placeholder="وصف الميزة..." />
+                        </div>
+                        <div className="col-md-2">
                           <button className="btn-admin primary btn-admin-sm w-100" onClick={async () => {
                             const feat = {
                               service_id: editingService.id,
                               icon: document.getElementById('f_icon').value,
                               title_ar: document.getElementById('f_title').value,
                               section: document.getElementById('f_section').value,
-                              description_ar: 'وصف تلقائي', // Simplified for now
+                              description_ar: document.getElementById('f_desc').value || '',
                             };
                             await api.post(`/services/${editingService.id}/features`, feat);
                             const updated = await api.get(`/services/${editingService.id}`);
                             setEditingService(updated);
                             document.getElementById('f_icon').value = '';
                             document.getElementById('f_title').value = '';
+                            document.getElementById('f_desc').value = '';
                           }}>إضافة ميزة</button>
                         </div>
                       </div>
