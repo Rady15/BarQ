@@ -34,11 +34,12 @@ const AdminBlog = () => {
     }
   }, [form, showModal, editingArticle]);
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     setEditingArticle(null);
     const draft = localStorage.getItem('blog_draft');
     if (draft) {
-      if (window.confirm('تم العثور على مسودة غير محفوظة لمقال جديد. هل تريد استكمال كتابة المقال؟')) {
+      const result = await showConfirm('مسودة غير محفوظة', 'تم العثور على مسودة مقال لم يتم حفظها. هل تريد استكمال كتابتها؟');
+      if (result.isConfirmed) {
         setForm(JSON.parse(draft));
         setShowModal(true);
         return;
