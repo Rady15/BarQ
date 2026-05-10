@@ -24,8 +24,28 @@ const AdminBlog = () => {
     fetchArticles();
   }, []);
 
+  useEffect(() => {
+    if (showModal && !editingArticle) {
+      // Auto-save draft when adding a new article
+      const timeout = setTimeout(() => {
+        localStorage.setItem('blog_draft', JSON.stringify(form));
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [form, showModal, editingArticle]);
+
   const handleAdd = () => {
     setEditingArticle(null);
+    const draft = localStorage.getItem('blog_draft');
+    if (draft) {
+      if (window.confirm('تم العثور على مسودة غير محفوظة لمقال جديد. هل تريد استكمال كتابة المقال؟')) {
+        setForm(JSON.parse(draft));
+        setShowModal(true);
+        return;
+      } else {
+        localStorage.removeItem('blog_draft');
+      }
+    }
     setForm({ title_ar: '', title_en: '', content_ar: '', content_en: '', status: 'draft', category: '', image: '' });
     setShowModal(true);
   };
@@ -49,6 +69,7 @@ const AdminBlog = () => {
       } else {
         await api.post('/articles', form);
         showSuccess('تم النشر', 'تم إضافة المقال الجديد بنجاح');
+        localStorage.removeItem('blog_draft');
       }
       setShowModal(false);
       fetchArticles();

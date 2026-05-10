@@ -1,17 +1,49 @@
-import React from 'react';
+import React, { useRef, useCallback, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const RichTextEditor = ({ value, onChange, placeholder, label }) => {
-  const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link', 'image'],
-      ['clean']
-    ],
-  };
+  const quillRef = useRef(null);
+
+  const imageHandler = useCallback(() => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (file) {
+        try {
+          const { api, getImageUrl } = await import('../../utils/api');
+          const data = await api.upload(file);
+          const url = getImageUrl(data.url);
+          
+          const quill = quillRef.current.getEditor();
+          const range = quill.getSelection(true);
+          quill.insertEmbed(range.index, 'image', url);
+          quill.setSelection(range.index + 1);
+        } catch (err) {
+          alert('فشل رفع الصورة: ' + err.message);
+        }
+      }
+    };
+  }, []);
+
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+        ['link', 'image'],
+        ['clean']
+      ],
+      handlers: {
+        image: imageHandler
+      }
+    }
+  }), [imageHandler]);
 
   const formats = [
     'header',
@@ -30,6 +62,7 @@ const RichTextEditor = ({ value, onChange, placeholder, label }) => {
     <div className="form-group mb-4">
       {label && <label className="mb-2 d-block fw-bold">{label}</label>}
       <ReactQuill 
+        ref={quillRef}
         theme="snow"
         value={value || ''}
         onChange={handleChange}
