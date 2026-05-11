@@ -84,5 +84,33 @@ export const api = {
     });
     if (!response.ok) throw new Error(await response.text());
     return response.json();
+  },
+
+  download: async (endpoint, filename) => {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      method: 'GET',
+      headers: getHeaders(),
+    });
+    if (!response.ok) throw new Error(await response.text());
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  },
+
+  uploadRestore: async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await fetch(`${API_URL}/system/restore`, {
+      method: 'POST',
+      headers: getHeaders(true),
+      body: formData,
+    });
+    if (!response.ok) throw new Error(await response.text());
+    return response.json();
   }
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { api } from '../../utils/api';
-import { showSuccess, showError } from '../../utils/alerts';
+import { showSuccess, showError, showConfirm } from '../../utils/alerts';
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -272,8 +272,9 @@ const AdminSettings = () => {
                       try {
                         await api.post('/system/maintenance', { enabled });
                         handleChange('maintenance_mode', enabled ? '1' : '0');
+                        showSuccess('تم تحديث وضع الصيانة');
                       } catch (err) {
-                        alert('خطأ في تغيير وضع الصيانة');
+                        showError('خطأ', 'فشل في تغيير وضع الصيانة');
                       }
                     }} 
                   />
@@ -283,12 +284,45 @@ const AdminSettings = () => {
             <div className="col-md-6">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: '#f9fafb', borderRadius: '12px' }}>
                 <div>
-                  <div style={{ fontWeight: 700, marginBottom: '4px' }}>نسخة احتياطية لقاعدة البيانات</div>
-                  <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>تحميل نسخة كاملة من بيانات الموقع (SQLite)</div>
+                  <div style={{ fontWeight: 700, marginBottom: '4px' }}>إدارة قواعد البيانات</div>
+                  <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>تنزيل أو رفع نسخة احتياطية (SQLite)</div>
                 </div>
-                <button className="btn-admin info" onClick={() => window.open(`${api.defaults.baseURL}/system/backup`, '_blank')}>
-                  <i className="fa fa-download me-1"></i> تحميل النسخة
-                </button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button className="btn-admin info" onClick={async () => {
+                    try {
+                      showSuccess('جاري التحضير...', 'جاري تحضير النسخة الاحتياطية للتحميل');
+                      await api.download('/system/backup', `barqtech_backup_${new Date().toISOString().split('T')[0]}.db`);
+                    } catch (err) {
+                      showError('خطأ', 'فشل تحميل النسخة الاحتياطية');
+                    }
+                  }}>
+                    <i className="fa fa-download"></i> تنزيل
+                  </button>
+                  <label className="btn-admin primary" style={{ cursor: 'pointer', margin: 0 }}>
+                    <i className="fa fa-upload"></i> استعادة
+                    <input 
+                      type="file" 
+                      accept=".db" 
+                      style={{ display: 'none' }} 
+                      onChange={async (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        if (!file.name.endsWith('.db')) return showError('خطأ', 'الملف غير صالح');
+                        const result = await showConfirm('تأكيد الاستعادة', 'سيتم استبدال كل البيانات الحالية وإعادة تشغيل السيرفر. متأكد؟');
+                        if (result.isConfirmed) {
+                          try {
+                            const res = await api.uploadRestore(file);
+                            showSuccess('نجاح', res.message);
+                            setTimeout(() => window.location.reload(), 3000);
+                          } catch (err) {
+                            showError('خطأ', err.message);
+                          }
+                        }
+                        e.target.value = null; // reset
+                      }} 
+                    />
+                  </label>
+                </div>
               </div>
             </div>
           </div>

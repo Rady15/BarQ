@@ -36,6 +36,7 @@ import GoogleAnalytics from './components/GoogleAnalytics';
 import WhatsAppButton from './components/WhatsAppButton';
 import ConsultationFloat from './components/ConsultationFloat';
 import NotFound from './pages/NotFound';
+import Maintenance from './pages/Maintenance';
 import { api } from './utils/api';
 
 const ProtectedRoute = ({ children }) => {
@@ -46,6 +47,7 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   const location = useLocation();
+  const [isMaintenance, setIsMaintenance] = React.useState(false);
 
   useEffect(() => {
     // Only track public routes
@@ -53,6 +55,26 @@ function App() {
       api.post('/analytics/track', { page_path: location.pathname }).catch(e => console.error(e));
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const settings = await api.get('/settings');
+        if (settings.maintenance_mode === '1' && !location.pathname.startsWith('/admin')) {
+          setIsMaintenance(true);
+        } else {
+          setIsMaintenance(false);
+        }
+      } catch (err) {
+        console.error('Settings fetch error:', err);
+      }
+    };
+    fetchSettings();
+  }, [location.pathname]);
+
+  if (isMaintenance) {
+    return <Maintenance />;
+  }
 
   return (
     <>

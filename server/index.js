@@ -801,28 +801,6 @@ app.get('/api/audit-logs', authMiddleware, (req, res) => {
   res.json(logs);
 });
 
-// ═══════════════════════════════════════
-//  SYSTEM ROUTES
-// ═══════════════════════════════════════
-
-app.get('/api/system/backup', authMiddleware, (req, res) => {
-  if (req.user.role !== 'admin') return res.status(403).json({ error: 'غير مسموح' });
-  const dbFile = path.join(__dirname, 'database.sqlite');
-  res.download(dbFile, `backup-barq-${new Date().toISOString().split('T')[0]}.sqlite`);
-});
-
-app.post('/api/system/maintenance', authMiddleware, (req, res) => {
-  if (req.user.role !== 'admin') return res.status(403).json({ error: 'غير مسموح' });
-  const { enabled } = req.body;
-  const stmt = db.prepare('UPDATE settings SET setting_value = ? WHERE setting_key = ?');
-  const result = stmt.run(enabled ? '1' : '0', 'maintenance_mode');
-  if (result.changes === 0) {
-    db.prepare('INSERT INTO settings (setting_key, setting_value, setting_group) VALUES (?, ?, ?)')
-      .run('maintenance_mode', enabled ? '1' : '0', 'system');
-  }
-  logAction(req, enabled ? 'ENABLE_MAINTENANCE' : 'DISABLE_MAINTENANCE', 'system');
-  res.json({ message: 'تم تحديث حالة الصيانة بنجاح' });
-});
 
 // ═══════════════════════════════════════
 //  NEWSLETTER ROUTES
@@ -950,6 +928,82 @@ const transporter = nodemailer.createTransport({
   },
   family: 4, // إجبار استخدام IPv4 لحل مشكلة ENETUNREACH
   connectionTimeout: 20000,
+});
+
+// ─── System Tools Routes ───
+app.post('/api/system/maintenance', authMiddleware, (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ error: 'غير مسموح' });
+  const { enabled } = req.body;
+  const val = enabled ? '1' : '0';
+  
+  const exists = db.prepare('SELECT id FROM settings WHERE setting_key = ?').get('maintenance_mode');
+  if (exists) {
+    db.prepare('UPDATE settings SET setting_value = ? WHERE setting_key = ?').run(val, 'maintenance_mode');
+  } else {
+    db.prepare('INSERT INTO settings (setting_key, setting_value, setting_group) VALUES (?, ?, ?)').run('maintenance_mode', val, 'general');
+  }
+  
+  logAction(req, 'UPDATE_MAINTENANCE_MODE', 'system', null, { enabled });
+  res.json({ success: true, maintenance_mode: val });
+});
+
+app.get('/api/system/backup', authMiddleware, (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ error: 'غير مسموح' });
+  
+  const backupFileName = `barqtech_backup_${Date.now()}.db`;
+  const backupPath = path.join(__dirname, backupFileName);
+  
+  try {
+    db.prepare(`VACUUM INTO '${backupPath}'`).run();
+    res.download(backupPath, backupFileName, (err) => {
+      const fs = require('fs');
+      if (fs.existsSync(backupPath)) fs.unlinkSync(backupPath);
+    });
+  } catch (err) {
+    console.error('Backup error:', err);
+    res.status(500).json({ error: 'Failed to create backup' });
+  }
+});
+
+app.post('/api/system/restore', authMiddleware, upload.single('file'), (req, res) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ error: 'غير مسموح' });
+  if (!req.file) return res.status(400).json({ error: 'يرجى إرفاق ملف النسخة الاحتياطية' });
+  
+  const fs = require('fs');
+  const dbPath = path.join(__dirname, 'barqtech.db');
+  const tempFile = req.file.path;
+  
+  try {
+    // Verify it's a valid SQLite DB before replacing
+    const testDb = require('better-sqlite3')(tempFile);
+    testDb.prepare('SELECT count(*) FROM sqlite_master').get();
+    testDb.close();
+
+    // Close current connection
+    db.close();
+
+    // Remove WAL and SHM if they exist to prevent corruption
+    const walPath = dbPath + '-wal';
+    const shmPath = dbPath + '-shm';
+    if (fs.existsSync(walPath)) fs.unlinkSync(walPath);
+    if (fs.existsSync(shmPath)) fs.unlinkSync(shmPath);
+
+    // Replace the DB
+    fs.copyFileSync(tempFile, dbPath);
+    fs.unlinkSync(tempFile);
+    
+    // Attempt graceful restart by exiting process
+    setTimeout(() => {
+      process.exit(0);
+    }, 1000);
+    
+    res.json({ success: true, message: 'تم استعادة النسخة بنجاح! جاري إعادة تشغيل النظام...' });
+  } catch (err) {
+    console.error('Restore error:', err);
+    const fs = require('fs');
+    if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
+    res.status(500).json({ error: 'فشل استعادة النسخة الاحتياطية، تأكد من صحة الملف' });
+  }
 });
 
 // ─── Sitemap Endpoint ───
