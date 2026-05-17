@@ -134,18 +134,43 @@ const BlogPost = () => {
                       <span className="text-muted">{isAr ? 'مشاركة:' : 'Share:'}</span>
                       <div className="d-flex gap-2">
                         {[
-                          { id: 'facebook', icon: 'facebook', url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}` },
-                          { id: 'twitter', icon: 'twitter', url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(isAr ? post.title_ar : post.title_en)}` },
-                          { id: 'linkedin', icon: 'linkedin', url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}` },
-                          { id: 'whatsapp', icon: 'whatsapp', url: `https://wa.me/?text=${encodeURIComponent((isAr ? post.title_ar : post.title_en) + ' ' + window.location.href)}` }
+                          { id: 'facebook', icon: 'fab fa-facebook-f', url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}` },
+                          { id: 'twitter', icon: 'fab fa-twitter', url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(isAr ? post.title_ar : post.title_en)}` },
+                          { id: 'linkedin', icon: 'fab fa-linkedin-in', url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}` },
+                          { id: 'whatsapp', icon: 'fab fa-whatsapp', url: `https://wa.me/?text=${encodeURIComponent((isAr ? post.title_ar : post.title_en) + ' ' + window.location.href)}` }
                         ].map((social, i) => (
                           <button
                             key={i}
                             className="btn btn-sm rounded-circle"
-                            style={{ width: '40px', height: '40px', background: '#F7FAFF', color: '#2124B1', border: '1px solid #e0e0e0' }}
+                            style={{
+                              width: '42px',
+                              height: '42px',
+                              background: '#F7FAFF',
+                              color: '#2124B1',
+                              border: '1px solid #e2e8f0',
+                              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: '1rem'
+                            }}
                             onClick={() => window.open(social.url, '_blank')}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = '#2124B1';
+                              e.currentTarget.style.color = '#FFFFFF';
+                              e.currentTarget.style.borderColor = '#2124B1';
+                              e.currentTarget.style.transform = 'translateY(-3px) scale(1.08)';
+                              e.currentTarget.style.boxShadow = '0 8px 15px rgba(33, 36, 177, 0.2)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = '#F7FAFF';
+                              e.currentTarget.style.color = '#2124B1';
+                              e.currentTarget.style.borderColor = '#e2e8f0';
+                              e.currentTarget.style.transform = 'none';
+                              e.currentTarget.style.boxShadow = 'none';
+                            }}
                           >
-                            <i className={`fa fa-${social.icon}`}></i>
+                            <i className={social.icon}></i>
                           </button>
                         ))}
                       </div>

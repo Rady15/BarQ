@@ -181,12 +181,48 @@ app.delete('/api/services/:id', authMiddleware, (req, res) => {
 
 // ─── SERVICE FEATURES ROUTES ───
 app.post('/api/services/:id/features', authMiddleware, (req, res) => {
-  const { title_ar, title_en, description_ar, description_en, icon, section, sort_order } = req.body;
+  const { title_ar, title_en, description_ar, description_en, icon, section, sort_order, slogan_ar, slogan_en, image, link_url } = req.body;
   const result = db.prepare(`
-    INSERT INTO service_features (service_id, title_ar, title_en, description_ar, description_en, icon, section, sort_order)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `).run(req.params.id, title_ar, title_en, description_ar || '', description_en || '', icon, section, sort_order || 0);
+    INSERT INTO service_features (service_id, title_ar, title_en, description_ar, description_en, icon, section, sort_order, slogan_ar, slogan_en, image, link_url)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    req.params.id, 
+    title_ar, 
+    title_en, 
+    description_ar || '', 
+    description_en || '', 
+    icon || 'fa-check', 
+    section || 'why', 
+    sort_order || 0,
+    slogan_ar || '',
+    slogan_en || '',
+    image || '',
+    link_url || ''
+  );
   res.status(201).json({ id: result.lastInsertRowid, message: 'تمت إضافة الميزة' });
+});
+
+app.put('/api/services/features/:id', authMiddleware, (req, res) => {
+  const { title_ar, title_en, description_ar, description_en, icon, section, sort_order, slogan_ar, slogan_en, image, link_url } = req.body;
+  db.prepare(`
+    UPDATE service_features 
+    SET title_ar = ?, title_en = ?, description_ar = ?, description_en = ?, icon = ?, section = ?, sort_order = ?, slogan_ar = ?, slogan_en = ?, image = ?, link_url = ?
+    WHERE id = ?
+  `).run(
+    title_ar, 
+    title_en, 
+    description_ar || '', 
+    description_en || '', 
+    icon || 'fa-check', 
+    section || 'why', 
+    sort_order || 0,
+    slogan_ar || '',
+    slogan_en || '',
+    image || '',
+    link_url || '',
+    req.params.id
+  );
+  res.json({ message: 'تم تحديث الميزة بنجاح' });
 });
 
 app.delete('/api/services/features/:id', authMiddleware, (req, res) => {

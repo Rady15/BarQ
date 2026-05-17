@@ -43,10 +43,10 @@ const Home = () => {
           <div className="container my-5 py-5 px-lg-5">
             <div className="row g-5 py-5 align-items-center">
               <div className="col-lg-10 mx-auto text-center">
-                <h1 className="text-white mb-4 animated zoomIn" style={{ fontSize: 'calc(1.5rem + 1.5vw)' }}>
+                <h1 className="text-white mb-4 animated zoomIn" style={{ fontSize: 'calc(2.2rem + 1.8vw)', fontWeight: 900, textShadow: '0 4px 15px rgba(0, 0, 0, 0.4)' }}>
                   {isAr ? 'برق تك..' : 'Barq Tech..'}
                 </h1>
-                <p className="text-white pb-3 animated zoomIn">
+                <p className="text-white pb-4 animated zoomIn" style={{ fontSize: '1.3rem', fontWeight: 700, lineHeight: '1.8', textShadow: '0 2px 10px rgba(0, 0, 0, 0.4)', maxWidth: '900px', margin: '0 auto' }}>
                   {isAr ? (
                     'نحوّل طموحك الرقمي إلى نتائج حقيقية. في برق تك، نقدم حلولًا تقنية ذكية تجمع بين الذكاء الاصطناعي، التحول الرقمي، وتطوير الأعمال لنساعد شركتك على النمو بسرعة، رفع الكفاءة، وبناء مستقبل أكثر قوة. من المواقع والأنظمة إلى الاستراتيجيات الرقمية المتقدمة — نحن شريكك التقني لصناعة نجاح يسبق المنافسة.'
                   ) : (

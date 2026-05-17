@@ -1,6 +1,87 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { api } from '../utils/api';
+import { api, getImageUrl } from '../utils/api';
+
+const FeatureCard = ({ item, isAr, cardStyle, index, colClass }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const sloganText = isAr ? item.slogan_ar : item.slogan_en;
+
+  const dynamicStyle = {
+    ...cardStyle,
+    background: isHovered ? 'var(--primary)' : (cardStyle.backgroundImage ? `${cardStyle.backgroundColor} ${cardStyle.backgroundImage}` : cardStyle.backgroundColor),
+    backgroundColor: isHovered ? 'var(--primary)' : cardStyle.backgroundColor,
+    backgroundImage: isHovered ? 'none' : cardStyle.backgroundImage,
+    borderColor: isHovered ? 'var(--primary)' : 'rgba(8, 46, 113, 0.1)',
+    transform: isHovered ? 'translateY(-10px)' : 'translateY(0)',
+    boxShadow: isHovered ? '0 15px 35px rgba(8, 46, 113, 0.3)' : 'none',
+    transition: 'all 0.3s ease-in-out',
+    position: 'relative'
+  };
+
+  const textStyle = {
+    color: isHovered ? '#ffffff' : '#212529',
+    transition: 'color 0.3s ease',
+  };
+
+  const titleStyle = {
+    color: isHovered ? '#ffffff' : 'var(--primary)',
+    transition: 'color 0.3s ease',
+  };
+
+  const iconStyle = {
+    color: isHovered ? '#ffffff' : 'var(--primary)',
+    transition: 'color 0.3s ease',
+  };
+
+  const cardContent = (
+    <div 
+      className="p-4 rounded h-100 text-center position-relative shadow-hover" 
+      style={dynamicStyle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {sloganText && (
+        <div style={{ position: 'absolute', top: '10px', left: isAr ? '10px' : 'auto', right: isAr ? 'auto' : '10px', zIndex: 2 }}>
+          <span className="badge bg-warning text-dark px-2 py-1 rounded-pill" style={{ fontSize: '0.65rem', fontWeight: 'bold', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+            {sloganText}
+          </span>
+        </div>
+      )}
+      <div className="icon-animated mb-4" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70px' }}>
+        {item.image ? (
+          <img 
+            src={getImageUrl(item.image)} 
+            alt={isAr ? item.title_ar : item.title_en} 
+            style={{ maxWidth: '70px', maxHeight: '70px', objectFit: 'contain', borderRadius: '8px', filter: isHovered ? 'brightness(0) invert(1)' : 'none', transition: 'filter 0.3s ease' }} 
+          />
+        ) : (
+          <i className={`fa ${item.icon || 'fa-check'} fa-3x`} style={iconStyle}></i>
+        )}
+      </div>
+      <h6 className="mb-2 fw-bold" style={titleStyle}>{isAr ? item.title_ar : item.title_en}</h6>
+      <p className="mb-0 small fw-bold" style={textStyle}>{isAr ? item.description_ar : item.description_en}</p>
+    </div>
+  );
+
+  const delay = index * 100;
+  const wrapperClass = `${colClass} scroll-reveal ${index % 2 === 0 ? 'from-left' : 'from-right'}`;
+
+  if (item.link_url) {
+    return (
+      <div className={wrapperClass} data-delay={delay} key={item.id}>
+        <a href={item.link_url} className="text-decoration-none d-block h-100" style={{ color: 'inherit' }}>
+          {cardContent}
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <div className={wrapperClass} data-delay={delay} key={item.id}>
+      {cardContent}
+    </div>
+  );
+};
 
 const AutomationServiceDetail = () => {
   const { lang } = useLanguage();
@@ -36,7 +117,8 @@ const AutomationServiceDetail = () => {
     backgroundPosition: 'center',
     backgroundColor: 'rgba(8, 46, 113, 0.05)',
     border: '1px solid rgba(8, 46, 113, 0.1)',
-    transition: 'all 0.3s ease'
+    transition: 'all 0.3s ease',
+    position: 'relative'
   };
 
   const cardStyle2 = {
@@ -45,7 +127,8 @@ const AutomationServiceDetail = () => {
     backgroundPosition: 'center',
     backgroundColor: 'rgba(8, 46, 113, 0.05)',
     border: '1px solid rgba(8, 46, 113, 0.1)',
-    transition: 'all 0.3s ease'
+    transition: 'all 0.3s ease',
+    position: 'relative'
   };
 
   return (
@@ -74,15 +157,15 @@ const AutomationServiceDetail = () => {
                     <h4 className="text-primary mb-4 text-center">{isAr ? 'لماذا يمثل هذا أهمية لأعمالك؟' : 'Why it Matters?'}</h4>
                     <div className="row g-4">
                       {results.filter(f => f.section === 'why').map((item, index) => (
-                        <div className={`col-md-6 col-lg-3 ${index % 2 === 0 ? 'scroll-reveal from-left' : 'scroll-reveal from-right'}`} key={item.id}>
-                          <div className="p-4 rounded h-100 shadow-hover text-center" style={cardStyle1}>
-                            <div className="icon-animated mb-4">
-                              <i className={`fa ${item.icon || 'fa-percentage'} fa-3x text-primary`}></i>
-                            </div>
-                            <h6 className="mb-2 text-primary">{isAr ? item.title_ar : item.title_en}</h6>
-                            <p className="mb-0 small fw-bold text-dark">{isAr ? item.description_ar : item.description_en}</p>
-                          </div>
-                        </div>
+                        <FeatureCard 
+                          key={item.id} 
+                          item={item} 
+                          isAr={isAr} 
+                          cardStyle={cardStyle1} 
+                          index={index} 
+                          colClass="col-md-6 col-lg-3" 
+                          getImageUrl={getImageUrl}
+                        />
                       ))}
                     </div>
                   </div>
@@ -93,15 +176,15 @@ const AutomationServiceDetail = () => {
                     <h4 className="text-primary mb-4 text-center">{isAr ? 'كيف نصنع الفارق؟ How We Help' : 'How We Help'}</h4>
                     <div className="row g-4">
                       {results.filter(f => f.section === 'how').map((item, index) => (
-                        <div className={`col-md-6 col-lg-3 ${index % 2 === 0 ? 'scroll-reveal from-left' : 'scroll-reveal from-right'}`} key={item.id}>
-                          <div className="p-4 rounded h-100 shadow-hover text-center" style={cardStyle2}>
-                            <div className="icon-animated mb-4">
-                              <i className={`fa ${item.icon || 'fa-tools'} fa-3x text-primary`}></i>
-                            </div>
-                            <h6 className="text-primary mb-2">{isAr ? item.title_ar : item.title_en}</h6>
-                            <p className="mb-0 small fw-bold text-dark">{isAr ? item.description_ar : item.description_en}</p>
-                          </div>
-                        </div>
+                        <FeatureCard 
+                          key={item.id} 
+                          item={item} 
+                          isAr={isAr} 
+                          cardStyle={cardStyle2} 
+                          index={index} 
+                          colClass="col-md-6 col-lg-3" 
+                          getImageUrl={getImageUrl}
+                        />
                       ))}
                     </div>
                   </div>

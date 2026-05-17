@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 const PageHeader = ({ title, breadcrumb, bgImage }) => {
   const headerStyle = {
     backgroundColor: '#082e71',
-    backgroundImage: bgImage 
-      ? `url(/img/bg-dot.png), url(/img/bg-round.png), url(${bgImage})`
-      : `url(/img/bg-dot.png), url(/img/bg-round.png), url(/img/bg-bottom-hero.png)`,
-    backgroundPosition: '10px 10px, left 55% top -1px, center center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'auto, auto, cover',
-    minHeight: '300px'
+    backgroundImage: `url(/img/bg-bottom-hero.png), linear-gradient(rgba(8, 46, 113, 0.55), rgba(8, 46, 113, 0.55)), url(${bgImage || '/img/bg-bottom-hero.png'})`,
+    backgroundPosition: 'center bottom -1px, center center, center center',
+    backgroundRepeat: 'no-repeat, no-repeat, no-repeat',
+    backgroundSize: '100% auto, cover, cover',
+    minHeight: '350px',
+    position: 'relative'
   };
 
   return (

@@ -64,6 +64,10 @@ function initDatabase() {
       icon TEXT,
       section TEXT DEFAULT 'why' CHECK(section IN ('why', 'how')),
       sort_order INTEGER DEFAULT 0,
+      slogan_ar TEXT,
+      slogan_en TEXT,
+      image TEXT,
+      link_url TEXT,
       FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
     )
   `);
@@ -248,6 +252,21 @@ function initDatabase() {
     }
   } catch (e) {
     console.log('Migration Note:', e.message);
+  }
+
+  // Migrate service_features to add slogan_ar, slogan_en, image, link_url if missing
+  try {
+    const info = db.pragma('table_info(service_features)');
+    const hasSloganAr = info.some(col => col.name === 'slogan_ar');
+    if (!hasSloganAr) {
+      db.exec('ALTER TABLE service_features ADD COLUMN slogan_ar TEXT');
+      db.exec('ALTER TABLE service_features ADD COLUMN slogan_en TEXT');
+      db.exec('ALTER TABLE service_features ADD COLUMN image TEXT');
+      db.exec('ALTER TABLE service_features ADD COLUMN link_url TEXT');
+      console.log('Migrated service_features table columns successfully.');
+    }
+  } catch (e) {
+    console.log('Migration Note (service_features):', e.message);
   }
 
 
@@ -482,32 +501,61 @@ function initDatabase() {
     faqs.forEach((faq, i) => insertFaq.run(faq[0], faq[1], faq[2], faq[3], i + 1));
   }
 
-  // Default projects
-  const projectsCount = db.prepare('SELECT COUNT(*) as count FROM projects').get();
-  if (projectsCount.count === 0) {
-    const insertProject = db.prepare(`
-      INSERT INTO projects (title_ar, title_en, description_ar, description_en, client_name, image, category, status, sort_order)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-    insertProject.run(
-      'نظام إدارة الموارد ERP', 'ERP Management System',
-      'نظام سحابي متكامل لإدارة العمليات المالية والمخزون والموارد البشرية للشركات المتوسطة.',
-      'An integrated cloud system for managing financial operations, inventory, and human resources for medium companies.',
-      'شركة ركاء العقارية', '/img/portfolio-1.jpg', 'Web Application', 'published', 1
-    );
-    insertProject.run(
-      'تطبيق بارق الذكي', 'Barq Smart App',
-      'تطبيق هاتف محمول يعتمد على الذكاء الاصطناعي لتحليل البيانات وتقديم توصيات ذكية للمستخدمين.',
-      'A mobile application based on AI to analyze data and provide smart recommendations to users.',
-      'مجموعة برق الاستثمارية', '/img/portfolio-2.jpg', 'Mobile App', 'published', 2
-    );
-    insertProject.run(
-      'نظام التعليم الذكي', 'Smart Education Platform',
-      'نظام تعليمي متكامل يدعم التعلم عن بعد مع أدوات تفاعلية للمعلمين والطلاب.',
-      'An integrated educational platform supporting distance learning with interactive tools for teachers and students.',
-      'أكاديمية التعلم', '/img/portfolio-3.jpg', 'Web Platform', 'published', 3
-    );
-  }
+  // Default projects - Clean existing and re-seed to ensure these 6 specific projects are active
+  db.exec('DELETE FROM projects');
+  
+  const insertProject = db.prepare(`
+    INSERT INTO projects (title_ar, title_en, description_ar, description_en, client_name, image, category, status, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  
+  // Project 1: كعك بلادي
+  insertProject.run(
+    'مشروع كعك بلادي', 'Kaak Biladi Project',
+    'نظام متكامل مخصص لإدارة مصانع ومعامل المعجنات والحلويات. يغطي دورة التصنيع والمبيعات والمشتريات والمخازن ونقاط البيع POS مع الربط المحاسبي الكامل.',
+    'An integrated ERP system for bakery and confectionery manufacturing, covering sales, purchasing, inventory, manufacturing, POS, and financial accounting.',
+    'مجموعة كعك بلادي للحلويات', '/img/portfolio-1.jpg', 'ERP & POS Systems', 'published', 1
+  );
+
+  // Project 2: The Pantry
+  insertProject.run(
+    'مشروع The Pantry', 'The Pantry Restaurant System',
+    'حل رقمي شامل لمجال المطاعم وإدارة الضيافة. يتضمن إدارة المبيعات، المشتريات، المخازن والمستودعات، عمليات التصنيع والطهي، نقاط البيع POS، الموارد البشرية HR، والمحاسبة.',
+    'A comprehensive hospitality and restaurant management system covering sales, purchases, warehouses, food manufacturing, POS, HR, and accounting.',
+    'مطاعم ذا بانتري العالمية', '/img/portfolio-2.jpg', 'Restaurant Management', 'published', 2
+  );
+
+  // Project 3: MIS
+  insertProject.run(
+    'نظام MIS للمقاولات وعروض الأسعار', 'MIS Contracting & Purchasing Agreement System',
+    'نظام مخصص لقطاع المقاولات لإدارة ومتابعة العملاء وتقديم عروض أسعار متطورة، بالإضافة إلى إدارة المشتريات وطلبات الشراء بنظام اتفاقيات الشراء (Purchase Agreements).',
+    'A specialized contracting subsystem for managing client relationships (CRM), issuing advanced quotations, and handling purchases under Purchase Agreements.',
+    'شركة MIS للمقاولات والحلول العقارية', '/img/portfolio-3.jpg', 'Enterprise Systems', 'published', 3
+  );
+
+  // Project 4: Stretch
+  insertProject.run(
+    'منصة Stretch لإدارة مراكز الـ Spa', 'Stretch Spa & Massage Management Platform',
+    'نظام متكامل مخصص لإدارة جلسات المساج، الـ Spa، والنوادي الصحية. يدعم نظام الباقات، الاشتراكات الدورية، الجلسات الفردية، والحجز المباشر مع لوحة تحكم مالية محاسبية.',
+    'A complete booking and management system for spa, wellness, and massage centers, supporting subscription packages, single sessions, and fully integrated accounting.',
+    'مراكز Stretch الصحية والرياضية', '/img/portfolio-4.jpg', 'Booking & Subscription Platforms', 'published', 4
+  );
+
+  // Project 5: IBSS
+  insertProject.run(
+    'نظام IBSS لإدارة المستشفيات وعيادات الأسنان', 'IBSS Hospital & Dental Clinic Management System',
+    'نظام صحي متكامل مخصص لإدارة المستشفيات والمجمعات الطبية وعيادات الأسنان. يغطي الحسابات العامة، المبيعات والفوترة، إدارة علاقات المرضى CRM، الموارد البشرية HR، المشتريات، وإدارة المخزون الطبي.',
+    'A dedicated healthcare enterprise system for managing dental clinics and hospitals, covering billing, CRM, HR, specialized medical inventory, and purchase tracking.',
+    'مجموعة عيادات ومستشفيات IBSS الطبية', '/img/portfolio-5.jpg', 'Healthcare Solutions', 'published', 5
+  );
+
+  // Project 6: Tailor
+  insertProject.run(
+    'نظام Tailor للتصنيع وتفصيل الملابس', 'Tailor Apparel Manufacturing & Customization System',
+    'نظام شامل مخصص للمشاغل وورش الخياطة يغطي دورة العمل بأكملها: من التصنيع والتفصيل وتدوين المقاسات التفصيلية، مروراً بإدارة المبيعات والمخازن، ووصولاً للمشتريات والتسليم النهائي للعميل.',
+    'A comprehensive tailor and workshop management system, tracking apparel from manufacturing, custom sizing and detailed measurements to sales, inventory, and final delivery.',
+    'دار Tailor للأزياء والخياطة الراقية', '/img/portfolio-6.jpg', 'Manufacturing & Retail Systems', 'published', 6
+  );
 
   // Default SEO pages
   const seoCount = db.prepare('SELECT COUNT(*) as count FROM seo_pages').get();
@@ -557,6 +605,48 @@ function initDatabase() {
 
   // Force update GA ID to ensure it stays even after restarts
   db.prepare("UPDATE settings SET setting_value = ? WHERE setting_key = 'ga_measurement_id'").run('G-DT4Y4BNB9H');
+
+  // Default Testimonials - Clean and re-seed to ensure these 5 specific reviews are active
+  db.exec('DELETE FROM testimonials');
+  const insertTestimonial = db.prepare(`
+    INSERT INTO testimonials (name_ar, name_en, role_ar, role_en, text_ar, text_en, is_active)
+    VALUES (?, ?, ?, ?, ?, ?, 1)
+  `);
+
+  insertTestimonial.run(
+    'د. هبة إبراهيم', 'Dr. Heba Ibrahim',
+    'المدير العام لشركة Ibss Innovation', 'General Manager of Ibss Innovation',
+    'تجربتنا مع شركة برق تكنولوجي كانت رائعة جدًا، ومن أفضل القرارات اللي أخذناها في تطوير أعمالنا. الفريق كان متعاون واحترافي من أول يوم، وفهم احتياجاتنا بشكل سريع، واشتغل معنا على تنفيذ نظام Odoo كامل ومتكامل بالإضافة إلى نظام CRM مخصص ساعدنا بشكل كبير في تنظيم جميع عملياتنا الداخلية بطريقة أكثر كفاءة ووضوح. بفضل الحلول اللي قدموها لنا، قدرنا نحسن إدارة العملاء، تنظيم المبيعات، متابعة العمليات اليومية، وربط أقسام الشركة بشكل أفضل داخل نظام واحد سهل وعملي. أكثر شيء أعجبنا هو اهتمامهم بالتفاصيل، سرعة التنفيذ، والدعم المستمر اللي خلانا نحس أننا نتعامل مع شريك نجاح حقيقي.',
+    'Our experience with Barq Tech was truly wonderful, and one of the best decisions we made for our business development. The team was collaborative and professional from day one, quickly understanding our needs and working with us to implement a fully integrated Odoo system along with a custom CRM. This significantly helped organize all our internal operations efficiently and clearly. Thanks to their solutions, we improved client management, sales organization, and department integration within a simple, practical system. Their attention to detail, speed of execution, and continuous support made us feel like we had a true partner in success.'
+  );
+
+  insertTestimonial.run(
+    'سامر عيسى', 'Samer Issa',
+    'المدير العام لشركة أفاتار', 'General Manager of Avatar',
+    'تعاملنا مع برق تك كان تجربة مميزة فعلًا. كنا بحاجة إلى موقع إلكتروني يعكس شخصية أفاتار كشركة متخصصة في الدعاية والإعلان بطريقة احترافية وجذابة، وفريق برق تك قدر يقدم لنا حل متكامل تجاوز توقعاتنا. اشتغلوا على بناء موقع عصري يعبر عن هويتنا بشكل واضح، مع تصميم بصري مميز، عرض منظم لخدماتنا، وتجربة استخدام سهلة وسلسة على مختلف الأجهزة. كذلك اهتموا بجوانب مهمة مثل سرعة الأداء، وضوح المحتوى، وإظهار أعمالنا بطريقة تساعد العملاء على فهم خدماتنا والتواصل معنا بسهولة أكبر. أكثر شيء قدّرناه هو اهتمامهم الحقيقي بالتفاصيل، وحرصهم على أن يكون الموقع أداة فعالة لدعم أعمالنا وليس مجرد واجهة فقط. الفريق كان متجاوب، محترف، وسريع في التنفيذ، وهذا صنع فرق كبير معنا. نشكر برق تك على هذا العمل الرائع، وسعداء جدًا بهذا التعاون اللي ساعدنا في تعزيز حضورنا الرقمي بشكل أقوى وأكثر احترافية',
+    'Working with Barq Tech was a truly remarkable experience. We needed a professional, engaging website that reflects Avatar\'s identity as an advertising agency. The Barq Tech team delivered an integrated solution that exceeded our expectations, building a modern site with outstanding visual design and a seamless user experience across devices. The team was highly responsive, professional, and quick in execution, which made a huge difference for us. We thank Barq Tech for this wonderful work!'
+  );
+
+  insertTestimonial.run(
+    'يوسف جان', 'Yousef Jan',
+    'المدير العام لشركة OSB', 'General Manager of OSB',
+    'بصفتي المدير العام لشركة OSB، كنت أبحث عن جهة تقنية تستطيع تقديم موقع إلكتروني يعكس احترافية خدماتنا في مجال تأسيس الشركات ويعبر عن ثقة عملائنا بنا، والحقيقة أن برق تك قدمت لنا تجربة ممتازة من البداية حتى الإطلاق. الفريق استطاع بناء موقع متكامل يوضح خدماتنا بشكل منظم وواضح، وساعدنا في تقديم معلوماتنا بطريقة أكثر احترافية وسهولة للعملاء، سواء من ناحية التصميم، ترتيب المحتوى، أو سهولة الوصول للخدمات. ما أعجبني فعلًا هو قدرتهم على فهم طبيعة نشاطنا وتحويله إلى حضور رقمي يعكس هوية OSB بالشكل الصحيح. برق تك لم تقدم لنا مجرد موقع إلكتروني، بل ساعدتنا في بناء واجهة قوية تمثل شركتنا وتدعم نمو أعمالنا. التزامهم، سرعة استجابتهم، واهتمامهم بجودة العمل جعل التجربة ناجحة بكل المقاييس. أشكر فريق برق تك على هذا المستوى المميز، وأوصى بهم بكل ثقة لأي شركة تبحث عن شريك تقني يفهم احتياجها ويقدم نتائج حقيقية.',
+    'As the General Manager of OSB, I was looking for a technical partner capable of delivering a website that reflects the professionalism of our corporate setup services. Barq Tech provided us with an outstanding experience from inception to launch. The team built an integrated platform that showcases our services clearly and professionally. Their commitment, swift response, and attention to quality made this experience successful by all metrics.'
+  );
+
+  insertTestimonial.run(
+    'محمد برمدا', 'Mohamed Barmada',
+    'المدير العام لمجمع أزهار السكني', 'General Manager of Azhar Compound',
+    'بصفتي المدير العام لمجمع أزهار السكني، أود أن أعبر عن تقديري الكبير لفريق برق تك على العمل الاحترافي الذي قدموه لنا في تطوير تطبيق متكامل يخدم سكان المجمع ويرتقي بتجربة الحياة اليومية داخل المشروع. من البداية، أظهر فريق برق تك فهمًا واضحًا لاحتياجاتنا، ونجحوا في تصميم وتنفيذ تطبيق عملي وسهل الاستخدام ساعد السكان على الوصول للخدمات والمعلومات المهمة بكل سهولة، وساهم بشكل كبير في تحسين التواصل وتنظيم العديد من الجوانب التشغيلية داخل المجمع. ما يميز برق تك هو قدرتهم على تحويل الفكرة إلى حل رقمي فعّال يجمع بين الجودة، سهولة الاستخدام، والاهتمام بالتفاصيل، إلى جانب التزامهم العالي وسرعة استجابتهم طوال مراحل المشروع. نفخر بهذا التعاون، ونعتبر برق تك شريكًا تقنيًا موثوقًا ساعدنا في تقديم قيمة حقيقية لسكان مجمع أزهار، ونتطلع لمزيد من النجاحات معهم مستقبلًا.',
+    'As the General Manager of Azhar Compound, I want to express my gratitude to the Barq Tech team for their professional work in developing an integrated application serving compound residents and elevating their daily living experience. From the start, they demonstrated a clear understanding of our needs, designing and executing a highly practical, user-friendly app that facilitated resident communications and operations. We are proud of this partnership.'
+  );
+
+  insertTestimonial.run(
+    'المدير العام لشركة Coffee Selection', 'General Manager of Coffee Selection',
+    'المدير العام لشركة Coffee Selection ومحمصة ريفيكس', 'General Manager of Coffee Selection & Refix Roastery',
+    'بصفتي المدير العام لشركة Coffee Selection، يسعدني أن أشارك تجربتنا مع شركة برق تك التي كانت تجربة مميزة بكل المقاييس. عملنا معهم على مشروع متكامل شمل تطوير نظام رقمي كامل للمحمصة، بالإضافة إلى موقع إلكتروني احترافي وتطبيق موبايل باسم Refix، وكان الهدف هو ربط جميع عملياتنا في منصة واحدة ذكية وسهلة الاستخدام. برق تك نجحوا في تنفيذ نظام متكامل يربط عملياتنا التشغيلية من الإنتاج داخل المحمصة، إلى إدارة الطلبات، والتكامل مع شركات الشحن الخارجية، بالإضافة إلى ربط النظام مع Meta لإدارة الحملات والتسويق بشكل أكثر احترافية. كذلك تم تطوير حلول تدعم التوصيل وإدارة الطلبات بشكل سلس وسريع، مما ساعدنا على تحسين تجربة العملاء بشكل كبير. ما يميز فريق برق تك هو فهمهم العميق لطبيعة العمل، وقدرتهم على بناء حلول تقنية قابلة للتوسع وتخدم النمو المستقبلي للشركة، إلى جانب احترافيتهم العالية وسرعة تنفيذهم وحرصهم على التفاصيل. نحن في Coffee Selection نعتبر برق تك شريكًا تقنيًا حقيقيًا ساهم في تطوير أعمالنا بشكل واضح، ونشكرهم على هذا المستوى المتميز من الجودة والالتزام.',
+    'As the GM of Coffee Selection, I am delighted to share our outstanding experience with Barq Tech. We worked with them on an integrated system for our roastery, including a professional website and a mobile app called Refix. The goal was to unify all operations in one smart platform. Barq Tech successfully delivered a comprehensive ecosystem linking our production, order dispatching, shipping integration, and Meta marketing campaigns.'
+  );
 
   console.log('✅ Database initialized successfully');
   return db;

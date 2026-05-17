@@ -487,10 +487,10 @@ h6,
 
 /*** Hero Header ***/
 .hero-header {
-    background-image: url(/img/bg-bottom-hero.png), url(/img/herofull.png?v=3) !important;
-    background-position: center bottom -1px, center center !important;
-    background-size: 100% auto, cover !important;
-    background-repeat: no-repeat, no-repeat !important;
+    background-image: url(/img/bg-bottom-hero.png), linear-gradient(rgba(8, 46, 113, 0.45), rgba(8, 46, 113, 0.45)), url(/img/herofull.png?v=3);
+    background-position: center bottom -1px, center center, center center;
+    background-size: 100% auto, cover, cover;
+    background-repeat: no-repeat, no-repeat, no-repeat;
     position: relative;
 }
 
@@ -856,9 +856,10 @@ h6,
 @media (max-width: 768px) {
     /* Reduce hero height so the background image (cover) scales down */
     .hero-header {
-        background-image: url(/img/bg-bottom-hero.png), url(/img/heromob.png?v=3) !important;
-        background-position: center bottom -1px, center center !important;
-        background-size: 100% auto, cover !important;
+        background-image: url(/img/bg-bottom-hero.png), linear-gradient(rgba(8, 46, 113, 0.45), rgba(8, 46, 113, 0.45)), url(/img/heromob.png?v=3);
+        background-position: center bottom -1px, center center, center center;
+        background-size: 100% auto, cover, cover;
+        background-repeat: no-repeat, no-repeat, no-repeat;
     }
 
     .hero-header.py-5 {
@@ -884,17 +885,21 @@ h6,
 }
 
 .shadow-hover:hover {
+    background: var(--primary) !important;
     background-color: var(--primary) !important;
     background-image: none !important;
     transform: translateY(-10px);
     box-shadow: 0 15px 35px rgba(8, 46, 113, 0.3) !important;
+    border-color: var(--primary) !important;
 }
 
 .shadow-hover:hover p,
+.shadow-hover:hover p.text-dark,
 .shadow-hover:hover h5,
 .shadow-hover:hover h6,
-.shadow-hover:hover i {
-    color: #fff !important;
+.shadow-hover:hover i,
+.shadow-hover:hover span:not(.badge) {
+    color: #ffffff !important;
 }
 
 @keyframes icon-float {
