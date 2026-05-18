@@ -13,6 +13,7 @@ import BlogPost from './pages/BlogPost';
 import GenericService from './pages/GenericService';
 import Privacy from './pages/Privacy';
 import Faqs from './pages/Faqs';
+import ProjectDetail from './pages/ProjectDetail';
 
 // Admin Pages
 import AdminLogin from './pages/admin/AdminLogin';
@@ -96,6 +97,7 @@ function App() {
         <Route path="/service/ai-automation" element={<AutomationService />} />
         <Route path="/service/:slug" element={<GenericService />} />
         <Route path="/project" element={<Project />} />
+        <Route path="/project/:id" element={<ProjectDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogPost />} />

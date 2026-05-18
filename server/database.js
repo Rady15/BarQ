@@ -102,10 +102,28 @@ function initDatabase() {
       project_url TEXT,
       status TEXT DEFAULT 'draft' CHECK(status IN ('draft', 'published')),
       sort_order INTEGER DEFAULT 0,
+      sector_ar TEXT,
+      sector_en TEXT,
+      value_ar TEXT,
+      value_en TEXT,
+      impact_metric TEXT,
+      impact_label_ar TEXT,
+      impact_label_en TEXT,
+      features_json TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
+
+  // Migrate projects table if the columns are missing
+  try { db.exec("ALTER TABLE projects ADD COLUMN sector_ar TEXT;"); } catch(e){}
+  try { db.exec("ALTER TABLE projects ADD COLUMN sector_en TEXT;"); } catch(e){}
+  try { db.exec("ALTER TABLE projects ADD COLUMN value_ar TEXT;"); } catch(e){}
+  try { db.exec("ALTER TABLE projects ADD COLUMN value_en TEXT;"); } catch(e){}
+  try { db.exec("ALTER TABLE projects ADD COLUMN impact_metric TEXT;"); } catch(e){}
+  try { db.exec("ALTER TABLE projects ADD COLUMN impact_label_ar TEXT;"); } catch(e){}
+  try { db.exec("ALTER TABLE projects ADD COLUMN impact_label_en TEXT;"); } catch(e){}
+  try { db.exec("ALTER TABLE projects ADD COLUMN features_json TEXT;"); } catch(e){}
 
   // ─── BLOG ARTICLES TABLE ───
   db.exec(`
@@ -482,47 +500,61 @@ function initDatabase() {
 
   // Default FAQs
   const faqCount = db.prepare('SELECT COUNT(*) as count FROM faqs').get();
-  if (faqCount.count === 0) {
-    const insertFaq = db.prepare('INSERT INTO faqs (question_ar, question_en, answer_ar, answer_en, sort_order) VALUES (?, ?, ?, ?, ?)');
-    const faqs = [
-      ['ما هي خدمات برق تك؟', "What are Barq Tech's services?", 'نقدم حلولًا تقنية متكاملة تشمل تطوير المواقع والمتاجر الإلكترونية، الأنظمة الإدارية (ERP)، التحول الرقمي، حلول الذكاء الاصطناعي، الأتمتة، والاستشارات التقنية المصممة لدعم نمو الأعمال.', 'We provide integrated technical solutions including web development, e-commerce, ERP systems, digital transformation, AI solutions, automation, and technical consulting.'],
-      ['من هم العملاء الذين تستهدفهم برق تك؟', "Who are Barq Tech's target clients?", 'نعمل مع الشركات الناشئة، المؤسسات الصغيرة والمتوسطة، والشركات الكبرى التي تبحث عن تطوير أعمالها رقميًا.', 'We work with startups, SMEs, and large corporations seeking digital business development.'],
-      ['كيف تساعدنا برق تك في التحول الرقمي؟', 'How does Barq Tech help in digital transformation?', 'نقوم بتحليل احتياجات نشاطك التجاري، ثم نصمم حلولًا تقنية ذكية تساعدك على أتمتة العمليات وتحسين الأداء.', 'We analyze your business needs, then design smart technical solutions to automate processes and improve performance.'],
-      ['هل تقدمون حلولًا مخصصة حسب نشاط الشركة؟', 'Do you provide custom solutions?', 'نعم، نؤمن أن كل نشاط تجاري له احتياجاته الخاصة، لذلك نقدم حلولًا مخصصة تناسب أهدافك.', 'Yes, we believe every business has unique needs, so we provide customized solutions.'],
-      ['ما الفرق بين برق تك والشركات التقنية الأخرى؟', 'What differentiates Barq Tech?', 'نحن لا نقدم خدمات تقنية فقط، بل نركز على بناء حلول استراتيجية تعتمد على الابتكار والذكاء الاصطناعي.', 'We focus on building strategic solutions based on innovation and AI with measurable results.'],
-      ['هل يمكنكم تطوير موقع إلكتروني احترافي؟', 'Can you develop a professional website?', 'بالتأكيد، نقوم بتصميم وتطوير مواقع ومتاجر إلكترونية حديثة وسريعة ومتوافقة مع محركات البحث.', 'Certainly, we design and develop modern, fast, and SEO-compatible websites and e-stores.'],
-      ['هل توفرون دعمًا فنيًا بعد تنفيذ المشروع؟', 'Do you provide post-project support?', 'نعم، نقدم دعمًا فنيًا مستمرًا وخطط صيانة وتحديث لضمان استقرار الأنظمة.', 'Yes, we provide ongoing technical support and maintenance plans.'],
-      ['كم تستغرق مدة تنفيذ المشروع؟', 'How long does project execution take?', 'تعتمد مدة التنفيذ على نوع المشروع وحجمه، لكننا نحرص على تقديم جدول زمني واضح.', 'It depends on project type and size, but we always provide a clear timeline.'],
-      ['هل حلولكم مناسبة للشركات الناشئة؟', 'Are your solutions suitable for startups?', 'نعم، لدينا خدمات مرنة ومناسبة للشركات الناشئة تساعدها على بناء أساس تقني قوي.', 'Yes, we have flexible services suitable for startups to build a strong tech foundation.'],
-      ['كيف يمكنني بدء العمل مع برق تك؟', 'How can I start working with Barq Tech?', 'يمكنك التواصل معنا عبر الموقع أو الواتساب لحجز استشارة أولية.', 'Contact us via the website or WhatsApp for an initial consultation.'],
-      ['هل تقدمون خدمات SEO؟', 'Do you provide SEO services?', 'نعم، نساعد الشركات على تحسين ظهورها الرقمي عبر استراتيجيات SEO.', 'Yes, we help companies improve digital visibility through SEO strategies.'],
-      ['لماذا أحتاج إلى الذكاء الاصطناعي في عملي؟', 'Why do I need AI in my business?', 'يساعد الذكاء الاصطناعي في تحسين الإنتاجية وتحليل البيانات وأتمتة المهام واتخاذ قرارات أذكى.', 'AI helps improve productivity, data analysis, task automation, and smarter decision-making.'],
-    ];
-    faqs.forEach((faq, i) => insertFaq.run(faq[0], faq[1], faq[2], faq[3], i + 1));
-  }
 
   // Default projects - Clean existing and re-seed to ensure these 6 specific projects are active
   db.exec('DELETE FROM projects');
   
   const insertProject = db.prepare(`
-    INSERT INTO projects (title_ar, title_en, description_ar, description_en, client_name, image, category, status, sort_order)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO projects (
+      title_ar, title_en, description_ar, description_en, client_name, image, category, status, sort_order,
+      sector_ar, sector_en, value_ar, value_en, impact_metric, impact_label_ar, impact_label_en, features_json
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   
   // Project 1: كعك بلادي
+  const featuresKaak = [
+    {titleAr:"المبيعات (Sales)",titleEn:"Sales Management",icon:"fa-file-invoice-dollar",descAr:"إدارة متكاملة للفواتير والعملاء وتتبع عروض الأسعار والتحصيل المالي.",descEn:"Fully integrated billing, customer directory, quotation tracking, and cash collection pipelines."},
+    {titleAr:"المشتريات (Purchases)",titleEn:"Purchases & Supplies",icon:"fa-truck-loading",descAr:"شراء المواد الخام من الموردين تلقائياً وتتبع حركة الأسعار والموازنات.",descEn:"Automatic procurement of raw ingredients from verified vendors with price index tracking."},
+    {titleAr:"المخازن (Inventory)",titleEn:"Smart Inventory",icon:"fa-warehouse",descAr:"متابعة المخزون وحركة الأصناف والمواد الأولية في المخابز بدقة متناهية.",descEn:"Real-time ingredient tracking, batch numbers, expiration notifications, and internal stock transfer logs."},
+    {titleAr:"التصنيع (Manufacturing)",titleEn:"Manufacturing & Recipes",icon:"fa-blender",descAr:"إدارة الوصفات الإنتاجية (BOM)، وحساب تكاليف المواد وهدر خطوط الإنتاج.",descEn:"Detailed Bill of Materials (BOM) management, production recipe costing, and manufacturing line audits."},
+    {titleAr:"نقاط البيع (POS)",titleEn:"Fast POS System",icon:"fa-cash-register",descAr:"البيع المباشر والسريع داخل الفروع والمعارض مع التزامن السحابي المباشر.",descEn:"Blazing fast direct sales for retail branches with offline support and immediate cloud sync."},
+    {titleAr:"المحاسبة (Accounting)",titleEn:"Financial Accounting",icon:"fa-calculator",descAr:"إدارة المصاريف والأرباح والضرائب والتقارير المالية المعتمدة للزكاة والدخل.",descEn:"Double-entry ledger, expense claims, custom VAT/Zakat invoicing, and comprehensive financial reports."}
+  ];
+
   insertProject.run(
     'مشروع كعك بلادي', 'Kaak Biladi Project',
     'نظام متكامل مخصص لإدارة مصانع ومعامل المعجنات والحلويات. يغطي دورة التصنيع والمبيعات والمشتريات والمخازن ونقاط البيع POS مع الربط المحاسبي الكامل.',
     'An integrated ERP system for bakery and confectionery manufacturing, covering sales, purchasing, inventory, manufacturing, POS, and financial accounting.',
-    'مجموعة كعك بلادي للحلويات', '/img/portfolio-1.jpg', 'ERP & POS Systems', 'published', 1
+    'مجموعة كعك بلادي للحلويات', '/img/portfolio-1.jpg', 'ERP & POS Systems', 'published', 1,
+    'صناعة الكعك والحلويات والمخابز', 'Sweets, Bakeries & Confectionery Manufacturing',
+    'ساعد النظام في تنظيم دورة العمل الكاملة وتقليل الهدر وتحسين دقة احتساب تكلفة الإنتاج وتتبع الموارد الخام.',
+    'The system successfully organized the full operational workflow, reduced material waste, and enabled highly accurate real-time costing of recipes and raw items.',
+    '35%', 'تقليل في الهدر التشغيلي', 'Reduction in operational waste',
+    JSON.stringify(featuresKaak)
   );
 
   // Project 2: The Pantry
+  const featuresPantry = [
+    {titleAr:"المبيعات (Sales)",titleEn:"Sales Integration",icon:"fa-receipt",descAr:"إدارة المبيعات وقنوات البيع المختلفة كالتوصيل والطلبات المحلية.",descEn:"Centralized sales processing across multiple channels including delivery and dine-in tables."},
+    {titleAr:"المشتريات (Purchases)",titleEn:"Supplies Management",icon:"fa-shopping-basket",descAr:"طلب المواد الغذائية والخضروات وتحديث تكلفة المكونات تلقائياً.",descEn:"Procurement workflows for fresh produce and ingredients with auto-updated recipe costs."},
+    {titleAr:"المخازن (Inventory)",titleEn:"Kitchen Inventory",icon:"fa-cubes",descAr:"متابعة صلاحيات الأغذية والمكونات ومنع الهدر في المستودعات.",descEn:"Strict cold-storage logs, ingredient shelf-life alerts, and wastage auditing."},
+    {titleAr:"التصنيع (Kitchen Production)",titleEn:"Kitchen Display & Recipes",icon:"fa-utensils",descAr:"ربط شاشات المطبخ الذكية وإدارة وصفات الطهي والمقادير بدقة.",descEn:"KDS (Kitchen Display System) link, ingredient portion control, and recipe instructions."},
+    {titleAr:"نقاط البيع (POS)",titleEn:"Dine-In & Takeaway POS",icon:"fa-tablet-alt",descAr:"إدارة الطاولات، الحجوزات، والطلبات السريعة وربطها مع الكابتن مباشرة.",descEn:"Table layouts, visual reservations, and rapid captain orders synced with the kitchen."},
+    {titleAr:"الموارد البشرية (HR)",titleEn:"Restaurant HR & Staff",icon:"fa-users-cog",descAr:"تنظيم شفتات العمل للموظفين والطهاة، وتتبع الحضور والرواتب.",descEn:"Chef and waiter shift scheduling, biometric attendance tracking, and localized payroll."},
+    {titleAr:"المحاسبة (Accounting)",titleEn:"Revenue & Cost Control",icon:"fa-chart-pie",descAr:"تقارير الأرباح والخسائر اليومية ونسب الربح لكل وجبة أو قسم.",descEn:"Daily profit & loss reporting, food cost percentage metrics, and department cost centers."}
+  ];
+
   insertProject.run(
     'مشروع The Pantry', 'The Pantry Restaurant System',
     'حل رقمي شامل لمجال المطاعم وإدارة الضيافة. يتضمن إدارة المبيعات، المشتريات، المخازن والمستودعات، عمليات التصنيع والطهي، نقاط البيع POS، الموارد البشرية HR، والمحاسبة.',
     'A comprehensive hospitality and restaurant management system covering sales, purchases, warehouses, food manufacturing, POS, HR, and accounting.',
-    'مطاعم ذا بانتري العالمية', '/img/portfolio-2.jpg', 'Restaurant Management', 'published', 2
+    'مطاعم ذا بانتري العالمية', '/img/portfolio-2.jpg', 'Restaurant Management', 'published', 2,
+    'المطاعم والضيافة والمأكولات', 'Restaurants, Food & Hospitality',
+    'ساهم المشروع في توحيد جميع أقسام المطعم والمطبخ داخل نظام واحد لرفع الكفاءة التشغيلية وتحسين تجربة الإدارة والطلب.',
+    'The project successfully unified all restaurant front-of-house operations and kitchen lines into a single ERP, boosting efficiency and management experience.',
+    '42%', 'زيادة سرعة تجهيز الطلبات', 'Increase in order prep speed',
+    JSON.stringify(featuresPantry)
   );
 
   // Project 3: MIS
@@ -530,7 +562,12 @@ function initDatabase() {
     'نظام MIS للمقاولات وعروض الأسعار', 'MIS Contracting & Purchasing Agreement System',
     'نظام مخصص لقطاع المقاولات لإدارة ومتابعة العملاء وتقديم عروض أسعار متطورة، بالإضافة إلى إدارة المشتريات وطلبات الشراء بنظام اتفاقيات الشراء (Purchase Agreements).',
     'A specialized contracting subsystem for managing client relationships (CRM), issuing advanced quotations, and handling purchases under Purchase Agreements.',
-    'شركة MIS للمقاولات والحلول العقارية', '/img/portfolio-3.jpg', 'Enterprise Systems', 'published', 3
+    'شركة MIS للمقاولات والحلول العقارية', '/img/portfolio-3.jpg', 'Enterprise Systems', 'published', 3,
+    'المقاولات والإنشاءات', 'Contracting & Construction',
+    'أتاح للشركة تحويل طلبات الشراء إلى نظام مرن أوتوماتيكي بالكامل مع تتبع تسعير المواد.',
+    'Transformed standard purchasing into an automated, highly traceable ecosystem across multi-scale projects.',
+    '28%', 'تخفيض تكلفة المشتريات', 'Decrease in purchase cycle time',
+    '[]'
   );
 
   // Project 4: Stretch
@@ -538,7 +575,12 @@ function initDatabase() {
     'منصة Stretch لإدارة مراكز الـ Spa', 'Stretch Spa & Massage Management Platform',
     'نظام متكامل مخصص لإدارة جلسات المساج، الـ Spa، والنوادي الصحية. يدعم نظام الباقات، الاشتراكات الدورية، الجلسات الفردية، والحجز المباشر مع لوحة تحكم مالية محاسبية.',
     'A complete booking and management system for spa, wellness, and massage centers, supporting subscription packages, single sessions, and fully integrated accounting.',
-    'مراكز Stretch الصحية والرياضية', '/img/portfolio-4.jpg', 'Booking & Subscription Platforms', 'published', 4
+    'مراكز Stretch الصحية والرياضية', '/img/portfolio-4.jpg', 'Booking & Subscription Platforms', 'published', 4,
+    'النوادي الصحية والجمال', 'Wellness & Health Centers',
+    'وفر النظام للعملاء تجربة حجز متطورة مع زيادة نسبة المبيعات المتكررة بنسبة ملحوظة.',
+    'Organized booking parameters and improved recurring client acquisition cycles via seamless mobile app portals.',
+    '50%', 'زيادة مبيعات الاشتراكات', 'Increase in subscription sales',
+    '[]'
   );
 
   // Project 5: IBSS
@@ -546,7 +588,12 @@ function initDatabase() {
     'نظام IBSS لإدارة المستشفيات وعيادات الأسنان', 'IBSS Hospital & Dental Clinic Management System',
     'نظام صحي متكامل مخصص لإدارة المستشفيات والمجمعات الطبية وعيادات الأسنان. يغطي الحسابات العامة، المبيعات والفوترة، إدارة علاقات المرضى CRM، الموارد البشرية HR، المشتريات، وإدارة المخزون الطبي.',
     'A dedicated healthcare enterprise system for managing dental clinics and hospitals, covering billing, CRM, HR, specialized medical inventory, and purchase tracking.',
-    'مجموعة عيادات ومستشفيات IBSS الطبية', '/img/portfolio-5.jpg', 'Healthcare Solutions', 'published', 5
+    'مجموعة عيادات ومستشفيات IBSS الطبية', '/img/portfolio-5.jpg', 'Healthcare Solutions', 'published', 5,
+    'المستشفيات والرعاية الطبية', 'Healthcare & Medical Centers',
+    'سلسلة عيادات كاملة تعمل الآن بنظام رقمي موحد متوافق مع متطلبات التأمين الطبي.',
+    'Integrated patient check-in queues, dental record charts, and Zatca e-invoicing databases.',
+    '99.9%', 'دقة في الفوترة والمطالبات', 'Billing and claim accuracy',
+    '[]'
   );
 
   // Project 6: Tailor
@@ -554,7 +601,12 @@ function initDatabase() {
     'نظام Tailor للتصنيع وتفصيل الملابس', 'Tailor Apparel Manufacturing & Customization System',
     'نظام شامل مخصص للمشاغل وورش الخياطة يغطي دورة العمل بأكملها: من التصنيع والتفصيل وتدوين المقاسات التفصيلية، مروراً بإدارة المبيعات والمخازن، ووصولاً للمشتريات والتسليم النهائي للعميل.',
     'A comprehensive tailor and workshop management system, tracking apparel from manufacturing, custom sizing and detailed measurements to sales, inventory, and final delivery.',
-    'دار Tailor للأزياء والخياطة الراقية', '/img/portfolio-6.jpg', 'Manufacturing & Retail Systems', 'published', 6
+    'دار Tailor للأزياء والخياطة الراقية', '/img/portfolio-6.jpg', 'Manufacturing & Retail Systems', 'published', 6,
+    'صناعة الأزياء وتفصيل الملابس', 'Fashion & Custom Apparel Industry',
+    'قلص النظام أخطاء المقاسات والتسليمات الضائعة بنسبة غير مسبوقة.',
+    'Reduced measurement records mismatch errors and enhanced inventory management of valuable textile rolls.',
+    '85%', 'تحسن في دقة تلبية المقاسات', 'Improvement in custom sizing accuracy',
+    '[]'
   );
 
   // Default SEO pages

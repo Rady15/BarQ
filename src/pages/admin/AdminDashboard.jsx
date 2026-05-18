@@ -126,17 +126,23 @@ const AdminDashboard = () => {
             </div>
             <div style={{ padding: '24px' }}>
               <h6 className="mb-3" style={{ fontSize: '0.85rem', color: '#6b7280' }}>الأجهزة المستخدمة</h6>
-              {analytics.devices?.map((d, i) => (
-                <div key={i} className="mb-3">
-                  <div className="d-flex justify-content-between mb-1" style={{ fontSize: '0.85rem' }}>
-                    <span>{d.device === 'Mobile' ? 'جوال' : d.device === 'Tablet' ? 'تابلت' : 'كمبيوتر'}</span>
-                    <span className="fw-bold">{Math.round((d.count / (analytics.visitors?.today || 1)) * 100) || 0}%</span>
-                  </div>
-                  <div className="progress" style={{ height: '6px' }}>
-                    <div className="progress-bar bg-primary" style={{ width: `${(d.count / (analytics.visitors?.today || 1)) * 100}%` }}></div>
-                  </div>
-                </div>
-              ))}
+              {(() => {
+                const totalDevices = analytics.devices?.reduce((sum, d) => sum + (d.count || 0), 0) || 1;
+                return analytics.devices?.map((d, i) => {
+                  const percent = Math.round(((d.count || 0) / totalDevices) * 100) || 0;
+                  return (
+                    <div key={i} className="mb-3">
+                      <div className="d-flex justify-content-between mb-1" style={{ fontSize: '0.85rem' }}>
+                        <span>{d.device === 'Mobile' ? 'جوال' : d.device === 'Tablet' ? 'تابلت' : 'كمبيوتر'}</span>
+                        <span className="fw-bold">{percent}%</span>
+                      </div>
+                      <div className="progress" style={{ height: '6px' }}>
+                        <div className="progress-bar bg-primary" style={{ width: `${percent}%` }}></div>
+                      </div>
+                    </div>
+                  );
+                });
+              })()}
 
               <hr className="my-4" />
 

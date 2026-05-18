@@ -51,24 +51,28 @@ const PortfolioSection = ({ limit }) => {
               <div className="position-relative rounded overflow-hidden">
                 <img className="img-fluid w-100" src={getImageUrl(item.image)} alt={isAr ? item.title_ar : item.title_en} />
                 <div className="portfolio-overlay">
-                  <a className="btn btn-light mb-3" href={getImageUrl(item.image)} target="_blank" rel="noopener noreferrer">
-                    <i className="fa fa-plus fa-2x text-primary"></i>
-                  </a>
+                  <div className="d-flex gap-2 mb-3">
+                    <Link className="btn btn-light" to={`/project/${item.id}`}>
+                      <i className="fa fa-link text-primary" style={{ fontSize: '1.2rem', padding: '5px' }}></i>
+                    </Link>
+                    <a className="btn btn-light" href={getImageUrl(item.image)} target="_blank" rel="noopener noreferrer">
+                      <i className="fa fa-search text-primary" style={{ fontSize: '1.2rem', padding: '5px' }}></i>
+                    </a>
+                  </div>
                   <div className="mt-auto px-4 py-3 bg-dark-50 text-center w-100">
                     <small className="text-white d-block mb-1">
-                      <i className="fa fa-folder me-2"></i>
+                      <i className="fa fa-folder me-2 ms-2"></i>
                       {item.category || (isAr ? 'مشروع تقني' : 'Tech Project')}
                     </small>
                     <h5 className="text-white mb-2">
-                      {isAr ? item.title_ar : item.title_en}
+                      <Link to={`/project/${item.id}`} className="text-white text-decoration-none hover-cyan">
+                        {isAr ? item.title_ar : item.title_en}
+                      </Link>
                     </h5>
                     <p className="text-white-50 small mb-2">{isAr ? item.description_ar : item.description_en}</p>
-                    {item.result_ar && (
-                      <div className="bg-primary-transparent rounded p-2">
-                        <small className="text-white fw-bold">{isAr ? 'النتيجة: ' : 'Result: '}</small>
-                        <small className="text-white">{isAr ? item.result_ar : item.result_en}</small>
-                      </div>
-                    )}
+                    <Link to={`/project/${item.id}`} className="btn btn-sm btn-outline-cyan rounded-pill px-3 py-1 mt-1 text-white fw-bold">
+                      {isAr ? 'تفاصيل المشروع ➔' : 'Project Details ➔'}
+                    </Link>
                   </div>
                 </div>
               </div>

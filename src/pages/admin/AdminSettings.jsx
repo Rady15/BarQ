@@ -28,6 +28,20 @@ const AdminSettings = () => {
   
   const [passwords, setPasswords] = useState({ current: '', new: '', confirm: '' });
   const [saved, setSaved] = useState(false);
+  const [backups, setBackups] = useState([]);
+  const [loadingBackups, setLoadingBackups] = useState(true);
+
+  const loadBackups = async () => {
+    try {
+      setLoadingBackups(true);
+      const data = await api.get('/system/backups');
+      setBackups(data);
+    } catch (err) {
+      console.error('Failed to fetch server backups:', err);
+    } finally {
+      setLoadingBackups(false);
+    }
+  };
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -39,6 +53,7 @@ const AdminSettings = () => {
       }
     };
     loadSettings();
+    loadBackups();
   }, []);
 
   const handleChange = (key, value) => {
@@ -326,6 +341,122 @@ const AdminSettings = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Server Backups Manager */}
+      <div className="admin-table-card mb-4">
+        <div className="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <h5 className="mb-0"><i className="fa fa-database me-2"></i>إدارة النسخ الاحتياطية على السيرفر</h5>
+          <button className="btn-admin primary" onClick={async () => {
+            try {
+              showSuccess('جاري الإنشاء...', 'يتم الآن عمل نسخة احتياطية يدوية جديدة على السيرفر');
+              await api.post('/system/backups');
+              showSuccess('نجاح', 'تم إنشاء النسخة الاحتياطية اليدوية بنجاح');
+              loadBackups();
+            } catch (err) {
+              showError('خطأ', 'فشل إنشاء النسخة الاحتياطية: ' + err.message);
+            }
+          }}>
+            <i className="fa fa-plus me-1"></i> أخذ نسخة احتياطية يدوية الآن
+          </button>
+        </div>
+        <div style={{ padding: '24px' }}>
+          <p className="text-muted small mb-4">
+            <i className="fa fa-info-circle me-1"></i>
+            هنا تظهر كافة النسخ الاحتياطية المحفوظة تلقائياً قبل كل تعديل، بالإضافة للنسخ اليدوية التي تقوم بإنشائها. يتم الاحتفاظ بآخر 50 نسخة فقط تلقائياً.
+          </p>
+
+          {loadingBackups ? (
+            <div className="text-center py-4">
+              <i className="fa fa-spinner fa-spin fa-2x text-primary mb-2"></i>
+              <p className="text-muted small">جاري تحميل قائمة النسخ الاحتياطية...</p>
+            </div>
+          ) : backups.length === 0 ? (
+            <div className="text-center py-4" style={{ background: '#f9fafb', borderRadius: '12px' }}>
+              <i className="fa fa-folder-open fa-2x text-muted mb-2"></i>
+              <p className="text-muted mb-0">لا يوجد نسخ احتياطية على السيرفر حالياً</p>
+            </div>
+          ) : (
+            <div className="table-responsive">
+              <table className="admin-table text-center" style={{ width: '100%' }}>
+                <thead>
+                  <tr>
+                    <th>اسم الملف</th>
+                    <th>تاريخ النسخة</th>
+                    <th>الحجم</th>
+                    <th>النوع</th>
+                    <th>الإجراءات</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {backups.map(b => (
+                    <tr key={b.filename}>
+                      <td style={{ fontWeight: 600, fontSize: '0.9rem' }} dir="ltr">{b.filename}</td>
+                      <td style={{ fontSize: '0.85rem' }}>{new Date(b.date).toLocaleString('ar-EG')}</td>
+                      <td><span className="badge bg-light text-dark">{b.size}</span></td>
+                      <td>
+                        <span className={`badge ${b.isManual ? 'bg-warning text-dark' : 'bg-info text-white'}`} style={{ fontSize: '0.8rem', padding: '5px 10px' }}>
+                          {b.isManual ? 'يدوية 📝' : 'تلقائية قبل تعديل 🤖'}
+                        </span>
+                      </td>
+                      <td>
+                        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                          <button className="btn-admin info btn-sm" onClick={async () => {
+                            try {
+                              showSuccess('جاري التحميل...', 'يتم الآن تنزيل ملف قاعدة البيانات');
+                              await api.download(`/system/backups/download/${b.filename}`, b.filename);
+                            } catch (err) {
+                              showError('خطأ', 'فشل تحميل الملف: ' + err.message);
+                            }
+                          }}>
+                            <i className="fa fa-download"></i> تنزيل
+                          </button>
+                          
+                          <button className="btn-admin warning btn-sm" onClick={async () => {
+                            const result = await showConfirm(
+                              'تأكيد استعادة النسخة الاحتياطية',
+                              `هل أنت متأكد تماماً من رغبتك في استعادة قاعدة البيانات من الملف (${b.filename})؟ سيتم استبدال جميع البيانات الحالية بالكامل وإعادة تشغيل السيرفر تلقائياً!`
+                            );
+                            if (result.isConfirmed) {
+                              try {
+                                showSuccess('جاري الاستعادة...', 'يتم الآن استعادة البيانات، قد يستغرق السيرفر ثوانٍ لإعادة التشغيل.');
+                                const res = await api.post(`/system/backups/restore/${b.filename}`);
+                                showSuccess('نجاح', res.message);
+                                setTimeout(() => window.location.reload(), 3000);
+                              } catch (err) {
+                                showError('خطأ', 'فشل في استعادة النسخة: ' + err.message);
+                              }
+                            }
+                          }}>
+                            <i className="fa fa-undo"></i> استعادة
+                          </button>
+
+                          <button className="btn-admin danger btn-sm" onClick={async () => {
+                            const result = await showConfirm(
+                              'حذف النسخة الاحتياطية',
+                              `هل أنت متأكد من رغبتك في حذف ملف النسخة الاحتياطية (${b.filename}) نهائياً من السيرفر؟`
+                            );
+                            if (result.isConfirmed) {
+                              try {
+                                await api.delete(`/system/backups/${b.filename}`);
+                                showSuccess('نجاح', 'تم حذف النسخة الاحتياطية بنجاح');
+                                loadBackups();
+                              } catch (err) {
+                                showError('خطأ', 'فشل حذف الملف: ' + err.message);
+                              }
+                            }
+                          }}>
+                            <i className="fa fa-trash"></i> حذف
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
 
