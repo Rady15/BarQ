@@ -557,32 +557,6 @@ function initDatabase() {
     JSON.stringify(featuresPantry)
   );
 
-  // Project 3: MIS
-  insertProject.run(
-    'نظام MIS للمقاولات وعروض الأسعار', 'MIS Contracting & Purchasing Agreement System',
-    'نظام مخصص لقطاع المقاولات لإدارة ومتابعة العملاء وتقديم عروض أسعار متطورة، بالإضافة إلى إدارة المشتريات وطلبات الشراء بنظام اتفاقيات الشراء (Purchase Agreements).',
-    'A specialized contracting subsystem for managing client relationships (CRM), issuing advanced quotations, and handling purchases under Purchase Agreements.',
-    'شركة MIS للمقاولات والحلول العقارية', '/img/portfolio-3.jpg', 'Enterprise Systems', 'published', 3,
-    'المقاولات والإنشاءات', 'Contracting & Construction',
-    'أتاح للشركة تحويل طلبات الشراء إلى نظام مرن أوتوماتيكي بالكامل مع تتبع تسعير المواد.',
-    'Transformed standard purchasing into an automated, highly traceable ecosystem across multi-scale projects.',
-    '28%', 'تخفيض تكلفة المشتريات', 'Decrease in purchase cycle time',
-    '[]'
-  );
-
-  // Project 4: Stretch
-  insertProject.run(
-    'منصة Stretch لإدارة مراكز الـ Spa', 'Stretch Spa & Massage Management Platform',
-    'نظام متكامل مخصص لإدارة جلسات المساج، الـ Spa، والنوادي الصحية. يدعم نظام الباقات، الاشتراكات الدورية، الجلسات الفردية، والحجز المباشر مع لوحة تحكم مالية محاسبية.',
-    'A complete booking and management system for spa, wellness, and massage centers, supporting subscription packages, single sessions, and fully integrated accounting.',
-    'مراكز Stretch الصحية والرياضية', '/img/portfolio-4.jpg', 'Booking & Subscription Platforms', 'published', 4,
-    'النوادي الصحية والجمال', 'Wellness & Health Centers',
-    'وفر النظام للعملاء تجربة حجز متطورة مع زيادة نسبة المبيعات المتكررة بنسبة ملحوظة.',
-    'Organized booking parameters and improved recurring client acquisition cycles via seamless mobile app portals.',
-    '50%', 'زيادة مبيعات الاشتراكات', 'Increase in subscription sales',
-    '[]'
-  );
-
   // Project 5: IBSS
   insertProject.run(
     'نظام IBSS لإدارة المستشفيات وعيادات الأسنان', 'IBSS Hospital & Dental Clinic Management System',
