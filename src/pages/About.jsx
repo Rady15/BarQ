@@ -4,9 +4,7 @@ import Spinner from '../components/Spinner';
 import PageHeader from '../components/PageHeader';
 import AboutSection from '../components/AboutSection';
 import VisionMissionSection from '../components/VisionMissionSection';
-import TimelineSection from '../components/TimelineSection';
 import TeamSection from '../components/TeamSection';
-import TestimonialSection from '../components/TestimonialSection';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
 import { useSpinner, useWow } from '../hooks/useAnimations';
@@ -41,14 +39,8 @@ const About = () => {
       {/* Vision, Mission, Values */}
       <VisionMissionSection />
 
-      {/* Work Methodology Timeline */}
-      <TimelineSection />
-
       {/* Team Section */}
       <TeamSection />
-
-      {/* Testimonial Section */}
-      <TestimonialSection />
 
       {/* Footer */}
       <Footer />
