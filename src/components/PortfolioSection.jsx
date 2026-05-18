@@ -49,13 +49,23 @@ const PortfolioSection = ({ limit }) => {
               data-delay={index * 100}
             >
               <div className="position-relative rounded overflow-hidden">
-                <img className="img-fluid w-100" src={getImageUrl(item.image)} alt={isAr ? item.title_ar : item.title_en} />
+                <img 
+                  className="img-fluid w-100" 
+                  src={item.image ? getImageUrl(item.image) : "https://taharica.co.id/wp-content/uploads/2025/03/Artikel-Taharica-odoo.jpg"} 
+                  alt={isAr ? item.title_ar : item.title_en} 
+                  style={{ minHeight: '250px', objectFit: 'cover' }}
+                />
                 <div className="portfolio-overlay">
                   <div className="d-flex gap-2 mb-3">
                     <Link className="btn btn-light" to={`/project/${item.id}`}>
                       <i className="fa fa-link text-primary" style={{ fontSize: '1.2rem', padding: '5px' }}></i>
                     </Link>
-                    <a className="btn btn-light" href={getImageUrl(item.image)} target="_blank" rel="noopener noreferrer">
+                    <a 
+                      className="btn btn-light" 
+                      href={item.image ? getImageUrl(item.image) : "https://taharica.co.id/wp-content/uploads/2025/03/Artikel-Taharica-odoo.jpg"} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
                       <i className="fa fa-search text-primary" style={{ fontSize: '1.2rem', padding: '5px' }}></i>
                     </a>
                   </div>

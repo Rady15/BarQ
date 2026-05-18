@@ -207,13 +207,11 @@ const AdminProjects = () => {
                 <tr key={project.id}>
                   <td>{i + 1}</td>
                   <td>
-                    {project.image ? (
-                      <img src={getImageUrl(project.image)} alt={project.title_ar} style={{ height: '45px', width: '65px', borderRadius: '6px', objectFit: 'cover' }} />
-                    ) : (
-                      <div style={{ height: '45px', width: '65px', borderRadius: '6px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <i className="fa fa-image" style={{ color: '#d1d5db' }}></i>
-                      </div>
-                    )}
+                    <img 
+                      src={project.image ? getImageUrl(project.image) : "https://taharica.co.id/wp-content/uploads/2025/03/Artikel-Taharica-odoo.jpg"} 
+                      alt={project.title_ar} 
+                      style={{ height: '45px', width: '65px', borderRadius: '6px', objectFit: 'cover' }} 
+                    />
                   </td>
                   <td style={{ fontWeight: 600 }}>{project.title_ar}</td>
                   <td style={{ color: '#6b7280' }}>{project.client_name}</td>
