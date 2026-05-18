@@ -66,14 +66,17 @@ const AboutSection = () => {
               </p>
               
               <div>
-                <Link 
-                  to="/about" 
+                <a 
+                  href="/بروفيل برق-.pdf" 
+                  download="بروفايل-برق-تك.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn btn-primary d-inline-flex align-items-center gap-2 fw-semibold transition hover-scale"
                   style={{ borderRadius: '50px', padding: '14px 32px', backgroundColor: '#3350ff', borderColor: '#3350ff' }}
                 >
-                  {isAr ? 'اقرأ المزيد' : 'LEARN MORE'}
-                  <i className="fa fa-arrow-right" style={{ transform: isAr ? 'rotate(135deg)' : 'rotate(-45deg)', fontSize: '0.9rem' }}></i>
-                </Link>
+                  {isAr ? 'عرض بروفايل الشركة' : 'Company Profile'}
+                  <i className="fa fa-download" style={{ fontSize: '1rem' }}></i>
+                </a>
               </div>
             </div>
           </div>
