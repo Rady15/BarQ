@@ -198,16 +198,7 @@ const ProjectDetail = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-top">
-                  <h6 className="fw-bold text-dark mb-3">{isAr ? 'التقنيات المستخدمة:' : 'Technologies Leveraged:'}</h6>
-                  <div className="d-flex flex-wrap gap-2">
-                    {(project.technologies || 'React, Node.js, SQLite, Odoo Core API').split(',').map((tech, i) => (
-                      <span className="badge bg-white text-primary border border-light-dark px-3 py-2 rounded-pill shadow-sm fw-semibold" key={i}>
-                        {tech.trim()}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+
               </div>
 
               {/* Metric Impact Ring */}
