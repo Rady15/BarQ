@@ -25,7 +25,7 @@ const AdminSettings = () => {
     ga_measurement_id: '',
     primary_color: '#082e71',
   });
-  
+
   const [passwords, setPasswords] = useState({ current: '', new: '', confirm: '' });
   const [saved, setSaved] = useState(false);
   const [backups, setBackups] = useState([]);
@@ -276,12 +276,12 @@ const AdminSettings = () => {
                   <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>عند التفعيل، سيظهر للمستخدمين صفحة "قيد الصيانة"</div>
                 </div>
                 <div className="form-check form-switch">
-                  <input 
-                    className="form-check-input" 
-                    type="checkbox" 
-                    role="switch" 
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    role="switch"
                     style={{ width: '50px', height: '25px', cursor: 'pointer' }}
-                    checked={settings.maintenance_mode === '1'} 
+                    checked={settings.maintenance_mode === '1'}
                     onChange={async (e) => {
                       const enabled = e.target.checked;
                       try {
@@ -291,7 +291,7 @@ const AdminSettings = () => {
                       } catch (err) {
                         showError('خطأ', 'فشل في تغيير وضع الصيانة');
                       }
-                    }} 
+                    }}
                   />
                 </div>
               </div>
@@ -315,10 +315,10 @@ const AdminSettings = () => {
                   </button>
                   <label className="btn-admin primary" style={{ cursor: 'pointer', margin: 0 }}>
                     <i className="fa fa-upload"></i> استعادة
-                    <input 
-                      type="file" 
-                      accept=".db" 
-                      style={{ display: 'none' }} 
+                    <input
+                      type="file"
+                      accept=".db"
+                      style={{ display: 'none' }}
                       onChange={async (e) => {
                         const file = e.target.files[0];
                         if (!file) return;
@@ -334,7 +334,7 @@ const AdminSettings = () => {
                           }
                         }
                         e.target.value = null; // reset
-                      }} 
+                      }}
                     />
                   </label>
                 </div>
@@ -397,7 +397,7 @@ const AdminSettings = () => {
                       <td><span className="badge bg-light text-dark">{b.size}</span></td>
                       <td>
                         <span className={`badge ${b.isManual ? 'bg-warning text-dark' : 'bg-info text-white'}`} style={{ fontSize: '0.8rem', padding: '5px 10px' }}>
-                          {b.isManual ? 'يدوية 📝' : 'تلقائية قبل تعديل 🤖'}
+                          {b.isManual ? 'يدوية 📝' : 'تلقائية قبل تعديل '}
                         </span>
                       </td>
                       <td>
@@ -412,7 +412,7 @@ const AdminSettings = () => {
                           }}>
                             <i className="fa fa-download"></i> تنزيل
                           </button>
-                          
+
                           <button className="btn-admin warning btn-sm" onClick={async () => {
                             const result = await showConfirm(
                               'تأكيد استعادة النسخة الاحتياطية',
