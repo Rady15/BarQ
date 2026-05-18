@@ -645,7 +645,7 @@ function initDatabase() {
       ['linkedin_url', '', 'social'],
       ['instagram_url', '', 'social'],
       ['tiktok_url', '', 'social'],
-      ['ga_measurement_id', 'G-DT4Y4BNB9H', 'analytics'],
+      ['ga_measurement_id', 'G-ZNTDE26H27', 'analytics'],
       ['google_verification', '', 'seo'],
       ['about_text_ar', 'نحن في برق تك، شركة تقنية سعودية المنشأ، نؤمن أن الذكاء الاصطناعي ليس مجرد أداة، بل هو المحرك الجديد للنمو. انطلقنا لنطوع أحدث تقنيات الـ AI لخدمة الشركات الطموحة، محولين الأفكار المعقدة إلى تطبيقات واقعية ووكلاء ذكيين يعملون بدقة البرق.', 'general'],
       ['about_text_en', 'We at Barq Tech, a Saudi-born technology company, believe that artificial intelligence is not just a tool, but the new engine for growth. We set out to harness the latest AI technologies to serve ambitious companies, transforming complex ideas into realistic applications and smart agents that work with lightning precision.', 'general'],
@@ -655,8 +655,9 @@ function initDatabase() {
     defaults.forEach(s => insertSetting.run(...s));
   }
 
-  // Force update GA ID to ensure it stays even after restarts
-  db.prepare("UPDATE settings SET setting_value = ? WHERE setting_key = 'ga_measurement_id'").run('G-DT4Y4BNB9H');
+  // Update GA ID to the user's specific G-ZNTDE26H27 if it is still set to the old default or is empty,
+  // while preserving user's custom future updates from the control panel!
+  db.prepare("UPDATE settings SET setting_value = 'G-ZNTDE26H27' WHERE setting_key = 'ga_measurement_id' AND (setting_value = 'G-DT4Y4BNB9H' OR setting_value IS NULL OR setting_value = '')").run();
 
   // Default Testimonials - Clean and re-seed to ensure these 5 specific reviews are active
   db.exec('DELETE FROM testimonials');
