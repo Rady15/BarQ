@@ -57,13 +57,13 @@ const AboutSection = () => {
                 </h6>
               </div>
             </div>
-            <div className="d-flex align-items-center mt-4">
-              <Link className={`btn btn-primary rounded-pill px-4 ${isAr ? 'ms-3' : 'me-3'}`} to="/about">
+            <div className="d-flex align-items-center gap-3 mt-4 flex-wrap">
+              <Link className="btn btn-primary rounded-pill px-4" to="/about">
                 {isAr ? 'اقرأ المزيد' : 'Read More'}
               </Link>
-              <a className="btn btn-outline-primary btn-square me-3" href="#"><i className="fab fa-facebook-f"></i></a>
-              <a className="btn btn-outline-primary btn-square me-3" href="#"><i className="fab fa-twitter"></i></a>
-              <a className="btn btn-outline-primary btn-square me-3" href="#"><i className="fab fa-instagram"></i></a>
+              <a className="btn btn-outline-primary btn-square" href="#"><i className="fab fa-facebook-f"></i></a>
+              <a className="btn btn-outline-primary btn-square" href="#"><i className="fab fa-twitter"></i></a>
+              <a className="btn btn-outline-primary btn-square" href="#"><i className="fab fa-instagram"></i></a>
               <a className="btn btn-outline-primary btn-square" href="#"><i className="fab fa-linkedin-in"></i></a>
             </div>
           </div>
