@@ -131,8 +131,17 @@ const AboutSection = () => {
           
           {/* Column 2: Stats Box */}
           <div className="col-lg-5 scroll-reveal from-bottom" data-delay="500">
-            <div className="p-4 p-xl-5 shadow-lg position-relative h-100 d-flex flex-column justify-content-center" style={{ background: '#020617', borderRadius: '30px' }}>
-              <div className="d-flex justify-content-around align-items-center text-center">
+            <div 
+              className="p-4 p-xl-5 shadow-lg position-relative h-100 d-flex flex-column justify-content-center" 
+              style={{ 
+                borderRadius: '30px', 
+                overflow: 'hidden',
+                backgroundImage: `linear-gradient(rgba(2, 6, 23, 0.85), rgba(2, 6, 23, 0.95)), url('https://img.pikbest.com/backgrounds/20190731/design-in-the-concept-of-electronic-circuit-boards-background-v_1517907jpg!bw700')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            >
+              <div className="d-flex justify-content-around align-items-center text-center position-relative z-index-1">
                 <div>
                   <h2 className="text-white fw-bold mb-1" style={{ fontSize: '3rem' }}>
                     <Counter end={42} /><span style={{ color: '#e0e5ff', fontSize: '1.5rem', fontWeight: 'bold', marginLeft: '2px' }}>k</span>
