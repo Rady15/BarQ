@@ -208,7 +208,7 @@ const AdminProjects = () => {
                   <td>{i + 1}</td>
                   <td>
                     <img 
-                      src={project.image ? getImageUrl(project.image) : "https://taharica.co.id/wp-content/uploads/2025/03/Artikel-Taharica-odoo.jpg"} 
+                      src={project.image ? getImageUrl(project.image) : "/img/prjects.png"} 
                       alt={project.title_ar} 
                       style={{ height: '45px', width: '65px', borderRadius: '6px', objectFit: 'cover' }} 
                     />

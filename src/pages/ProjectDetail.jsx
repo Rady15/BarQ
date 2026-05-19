@@ -95,7 +95,7 @@ const ProjectDetail = () => {
       <Navbar />
 
       {/* Futuristic Hero Banner Section */}
-      <div className="project-detail-hero position-relative d-flex align-items-center justify-content-center" style={{ backgroundImage: `linear-gradient(rgba(5, 29, 71, 0.9), rgba(5, 29, 71, 0.9)), url(${project.image ? getImageUrl(project.image) : "https://taharica.co.id/wp-content/uploads/2025/03/Artikel-Taharica-odoo.jpg"})` }}>
+      <div className="project-detail-hero position-relative d-flex align-items-center justify-content-center" style={{ backgroundImage: `linear-gradient(rgba(5, 29, 71, 0.9), rgba(5, 29, 71, 0.9)), url(${project.image ? getImageUrl(project.image) : "/img/prjects.png"})` }}>
         <div className="container px-lg-5 text-center text-white z-index-2 scroll-reveal from-bottom">
           <div className="badge bg-cyan text-dark px-3 py-2 rounded-pill mb-3 fw-bold tracking-wider fs-7">
             {isAr ? details.sectorAr : details.sectorEn}

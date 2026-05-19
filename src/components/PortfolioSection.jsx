@@ -51,7 +51,7 @@ const PortfolioSection = ({ limit }) => {
               <div className="position-relative rounded overflow-hidden">
                 <img 
                   className="img-fluid w-100" 
-                  src={item.image ? getImageUrl(item.image) : "https://taharica.co.id/wp-content/uploads/2025/03/Artikel-Taharica-odoo.jpg"} 
+                  src={item.image ? getImageUrl(item.image) : "/img/prjects.png"} 
                   alt={isAr ? item.title_ar : item.title_en} 
                   style={{ minHeight: '250px', objectFit: 'cover' }}
                 />
@@ -62,7 +62,7 @@ const PortfolioSection = ({ limit }) => {
                     </Link>
                     <a 
                       className="btn btn-light" 
-                      href={item.image ? getImageUrl(item.image) : "https://taharica.co.id/wp-content/uploads/2025/03/Artikel-Taharica-odoo.jpg"} 
+                      href={item.image ? getImageUrl(item.image) : "/img/prjects.png"} 
                       target="_blank" 
                       rel="noopener noreferrer"
                     >
