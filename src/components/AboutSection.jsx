@@ -64,8 +64,7 @@ const AboutSection = () => {
               <p className="fs-5 mb-5" style={{ color: '#5a6275', lineHeight: '2', textAlign: 'justify' }}>
                 {aboutText}
               </p>
-              
-              <div>
+              <div className="d-flex align-items-center flex-wrap gap-3 mt-2">
                 <a 
                   href="/بروفيل برق-.pdf" 
                   download="بروفايل-برق-تك.pdf"
@@ -77,6 +76,22 @@ const AboutSection = () => {
                   {isAr ? 'عرض بروفايل الشركة' : 'Company Profile'}
                   <i className="fa fa-download" style={{ fontSize: '1rem' }}></i>
                 </a>
+
+                {/* Social Media Links */}
+                <div className="d-flex align-items-center gap-2" style={{ marginLeft: isAr ? '0' : '10px', marginRight: isAr ? '10px' : '0' }}>
+                  <a className="btn btn-square rounded-circle shadow-sm transition hover-scale d-flex align-items-center justify-content-center" href={settings?.facebook || '#'} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#1877F2', color: '#fff', width: '45px', height: '45px' }}>
+                    <i className="fab fa-facebook-f"></i>
+                  </a>
+                  <a className="btn btn-square rounded-circle shadow-sm transition hover-scale d-flex align-items-center justify-content-center" href={settings?.twitter || '#'} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#000000', color: '#fff', width: '45px', height: '45px' }}>
+                    <i className="fab fa-twitter"></i>
+                  </a>
+                  <a className="btn btn-square rounded-circle shadow-sm transition hover-scale d-flex align-items-center justify-content-center" href={settings?.instagram || '#'} target="_blank" rel="noopener noreferrer" style={{ background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', color: '#fff', width: '45px', height: '45px' }}>
+                    <i className="fab fa-instagram"></i>
+                  </a>
+                  <a className="btn btn-square rounded-circle shadow-sm transition hover-scale d-flex align-items-center justify-content-center" href={settings?.linkedin || '#'} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: '#0A66C2', color: '#fff', width: '45px', height: '45px' }}>
+                    <i className="fab fa-linkedin-in"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
