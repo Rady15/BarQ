@@ -35,6 +35,7 @@ const Counter = ({ end, duration = 2000 }) => {
 const AboutSection = () => {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
+  const { settings } = useContext(SiteContext);
   
   // Use the exact text requested by the user, but smartly omitting the previously removed vendors.
   const customAboutAr = 'نحن في برق تك، شركة تقنية سعودية المنشأ، نؤمن أن الذكاء الاصطناعي ليس مجرد أداة، بل هو المحرك الجديد للنمو. انطلقنا لنطوع أحدث تقنيات الـ AI لخدمة الشركات الطموحة، محولين الأفكار المعقدة إلى تطبيقات واقعية ووكلاء ذكيين يعملون بدقة البرق. بصفتنا شركاء معتمدين لعمالقة التقنية مثل Odoo، نضمن لك حلولاً برمجية تتوافق مع أعلى المعايير العالمية وبلمسة إبداعية محلية.';
